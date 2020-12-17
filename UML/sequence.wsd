@@ -1,0 +1,153 @@
+@startuml
+actor User
+boundary UI
+
+' Firebase
+database Firebase
+database Email
+entity FirebaseUserInfo
+
+' APIs
+database API_PLAYERS
+database API_LIGAS_CLUBES_ESTADIOS
+
+' componnets
+control App
+control Nav
+control Liga
+control RequestLiga
+control Club
+control RequestClub
+control ClubPage
+control Estadio
+control RequestEstadio
+control PlayerList
+control RequestPlayerList
+control RequestPlayerListClub
+control RequestPlayerListPlayers
+control PlayerItem
+control ClubInfo
+control RequestClubInfo
+control Player
+
+
+' react + auth
+control React
+database ReactLocalStorage
+entity AuthToken
+
+' store
+database Store
+control Receive
+entity UserInfo
+
+' 11 ideal
+control RequestPlayers
+control PlayerIdeal
+
+' Auth Token
+control CheckAuthToken
+
+' ReactDOM
+React -> App: request Components
+' Nav
+App -> Nav: request Nav component
+Nav -> App: response Nav component
+' Liga (pagina inicial)
+App -> Liga: request Liga component
+Liga -> RequestLiga: resquest Liga prop
+RequestLiga -> API_LIGAS_CLUBES_ESTADIOS: resquest Liga data
+API_LIGAS_CLUBES_ESTADIOS -> RequestLiga: response Liga data
+RequestLiga -> Liga: response Liga prop
+Liga -> App: response Liga component
+' Club (route -> clicar numa Liga)
+App -> Club: request Club component
+Club -> RequestClub: resquest Club prop
+RequestClub -> API_LIGAS_CLUBES_ESTADIOS: resquest Club data
+API_LIGAS_CLUBES_ESTADIOS -> RequestClub: response Club data
+RequestClub -> Club: response Club prop
+Club -> App: response Club component
+' ClubPage (route -> clicar numa clube)
+App -> ClubPage: request Club component
+ClubPage -> Estadio: request Estadio component
+Estadio -> RequestEstadio: resquest Estadio prop
+RequestEstadio -> API_LIGAS_CLUBES_ESTADIOS: resquest Estadio data
+API_LIGAS_CLUBES_ESTADIOS -> RequestEstadio: response Estadio data
+RequestEstadio -> Estadio: response Estadio prop
+Estadio -> ClubPage: response Estadio component
+ClubPage -> PlayerList: request PlayerList component
+PlayerList -> RequestPlayerListClub: resquest PlayerList prop
+RequestPlayerList -> API_LIGAS_CLUBES_ESTADIOS: resquest PlayerList data
+API_LIGAS_CLUBES_ESTADIOS -> RequestPlayerList: response PlayerList data
+' club e sabemos a sua liga
+' pesquisa na outra API de todos os jogadores desse clube a jogar nessa Liga url=?club=${club}&liga=${liga} include apenas jogadores
+RequestPlayerListPlayers -> API_PLAYERS: request Players based on str: club and str: liga
+API_PLAYERS -> RequestPlayerListPlayers: response Players
+RequestPlayerListPlayers -> PlayerList: response Players
+RequestPlayerList -> PlayerList: response PlayerList prop
+PlayerList -> PlayerItem: send PlayerItem prop
+PlayerItem -> PlayerList: response PlayerItem component
+PlayerList -> ClubPage: response PlayerList component
+ClubPage -> ClubInfo: request ClubInfo component
+ClubInfo -> RequestClubInfo: resquest ClubInfo prop
+RequestClubInfo -> API_LIGAS_CLUBES_ESTADIOS: resquest ClubInfo data
+API_LIGAS_CLUBES_ESTADIOS -> RequestClubInfo: response ClubInfo data
+RequestClubInfo -> Estadio: response ClubInfo prop
+ClubInfo -> ClubPage: response ClubInfo component
+' Player (route -> clicar numa jogador de um clube)
+App -> Player: request Player component
+Player -> App: response Player component
+
+' Firebase relationship
+' sign up
+User -> UI: sign up
+UI -> Firebase: add new user
+Firebase -> FirebaseUserInfo: set FirebaseUserInfo
+
+' check account
+Firebase -> Email: confirm new account
+Email -> Firebase: confirmation request
+Firebase -> FirebaseUserInfo: validation
+
+' login
+User -> UI: login
+UI -> Firebase: Authentication request
+Firebase -> FirebaseUserInfo: check if it matches and its validated
+FirebaseUserInfo -> Firebase: validation T/F
+Firebase -> UI: Authentication response
+UI -> React: request create Auth TOKEN
+React -> ReactLocalStorage: create Auth TOKEN
+UI -> Receive: if success response initiate state
+Receive -> Store: dispatch UserInfo
+Store -> UserInfo: set UserInfo
+UI -> User: show Authentication response
+
+' logout
+User -> UI: request logout
+UI -> React: request delete Auth TOKEN
+React -> ReactLocalStorage: delete Auth TOKEN
+
+' cheack if Auth TOKEN exists when entering web app
+CheckAuthToken -> ReactLocalStorage: check if Auth TOKEN exists
+ReactLocalStorage -> CheckAuthToken: validation T/F
+
+'11 ideal (button only visible while logged)
+User -> UI: click button 11 ideal
+UI -> React: request 11 ideal
+React -> RequestPlayers: request players data
+' the request is based on rating or performance from many leagues (German, Portugal, Spain, Italy)
+RequestPlayers -> API_PLAYERS: request players data
+API_PLAYERS -> RequestPlayers: response players
+RequestPlayers -> PlayerIdeal: send player prop
+PlayerIdeal -> React: JSX player information
+React -> UI: 11 Player info HTML & CSS
+UI -> User: view 11 ideal
+
+' redux relationship
+UI -> Receive: action
+Receive -> Store: dispatch
+Store -> UserInfo: check changes
+UserInfo -> Store: return changes 
+Store -> UI: send state changes
+
+@enduml
