@@ -29,7 +29,14 @@ control PlayerItem
 control ClubInfo
 control RequestClubInfo
 control Player
+control RequestPlayer
 
+' sign up
+control SignUp
+' login
+control Login
+' log out
+control LogOut
 
 ' react + auth
 control React
@@ -48,8 +55,6 @@ control PlayerIdeal
 ' Auth Token
 control CheckAuthToken
 
-' ReactDOM
-React -> App: request Components
 ' Nav
 App -> Nav: request Nav component
 Nav -> App: response Nav component
@@ -75,9 +80,9 @@ RequestEstadio -> API_LIGAS_CLUBES_ESTADIOS: resquest Estadio data
 API_LIGAS_CLUBES_ESTADIOS -> RequestEstadio: response Estadio data
 RequestEstadio -> Estadio: response Estadio prop
 Estadio -> ClubPage: response Estadio component
-ClubPage -> PlayerList: request PlayerList component
+ClubPage -> PlayerList: request PlayerList component and send Club prop
 PlayerList -> RequestPlayerListClub: resquest PlayerList prop
-RequestPlayerList -> API_LIGAS_CLUBES_ESTADIOS: resquest PlayerList data
+RequestPlayerList -> API_LIGAS_CLUBES_ESTADIOS: resquest PlayerList data ask liga
 API_LIGAS_CLUBES_ESTADIOS -> RequestPlayerList: response PlayerList data
 ' club e sabemos a sua liga
 ' pesquisa na outra API de todos os jogadores desse clube a jogar nessa Liga url=?club=${club}&liga=${liga} include apenas jogadores
@@ -96,12 +101,18 @@ RequestClubInfo -> Estadio: response ClubInfo prop
 ClubInfo -> ClubPage: response ClubInfo component
 ' Player (route -> clicar numa jogador de um clube)
 App -> Player: request Player component
+Player -> RequestPlayer: request Player
+RequestPlayer -> API_PLAYERS: request Player data
+API_PLAYERS -> RequestPlayer: response Player
+RequestPlayer -> Player: response Player
 Player -> App: response Player component
 
 ' Firebase relationship
 ' sign up
 User -> UI: sign up
-UI -> Firebase: add new user
+UI -> App: resquest sign up
+App -> SignUp: resquest sign up
+SignUp -> Firebase: add new user
 Firebase -> FirebaseUserInfo: set FirebaseUserInfo
 
 ' check account
@@ -110,22 +121,28 @@ Email -> Firebase: confirmation request
 Firebase -> FirebaseUserInfo: validation
 
 ' login
-User -> UI: login
-UI -> Firebase: Authentication request
+User -> UI: login request
+UI -> App: login request
+App -> Login: login request
+Login -> Firebase: Authentication request
 Firebase -> FirebaseUserInfo: check if it matches and its validated
 FirebaseUserInfo -> Firebase: validation T/F
 Firebase -> UI: Authentication response
-UI -> React: request create Auth TOKEN
-React -> ReactLocalStorage: create Auth TOKEN
-UI -> Receive: if success response initiate state
+' if T
+UI -> App: request create Auth TOKEN
+App -> ReactLocalStorage: create Auth TOKEN
+UI -> App: send state payload user
+App -> Receive: send user payload state
 Receive -> Store: dispatch UserInfo
 Store -> UserInfo: set UserInfo
+' apos iniciar conta mostra que foi com sucesso
 UI -> User: show Authentication response
 
 ' logout
 User -> UI: request logout
-UI -> React: request delete Auth TOKEN
-React -> ReactLocalStorage: delete Auth TOKEN
+UI -> App: request delete Auth TOKEN
+App -> LogOut: request delete Auth TOKEN
+LogOut -> ReactLocalStorage: delete Auth TOKEN
 
 ' cheack if Auth TOKEN exists when entering web app
 CheckAuthToken -> ReactLocalStorage: check if Auth TOKEN exists
@@ -133,18 +150,18 @@ ReactLocalStorage -> CheckAuthToken: validation T/F
 
 '11 ideal (button only visible while logged)
 User -> UI: click button 11 ideal
-UI -> React: request 11 ideal
-React -> RequestPlayers: request players data
+UI -> App: request 11 ideal
+App -> RequestPlayers: request players data
 ' the request is based on rating or performance from many leagues (German, Portugal, Spain, Italy)
 RequestPlayers -> API_PLAYERS: request players data
 API_PLAYERS -> RequestPlayers: response players
 RequestPlayers -> PlayerIdeal: send player prop
-PlayerIdeal -> React: JSX player information
-React -> UI: 11 Player info HTML & CSS
+PlayerIdeal -> App: JSX player information
+App -> UI: 11 Player info HTML & CSS
 UI -> User: view 11 ideal
 
 ' redux relationship
-UI -> Receive: action
+App -> Receive: action
 Receive -> Store: dispatch
 Store -> UserInfo: check changes
 UserInfo -> Store: return changes 
