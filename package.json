@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://JoaoAlmeida11.github.io/lm5a_project",
   "dependencies": {
+    "@jamesives/github-pages-deploy-action": "^3.7.1",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.6.0",
