@@ -1,10 +1,12 @@
-export default function Club(){
-import Estadio from './Estadio';
+
+import Stadium from './Stadium';
 import PlayerList from './PlayerList';
 import ClubInfo from './ClubInfo';
+
+export default function Club(){
     return(
     <div>
-        <Estadio />
+        <Stadium />
         <PlayerList />
         <ClubInfo />
     </div>)
