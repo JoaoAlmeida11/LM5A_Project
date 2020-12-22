@@ -1,13 +1,15 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/*
+#37505C (charcoal)
+#F07167 (bittersweet)
+*/
+/* change the colors 
+add fix css states
+*/
+.homepageButtonLeague{
+    color: white;
+    background-color: #37505C;
+}
+.homepageButtonLeague:hover, .homepageButtonLeague:active{
+    color: #F07167;
 }
