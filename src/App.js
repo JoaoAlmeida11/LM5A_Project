@@ -24,13 +24,13 @@ export default function App() {
           {/* o deployment está a mostrar lm5a_project mas o NavBar apenas mostra o path
               é preciso ver se é necessário adicionar o nome do projeto ao Route de todos
           */}
-          <Route exact path="/" component={HomePage}></Route>
-          <Route path="/league" component={League}></Route>
-          <Route path="/club" component={Club}></Route>
-          <Route path="/player" component={Player}></Route>
-          <Route path="/ideal11" component={Ideal11}></Route>
-          <Route path="/login" component={Login}></Route>
-          <Route path="/signIn" component={SignIn}></Route>
+          <Route exact path="/lm5a_project/" component={HomePage}></Route>
+          <Route path="/lm5a_project/league" component={League}></Route>
+          <Route path="/lm5a_project/club" component={Club}></Route>
+          <Route path="/lm5a_project/player" component={Player}></Route>
+          <Route path="/lm5a_project/ideal11" component={Ideal11}></Route>
+          <Route path="/lm5a_project/login" component={Login}></Route>
+          <Route path="/lm5a_project/signIn" component={SignIn}></Route>
         </Switch>
 </header>
     </Router>

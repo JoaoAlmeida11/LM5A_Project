@@ -1,5 +1,4 @@
 export default function RequestLeague(){
-    
     // // 
     // return axios.get('*')
     // .then(res =>{
@@ -12,14 +11,13 @@ export default function RequestLeague(){
     // })
     return([{
         id: 1,
-        name: "Maria Antonia"
+        name: "La Liga",
+        img: '../../images/leagues/Laliga.png',
       },
       {
         id: 2,
-        nome: "Josefa Maria",
-        username: "josm",
-        gn: "f",
-        tlf: "3519394458"
+        name: "Liga NOS",
+        img: '../../images/leagues/Liga_NOS.png',
       }]
     )
 }
