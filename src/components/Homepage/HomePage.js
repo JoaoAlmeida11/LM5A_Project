@@ -1,14 +1,14 @@
 import ShowLeague from "./ShowLeague"
+import RequestLeague from "../../functions/Homepage/RequestLeague"
 
 export default function HomePage(){
+    const databaseLeague = RequestLeague();
+    
     return(
     <main className="container">
-        <ShowLeague />
-        <ShowLeague />
-        <ShowLeague />
-        <ShowLeague />
-        <ShowLeague />
-        <ShowLeague />
+        {databaseLeague && databaseLeague.map((league) => {
+         return (<ShowLeague league={league.name} key={league.id}/>)
+        }) }
     </main>
     )
 }
