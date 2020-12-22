@@ -1,4 +1,4 @@
-
+import ShowLeague from "./ShowLeague"
 
 export default function HomePage(){
     return(
