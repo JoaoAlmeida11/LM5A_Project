@@ -5,7 +5,7 @@ export default function HomePage(){
     const databaseLeague = [{
         id: 1,
         name: "La Liga",
-        img: '../../images/leagues/Laliga.png',
+        img: '/leagues/Laliga.png',
       },
       {
         id: 2,
