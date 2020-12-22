@@ -6,9 +6,7 @@ export default function HomePage(){
     return(
     <main className="container">
         <section className="row">
-            {databaseLeague.map((league) => {
-                 return (<ShowLeague league={league} key={league.id}/>)
-            }) }
+            {databaseLeague.map(league => <ShowLeague league={league} key={league.id}/>)}
         </section>
     </main>
     )
