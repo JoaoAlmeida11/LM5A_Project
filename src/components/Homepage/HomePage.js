@@ -3,7 +3,6 @@ import RequestLeague from "../../functions/Homepage/RequestLeague"
 
 export default function HomePage(){
     const databaseLeague = RequestLeague();
-    console.log(databaseLeague)
     return(
     <main className="container">
         <section className="row">
