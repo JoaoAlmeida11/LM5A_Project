@@ -2,7 +2,16 @@ import ShowLeague from "./ShowLeague"
 import RequestLeague from "../../functions/Homepage/RequestLeague"
 
 export default function HomePage(){
-    const databaseLeague = RequestLeague();
+    const databaseLeague = [{
+        id: 1,
+        name: "La Liga",
+        img: '../../images/leagues/Laliga.png',
+      },
+      {
+        id: 2,
+        name: "Liga NOS",
+        img: '../../images/leagues/Liga_NOS.png',
+      }];
     return(
     <main className="container">
         <section className="row">
