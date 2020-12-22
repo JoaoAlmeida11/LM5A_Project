@@ -1,4 +1,4 @@
-
+// local images have to be imported
 
 export default function ShowLeague(props){
     return(
@@ -7,7 +7,7 @@ export default function ShowLeague(props){
                 <img src={props.image} />
             </figure>
             <p className="text-center">{props.name}</p>
-            <button onClick={}></button>
+            <button className="homepageButtonLeague"></button>
         </article>
     )
 }
