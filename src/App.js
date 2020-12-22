@@ -10,6 +10,8 @@ import Club from './components/Club/Club';
 import Player from './components/Player/Player';
 import NavCostum from "./components/Layout/NavCostum";
 import Ideal11 from "./components/Ideal11/Ideal11";
+import Login from './components/Authentication/Login';
+import SignIn from './components/Authentication/SignIn';
 
 
 export default function App() {
@@ -27,6 +29,8 @@ export default function App() {
           <Route path="/club" component={Club}></Route>
           <Route path="/player" component={Player}></Route>
           <Route path="/ideal11" component={Ideal11}></Route>
+          <Route path="/login" component={Login}></Route>
+          <Route path="/signIn" component={SignIn}></Route>
         </Switch>
 </header>
     </Router>

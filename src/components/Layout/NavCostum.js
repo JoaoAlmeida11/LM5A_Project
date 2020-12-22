@@ -17,8 +17,8 @@ return(
             <Form inline>
                 <FormControl type="text" placeholder="Search" className="mr-sm-2" />
                  <Button variant="outline-success">Search</Button>
-                 <Nav.Link href="#home">Login</Nav.Link>
-                 <Nav.Link href="#home">Sign In</Nav.Link>
+                 <Nav.Link href="/login">Login</Nav.Link>
+                 <Nav.Link href="/signIn">Sign In</Nav.Link>
             </Form>
            
         </Navbar.Collapse>
