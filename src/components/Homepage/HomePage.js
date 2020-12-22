@@ -1,5 +1,5 @@
 import ShowLeague from "./ShowLeague"
-import RequestLeague from "../../functions/Homepage/RequestLeague"
+// import RequestLeague from "../../functions/Homepage/RequestLeague"
 
 export default function HomePage(){
     const databaseLeague = [{
