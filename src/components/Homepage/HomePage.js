@@ -1,14 +1,22 @@
 import ShowLeague from "./ShowLeague"
-import RequestLeague from "../../functions/Homepage/RequestLeague"
+// import RequestLeague from "../../functions/Homepage/RequestLeague"
 
 export default function HomePage(){
-    const databaseLeague = RequestLeague();
-    
+    const databaseLeague = [{
+        id: 1,
+        name: "La Liga",
+        img: '../../images/leagues/Laliga.png',
+      },
+      {
+        id: 2,
+        name: "Liga NOS",
+        img: '../../images/leagues/Liga_NOS.png',
+      }];
     return(
     <main className="container">
-        {databaseLeague && databaseLeague.map((league) => {
-         return (<ShowLeague league={league.name} key={league.id}/>)
-        }) }
+        <section className="row">
+            {databaseLeague.map(league => <ShowLeague league={league} key={league.id}/>)}
+        </section>
     </main>
     )
 }

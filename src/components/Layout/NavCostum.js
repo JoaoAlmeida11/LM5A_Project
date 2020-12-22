@@ -11,14 +11,14 @@ return(
         <Navbar.Collapse id="basic-navbar-nav">
             
              <Nav className="mr-auto">
-                 <Nav.Link href="{}/ideal11">11 Ideal</Nav.Link>
+                 <Nav.Link href="lm5a_project/ideal11">11 Ideal</Nav.Link>
             </Nav>
             
             <Form inline>
                 <FormControl type="text" placeholder="Search" className="mr-sm-2" />
                  <Button variant="outline-success">Search</Button>
-                 <Nav.Link href="/login">Login</Nav.Link>
-                 <Nav.Link href="/signIn">Sign In</Nav.Link>
+                 <Nav.Link href="lm5a_project/login">Login</Nav.Link>
+                 <Nav.Link href="lm5a_project/signIn">Sign In</Nav.Link>
             </Form>
            
         </Navbar.Collapse>
