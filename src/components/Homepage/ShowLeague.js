@@ -1,5 +1,5 @@
 // o scr da imagem n funciona pq n sei onde ele começa... verificar como é que se comporta com uma API
-export default function ShowLeague(props){
+function ShowLeague(props) {
     const altImage='League of '+props.league.name;
 
     return(
@@ -10,3 +10,4 @@ export default function ShowLeague(props){
         </article>
     )
 }
+export default ShowLeague;
