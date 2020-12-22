@@ -9,20 +9,20 @@ import HomePage from "./components/Homepage/HomePage"
 import League from "./components/League/League"
 import Club from './components/Club/Club';
 import Player from './components/Player/Player';
+import NavCostum from "./components/Layout/NavCostum";
 
 export default function App() {
   return (
     <Router>
-        <div className="App">
-      
+        <div>
+          <NavCostum />
         </div>
         <Switch>
-          <Route >
-            <HomePage exact path="/"/>
-            <League path="/league" />
-            <Club  path="/club"/>
-            <Player path="/player"/>
-          </Route>
+          <Route exact path="/" component={HomePage}></Route>
+          <Route path="/league" component={League}></Route>
+          <Route path="/club" component={Club}></Route>
+          <Route path="/player" component={Player}></Route>
+          <Route path="/ideal11" component={Player}></Route>
         </Switch>
 
     </Router>
