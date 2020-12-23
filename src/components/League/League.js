@@ -39,6 +39,7 @@ class databaseClubs{
 
 
 export default function League(){
+    // send params by redux
     let { paramsId } = useParams();
 
     const dbClubs = new databaseClubs();
@@ -46,14 +47,12 @@ export default function League(){
 
     const selectClub = dbClubs.data.filter(club => club.id === paramsId);
 
-    // console.log(selectClub);
-    // const selectClub = dbClubs.filter(club => club.id === paramsId);
-    // console.log(selectClub);
+    console.log(selectClub);
 
     return(
     <main className='container'>  
         <section className="row">
-            {databaseClubs.map(league => <ClubeDaLiga league={league} key={league.id} path={paramsId}/>)}
+            {dbClubs.data.map(club => <ClubeDaLiga club={club} key={club.id} path={paramsId}/>)}
         </section>
     </main>)
 }
