@@ -11,10 +11,6 @@ const { increment, decrement } = actions
     }
   })
 
-const store = configureStore({
-    reducer: reducer
-})
-
 // async
 document.getElementById('increment').addEventListener('click', () => {
     store.dispatch(actions.increment())

@@ -1,36 +1,12 @@
-
-
-
+import { applyMiddleware, createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import thunkMiddleware from "redux-thunk";
+import rootReducer from "./rootReducer";
+import configureStore from "./configureStore";
 
 const store = configureStore({
-  reducer: counter
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  reducer: rootReducer,
+});
 
 // import { applyMiddleware, createStore } from 'redux'
 // import { composeWithDevTools } from 'redux-devtools-extension'
@@ -55,3 +31,5 @@ const store = configureStore({
 
 //   return store
 // }
+
+export default store;

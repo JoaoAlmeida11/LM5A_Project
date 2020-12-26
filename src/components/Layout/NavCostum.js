@@ -1,9 +1,10 @@
 
 import { Navbar,  Nav, Form, FormControl, Button} from 'react-bootstrap';
+import {connect} from "react-redux";
 
 // mudar estilos da NavCostum
 // adicionar Brand
-export default function NavCostum(){
+ function NavCostum(){
 return(
      <Navbar bg="light" expand="md">
         <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
@@ -25,3 +26,12 @@ return(
   </Navbar>
 )
 }
+
+const mapStateToProps = (state) => {
+     console.log(state)
+     return {
+          
+     }
+}
+
+export default connect(mapStateToProps) (NavCostum)
