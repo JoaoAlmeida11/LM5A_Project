@@ -25,10 +25,10 @@ export default function App() {
               é preciso ver se é necessário adicionar o nome do projeto ao Route de todos
           */}
           <Route exact path="/lm5a_project/" component={HomePage}></Route>
-          <Route path="/lm5a_project/league" component={League}></Route>
-          <Route path="/lm5a_project/club" component={Club}></Route>
-          <Route path="/lm5a_project/player" component={Player}></Route>
-          <Route path="/lm5a_project/ideal11" component={Ideal11}></Route>
+          <Route path="/lm5a_project/league/:leagueId" children={<League />}></Route>
+          <Route path="/lm5a_project/club/:clubId" children={<Club />}></Route>
+          <Route path="/lm5a_project/player/:playerId" children={<Player />}></Route>
+          <Route path="/lm5a_project/ideal11/" component={Ideal11}></Route>
           <Route path="/lm5a_project/login" component={Login}></Route>
           <Route path="/lm5a_project/signIn" component={SignIn}></Route>
         </Switch>
