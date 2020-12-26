@@ -8,13 +8,19 @@ import rootReducer from "./redux/rootReducer";
 /* import firebase from './config/fbConfig'; */
 import configureStore from "./redux/configureStore";
 import { Provider } from "react-redux";
+import { Router, Route, browserHistory } from "react-router";
+import { syncHistoryWithStore, routerReducer } from "react-router-redux";
+import { Routes } from "./Routes/Routes";
 
 const store = configureStore();
+const history = syncHistoryWithStore(browserHistory, store);
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <Router history={history} routes={Routes}>
+        <App />
+      </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
