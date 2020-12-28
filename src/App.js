@@ -1,6 +1,6 @@
-import { BrowserRouter as Router } from "react-router-dom";
 import NavCostum from "./components/Layout/NavCostum";
 import { Routes } from "./Routes/Routes";
+import { connectRouter } from "connected-react-router";
 
 export default function App({ history, context }) {
   return (

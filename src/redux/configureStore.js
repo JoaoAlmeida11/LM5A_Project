@@ -1,10 +1,6 @@
-import { applyMiddleware, createStore } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import thunkMiddleware from "redux-thunk";
-import configureStore from "./configureStore";
 import { createBrowserHistory } from "history";
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import monitorReducersEnhancer from "./enhancers/monitorReducers";
+// import monitorReducersEnhancer from "./enhancers/monitorReducers";
 import loggerMiddleware from "./middleware/logger";
 import rootReducer from "./reducers";
 import thunkMiddleware from "redux-thunk";
@@ -18,7 +14,7 @@ export default function configureAppStore(preloadedState) {
     reducer: rootReducer,
     middleware: [loggerMiddleware, ...getDefaultMiddleware()],
     preloadedState,
-    enhancers: [monitorReducersEnhancer],
+    // enhancers: [monitorReducersEnhancer],
   });
 
   if (process.env.NODE_ENV !== "production" && module.hot) {
@@ -27,8 +23,6 @@ export default function configureAppStore(preloadedState) {
 
   return store;
 }
-
-export default store;
 
 /* // configureStore.js
 ...
