@@ -1,14 +1,24 @@
+// dependencies
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.min.css';
-/* import firebase from './config/fbConfig'; */
-import configureAppStore, { history } from './redux/configureStore';
 import { Provider } from 'react-redux';
-import { Routes } from './Routes/Routes';
 import { ConnectedRouter } from 'connected-react-router';
+
+// css files
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.css';
+
+// Application main routes
+import { Routes } from './Routes/Routes';
+
+// Store of app
+import configureAppStore, { history } from './redux/configureStore';
+
+// components
+import App from './App';
+
+/* import firebase from './config/fbConfig'; */
 
 const store = configureAppStore();
 
@@ -17,7 +27,7 @@ ReactDOM.render(
 		<Provider store={store}>
 			<ConnectedRouter history={history}>
 				<App />
-				{Routes}
+				<Routes />
 			</ConnectedRouter>
 		</Provider>
 	</React.StrictMode>,
