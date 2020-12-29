@@ -1,4 +1,4 @@
-// import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+// import { getDefaultMiddleware } from '@reduxjs/toolkit';
 import { configureStore } from '@reduxjs/toolkit';
 // import monitorReducersEnhancer from "./enhancers/monitorReducers";
 
@@ -18,9 +18,9 @@ export default function configureAppStore(preloadedState) {
 		// enhancers: [monitorReducersEnhancer],
 	});
 
-	// if (process.env.NODE_ENV !== 'production' && module.hot) {
-	// 	module.hot.accept('./rootReducer', () => store.replaceReducer(rootReducer));
-	// }
+	if (process.env.NODE_ENV !== 'production' && module.hot) {
+		module.hot.accept('./rootReducer', () => store.replaceReducer(rootReducer));
+	}
 
 	return store;
 }
