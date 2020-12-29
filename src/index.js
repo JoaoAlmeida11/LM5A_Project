@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
 // Application main routes
-import { Routes } from './Routes/Routes';
+import NavCostum from './components/Layout/NavCostum';
 
 // Store of app
 import configureAppStore, { history } from './redux/configureStore';
@@ -26,8 +26,8 @@ ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
 			<ConnectedRouter history={history}>
+				<NavCostum />
 				<App />
-				<Routes />
 			</ConnectedRouter>
 		</Provider>
 	</React.StrictMode>,
