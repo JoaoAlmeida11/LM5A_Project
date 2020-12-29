@@ -1,12 +1,12 @@
-import { createBrowserHistory } from "history";
 // import { getDefaultMiddleware } from "@reduxjs/toolkit"
 import { configureStore } from "@reduxjs/toolkit";
 // import monitorReducersEnhancer from "./enhancers/monitorReducers";
 // import logger from "redux-logger";
 import rootReducer from "./rootReducer";
 // import thunkMiddleware from "redux-thunk";
+import { syncHistoryWithStore } from "react-router-redux";
 
-export const history = createBrowserHistory();
+export const history = syncHistoryWithStore(BrowserHistory, store);
 
 export default function configureAppStore(preloadedState) {
   const store = configureStore({

@@ -6,16 +6,20 @@ import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 /* import firebase from './config/fbConfig'; */
 import configureAppStore, { history } from "./redux/configureStore";
-import { Provider, ReactReduxContext } from "react-redux";
-// import { syncHistoryWithStore, routerReducer } from "react-router-redux";
+import { Provider } from "react-redux";
+import { Routes } from "./Routes/Routes";
+import { ConnectedRouter } from "connected-react-router";
+// import { connectHistory } from "redux-history";
 
 const store = configureAppStore();
-// const history = syncHistoryWithStore(BrowserHistory, store);
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App history={history} context={ReactReduxContext} />
+      <ConnectedRouter history={history}>
+        <App />
+        {Routes}
+      </ConnectedRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
