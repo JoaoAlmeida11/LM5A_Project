@@ -14,6 +14,9 @@ import Footer from './components/Layout/Footer';
 import NavCostum from './components/Layout/NavCostum';
 
 export default function App({ store, history }) {
+	console.log('store', store);
+	console.log('history', history);
+
 	return (
 		<Provider store={store}>
 			<ConnectedRouter history={history}>

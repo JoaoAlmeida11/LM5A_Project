@@ -8,6 +8,8 @@ const rootReducer = history =>
 		auth: authReducer,
 		firebase: firebaseReducer,
 		router: connectRouter(history),
+		// users is an example made by reading documentation
+		users: usersSlice,
 	});
 
 export default rootReducer;
