@@ -2,15 +2,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
 
 // css files
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
 // Application main routes
-import NavCostum from './components/Layout/NavCostum';
 
 // Store of app
 import configureAppStore, { history } from './redux/configureStore';
@@ -24,12 +21,7 @@ const store = configureAppStore();
 
 ReactDOM.render(
 	<React.StrictMode>
-		<Provider store={store}>
-			<ConnectedRouter history={history}>
-				<NavCostum />
-				<App />
-			</ConnectedRouter>
-		</Provider>
+		<App store={store} history={history} />
 	</React.StrictMode>,
 	document.getElementById('root')
 );
