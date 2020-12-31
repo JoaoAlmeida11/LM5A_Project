@@ -1,3 +1,3 @@
 export default function Stadium() {
-	return <img scr={} alt="" className="img-fluid" />;
+	return <div>{/* <img scr={} alt="" className="img-fluid" /> */}</div>;
 }
