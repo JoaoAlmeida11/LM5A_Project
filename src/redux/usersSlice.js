@@ -8,6 +8,14 @@ import { useBootstrapPrefix } from 'react-bootstrap/esm/ThemeProvider';
 // 		Depending on the request result, the async logic dispatches either a "success" action containing the result data, or a "failure" action containing error details. The reducer logic clears the loading state in both cases, and either processes the result data from the success case, or stores the error value for potential display.
 //  thunk usage -> reducers
 //  createAsyncThunk usage -> extraReducers
+const fetchUsersById = createAsyncThunk(
+	'users/fetchByIdStatus',
+	async (userId, thunkAPI) => {
+		const response = await useBootstrapPrefix.fetch(userId);
+		return response.data;
+	}
+);
+
 export const usersSlice = createSlice({
 	name: 'users',
 	initialState: {
@@ -37,18 +45,18 @@ export const usersSlice = createSlice({
 export const { usersLoading, usersReceived } = usersSlice.actions;
 
 // old way -> normal thunk
-const fetchUsers = () => async dispatch => {
-	dispatch(usersLoading());
-	const response = await useBootstrapPrefix.fetchAll();
-	dispatch(usersReceived(response.data));
-};
+// const fetchUsers = () => async dispatch => {
+// 	dispatch(usersLoading());
+// 	const response = await useBootstrapPrefix.fetchAll();
+// 	dispatch(usersReceived(response.data));
+// };
 
 // new way -> createAsyncThunk
-
-const fetchUsersById = createAsyncThunk(
-	'users/fetchByIdStatus',
-	async (userId, thunkAPI) => {
-		const response = await useBootstrapPrefix.fetch(userId);
-		return response.data;
-	}
-);
+// on top
+// const fetchUsersById = createAsyncThunk(
+// 	'users/fetchByIdStatus',
+// 	async (userId, thunkAPI) => {
+// 		const response = await useBootstrapPrefix.fetch(userId);
+// 		return response.data;
+// 	}
+// );

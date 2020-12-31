@@ -1,4 +1,11 @@
-import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
+import {
+	Navbar,
+	Nav,
+	Form,
+	FormControl,
+	Button,
+	Container,
+} from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 // mudar estilos da NavCostum
@@ -6,7 +13,7 @@ import { connect } from 'react-redux';
 
 function NavCostum() {
 	return (
-		<header>
+		<Container fluid>
 			<Navbar bg="light" expand="md">
 				<Navbar.Brand href="/lm5a_project/">React-Bootstrap</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -23,7 +30,7 @@ function NavCostum() {
 					</Form>
 				</Navbar.Collapse>
 			</Navbar>
-		</header>
+		</Container>
 	);
 }
 
