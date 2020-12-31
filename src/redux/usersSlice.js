@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-
+import { useBootstrapPrefix } from 'react-bootstrap/esm/ThemeProvider';
 // documentation: https://redux-toolkit.js.org/usage/usage-guide
 // example comparing normal thunk usage with createAsyncThunk
 // thunk pattern
@@ -8,7 +8,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 // 		Depending on the request result, the async logic dispatches either a "success" action containing the result data, or a "failure" action containing error details. The reducer logic clears the loading state in both cases, and either processes the result data from the success case, or stores the error value for potential display.
 //  thunk usage -> reducers
 //  createAsyncThunk usage -> extraReducers
-
 export const usersSlice = createSlice({
 	name: 'users',
 	initialState: {
@@ -30,7 +29,7 @@ export const usersSlice = createSlice({
 	},
 	extraReducers: {
 		[fetchUsersById.fulfilled]: (state, action) => {
-			state.users.push(action.payload);
+			state.users.push(action);
 		},
 	},
 });
