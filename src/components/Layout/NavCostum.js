@@ -6,7 +6,7 @@ import {
 	Button,
 	Container,
 } from 'react-bootstrap';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 // mudar estilos da NavCostum
 // adicionar Brand
@@ -34,9 +34,10 @@ function NavCostum() {
 	);
 }
 
-const mapStateToProps = state => {
-	console.log(state);
-	return {};
-};
+// const mapStateToProps = state => {
+// 	console.log(state);
+// 	return {};
+// };
 
-export default connect(mapStateToProps)(NavCostum);
+export default NavCostum;
+// export default connect(mapStateToProps)(NavCostum);
