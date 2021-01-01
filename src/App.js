@@ -1,7 +1,6 @@
 // dependencies
-import { ConnectedRouter } from 'connected-react-router';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { Switch, Route } from 'react-router-dom';
 import HomePage from './components/Homepage/HomePage';
 import League from './components/League/League';
 import Club from './components/Club/Club';
@@ -12,9 +11,9 @@ import SignIn from './components/Authentication/SignIn';
 import Footer from './components/Layout/Footer';
 import NavCostum from './components/Layout/NavCostum';
 
-export default function App({ history, context }) {
+export default function App() {
 	return (
-		<ConnectedRouter history={history} context={context}>
+		<Router>
 			<NavCostum />
 			<Switch>
 				<Route exact path="/" component={HomePage}></Route>
@@ -26,6 +25,6 @@ export default function App({ history, context }) {
 				<Route path="/lm5a_project/signIn/" component={SignIn}></Route>
 			</Switch>
 			<Footer />
-		</ConnectedRouter>
+		</Router>
 	);
 }
