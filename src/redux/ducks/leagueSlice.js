@@ -7,6 +7,10 @@ import {
 import apiKey from '../../apiKey';
 import { schema, normalize } from 'normalizr';
 
+// access API key
+require('dotenv').config();
+const API_KEY = process.env.API_KEY;
+
 export const leagueEntity = new schema.Entity('leagues');
 
 const leaguesAdapter = createEntityAdapter();
@@ -16,7 +20,7 @@ const fetchLeagues = createAsyncThunk(
 	async (_, thunkAPI) => {
 		const axios = require('axios').default;
 		const response = await axios
-			.get(`https://api.statorium.com/api/v1/leagues/?apikey=${apiKey}`)
+			.get(`https://api.statorium.com/api/v1/leagues/?apikey=${API_KEY}`)
 			.then(res => {
 				console.log(res.json());
 				return res;
