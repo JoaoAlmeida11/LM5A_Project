@@ -49,8 +49,7 @@ export const leagueSlice = createSlice({
 		},
 	},
 });
-const reducer = leagueSlice.reducer;
-export default reducer;
+export default leagueSlice;
 
 // Rename the exports for readability in component usage
 export const {

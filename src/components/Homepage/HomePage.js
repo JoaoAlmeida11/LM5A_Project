@@ -1,24 +1,15 @@
 import ShowLeague from './ShowLeague';
 // import RequestLeague from "../../functions/Homepage/RequestLeague"
 import { Container, Row } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { selectAllLeagues } from '../../redux/ducks/leagueSlice';
 
 export default function HomePage() {
-	const databaseLeague = [
-		{
-			id: 1,
-			name: 'La Liga',
-			img: '/leagues/Laliga.png',
-		},
-		{
-			id: 2,
-			name: 'Liga NOS',
-			img: '../../images/leagues/Liga_NOS.png',
-		},
-	];
+	const leagues = useSelector(selectAllLeagues);
 	return (
 		<Container>
 			<Row>
-				{databaseLeague.map(league => (
+				{leagues.map(league => (
 					<ShowLeague league={league} key={league.id} />
 				))}
 			</Row>
