@@ -16,7 +16,7 @@ const leaguesAdapter = createEntityAdapter();
 
 const fetchLeagues = createAsyncThunk(
 	'leagues/requestStatus',
-	async (_, thunkAPI) => {
+	async thunkAPI => {
 		const axios = require('axios').default;
 		const response = await axios
 			.get(`https://api.statorium.com/api/v1/leagues/?apikey=${API_KEY}`)
@@ -31,7 +31,7 @@ const fetchLeagues = createAsyncThunk(
 		// additional call for image base on id
 		// https://api.statorium.com/api/v1/leagues/1/?apikey=123_test_token_123
 
-		const normalized = normalize(response.entities, leagueEntity);
+		const normalized = normalize(response.entities, [leagueEntity]);
 		return normalized.entities;
 	}
 );
@@ -65,3 +65,5 @@ export const {
 
 // Later, dispatch the thunk as needed in the app
 // dispatch(fetchUserById(123))
+
+// do not use

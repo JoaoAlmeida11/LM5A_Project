@@ -1,9 +1,9 @@
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Container, Row } from 'react-bootstrap';
 
 export default function Login() {
 	return (
-		<main className="container">
-			<section className="row centerLogin">
+		<Container>
+			<Row className="centerLogin">
 				<article className="col-12 col-lg-6 mx-auto my-auto">
 					<Form>
 						<h3 className="text-center mt-4">Sign In</h3>
@@ -34,7 +34,7 @@ export default function Login() {
 						</Form.Text>
 					</Form>
 				</article>
-			</section>
-		</main>
+			</Row>
+		</Container>
 	);
 }
