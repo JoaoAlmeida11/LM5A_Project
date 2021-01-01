@@ -1,7 +1,15 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { useBootstrapPrefix } from 'react-bootstrap/esm/ThemeProvider';
+import {
+	createAsyncThunk,
+	createEntityAdapter,
+	createSlice,
+} from '@reduxjs/toolkit';
 
 import apiKey from '../../apiKey';
+import { schema, normalize } from 'normalizr';
+
+export const leagueEntity = new schema.Entity('leagues');
+
+const leaguesAdapter = createEntityAdapter();
 
 const fetchLeagues = createAsyncThunk(
 	'leagues/requestStatus',
@@ -17,20 +25,41 @@ const fetchLeagues = createAsyncThunk(
 				console.log(err);
 				return err;
 			});
-		return response.data;
+		// additional call for image base on id
+		// https://api.statorium.com/api/v1/leagues/1/?apikey=123_test_token_123
+
+		const normalized = normalize(response.entities, leagueEntity);
+		return normalized.entities;
 	}
 );
 
 export const leagueSlice = createSlice({
 	name: 'league',
-	initialState: {
-		league: [],
-		loading: 'idle',
-		error: '',
-	},
+	initialState: leaguesAdapter.getInitialState(),
+	// initialState: {
+	// 	league: [],
+	// 	loading: 'idle',
+	// 	error: '',
+	// },
 	extraReducers: {
-		[fetchLeagues.fulfilled]: (state, action) => {},
+		[fetchLeagues.fulfilled]: (state, action) => {
+			//handle result
+			// state.league.push(action.payload);
+			leaguesAdapter.upsertMany(state, action.payload.leagues);
+		},
 	},
 });
+const reducer = leagueSlice.reducer;
+export default reducer;
 
-// export const { usersLoading, usersReceived } = usersSlice.actions;
+// Rename the exports for readability in component usage
+export const {
+	selectById: selectLeagueById,
+	selectIds: selectLeagueIds,
+	selectEntities: selectLeagueEntities,
+	selectAll: selectAllLeagues,
+	selectTotal: selectTotalLeagues,
+} = leaguesAdapter.getSelectors(state => state.leagues);
+
+// Later, dispatch the thunk as needed in the app
+// dispatch(fetchUserById(123))
