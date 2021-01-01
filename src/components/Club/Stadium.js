@@ -1,3 +1,5 @@
+// import { Image } from 'react-bootstrap';
+
 export default function Stadium() {
-	return <div>{/* <img scr={} alt="" className="img-fluid" /> */}</div>;
+	return <div>{/* <Image scr={} alt="" fluid /> */}</div>;
 }
