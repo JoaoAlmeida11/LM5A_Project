@@ -4,7 +4,6 @@ import {
 	createSlice,
 } from '@reduxjs/toolkit';
 
-import apiKey from '../../apiKey';
 import { schema, normalize } from 'normalizr';
 
 // access API key
