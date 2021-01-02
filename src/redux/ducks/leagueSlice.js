@@ -8,6 +8,9 @@ import { API_KEY } from '../../apiKey';
 // const API_KEY = process.env.API_KEY;
 
 export const leagueEntity = new schema.Entity('leagues');
+export const leagueListEntity = new schema.Entity('leagueList', {
+	list: [leagueEntity],
+});
 
 export const fetchLeagues = createAsyncThunk(
 	'leagues/requestStatus',
@@ -17,7 +20,7 @@ export const fetchLeagues = createAsyncThunk(
 		const response = await axios
 			.get(`https://api.statorium.com/api/v1/leagues/?apikey=${API_KEY}`)
 			.then(res => {
-				console.log(res.data);
+				// console.log(res.data);
 				return res.data;
 			})
 			.catch(err => {
@@ -27,7 +30,7 @@ export const fetchLeagues = createAsyncThunk(
 		// additional call for image base on id
 		// https://api.statorium.com/api/v1/leagues/1/?apikey=123_test_token_123
 
-		const normalized = normalize(response.leagues, [leagueEntity]);
+		const normalized = normalize(response.leagues, [leagueListEntity]);
 		return normalized.entities;
 	}
 );
@@ -45,7 +48,7 @@ const leagueSlice = createSlice({
 		},
 		[fetchLeagues.fulfilled]: (state, { payload }) => {
 			state.loading = 'success';
-			state.leagueList = payload.leagues;
+			state.leagueList = payload.leagueList;
 		},
 		[fetchLeagues.rejected]: state => {
 			state.loading = 'failed';
@@ -53,6 +56,6 @@ const leagueSlice = createSlice({
 	},
 });
 
-export const selectLeagues = ({ leagues }) => leagues;
+// export const selectLeagues = ({ leagues }) => leagues;
 
 export default leagueSlice.reducer;

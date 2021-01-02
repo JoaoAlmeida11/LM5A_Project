@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 // const dispatch = useDispatch();
 // const leagues = useSelector(selectAllLeagues);
 
-const HomePage = ({ leagues, loading }) => {
+const HomePage = ({ leagueList, loading }) => {
 	if (loading === 'idle') {
 		RequestLeague();
 	}
@@ -24,19 +24,25 @@ const HomePage = ({ leagues, loading }) => {
 	return (
 		<Container>
 			<Row>
-				{!leagues && <p>Loading...</p>}
-				{leagues &&
-					Object.keys(leagues).map(league => (
-						<ShowLeague league={league} key={league.id} />
-					))}
+				{!leagueList && <p>Loading...</p>}
+				{/* {console.log(league)} */}
+				{loading === 'success' &&
+					Object.entries(leagueList).map(league => {
+						console.log('league map');
+						console.log(league);
+						// console.log(league[1]);
+						// console.log(index);
+						return <ShowLeague league={league[1]} key={league[0]} />;
+					})}
 			</Row>
 		</Container>
 	);
 };
 
 const mapStateToProps = state => {
-	console.log(state);
-	return { leagues: state.league.leagueList, loading: state.league.loading };
+	// console.log('state');
+	// console.log(state);
+	return { leagueList: state.league.leagueList, loading: state.league.loading };
 };
 
 export default connect(mapStateToProps)(HomePage);
