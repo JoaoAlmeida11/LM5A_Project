@@ -1,57 +1,45 @@
 import { Container, Row } from 'react-bootstrap';
-
-import { useParams } from 'react-router-dom';
-
+// import { useParams } from 'react-router-dom';
 import ClubeDaLiga from './ClubeDaLiga';
+import RequestClub from '../../functions/League/RequestClub';
+import { connect } from 'react-redux';
 
-class databaseClubs {
-	constructor() {
-		this.data = [
-			{
-				id: 1,
-				name: 'La Liga',
-				img: '',
-				clubs: [
-					'Valencia',
-					'Villarreal',
-					'Barcelona',
-					'Celta Vigo',
-					'Elche',
-					'Granada',
-					'Levante',
-				],
-			},
-			{
-				id: 2,
-				name: 'Liga NOS',
-				img: '',
-				clubs: ['Porto', 'Marítimo', 'Farense', 'Braga', 'Rio Ave', 'Tondela'],
-			},
-		];
-	}
-	*[Symbol.iterator]() {
-		yield this.data;
-	}
-}
-
-export default function League() {
+const League = ({ clubList, loading }) => {
 	// send params by redux
-	let { paramsId } = useParams();
+	// let { paramsId } = useParams();
 
-	const dbClubs = new databaseClubs();
-	console.log(paramsId);
+	// console.log(paramsId);
 
-	const selectClub = dbClubs.data.filter(club => club.id === paramsId);
-
-	console.log(selectClub);
+	if (loading === 'idle') {
+		RequestClub();
+	}
 
 	return (
 		<Container>
 			<Row>
-				{dbClubs.data.map(club => (
+				{/* {dbClubs.data.map(club => (
 					<ClubeDaLiga club={club} key={club.id} path={paramsId} />
-				))}
+				))} */}
+
+				{loading === 'idle' && <p>Loading...</p>}
+				{loading === 'failed' && (
+					<p>
+						An error has occurred. Please reload this page and if the error
+						persists contact an administrator
+					</p>
+				)}
+				{/* {console.log(league)} */}
+				{loading === 'success' &&
+					Object.entries(clubList).map(club => {
+						return <ClubeDaLiga club={club[1]} key={club[0]} />;
+					})}
 			</Row>
 		</Container>
 	);
-}
+};
+
+const mapStateToProps = state => {
+	return { leagueList: state.league.leagueList, loading: state.league.loading };
+};
+
+export default connect(mapStateToProps)(League);
