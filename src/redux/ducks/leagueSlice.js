@@ -1,11 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-
 import { schema, normalize } from 'normalizr';
-import { API_KEY } from '../../apiKey';
-// access API key
-// require('dotenv').config();
-// dotenv.config();
-// const API_KEY = process.env.API_KEY;
+
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 export const leagueEntity = new schema.Entity('leagues');
 export const leagueListEntity = new schema.Entity('leagueList', {
@@ -55,7 +51,5 @@ const leagueSlice = createSlice({
 		},
 	},
 });
-
-// export const selectLeagues = ({ leagues }) => leagues;
 
 export default leagueSlice.reducer;
