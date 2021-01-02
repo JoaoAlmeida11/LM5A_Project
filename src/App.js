@@ -16,7 +16,7 @@ export default function App() {
 		<Router>
 			<NavCostum />
 			<Switch>
-				<Route exact path="/" component={HomePage}></Route>
+				<Route exact path="/lm5a_project/" component={HomePage}></Route>
 				<Route path="/lm5a_project/league/:leagueId/" children={League}></Route>
 				<Route path="/lm5a_project/club/:clubId/" children={Club}></Route>
 				<Route path="/lm5a_project/player/:playerId/" children={Player}></Route>

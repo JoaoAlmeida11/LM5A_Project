@@ -1,0 +1,55 @@
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { schema, normalize } from 'normalizr';
+
+const API_KEY = process.env.REACT_APP_API_KEY;
+
+export const leagueEntity = new schema.Entity('leagues');
+export const leagueListEntity = new schema.Entity('leagueList', {
+	list: [leagueEntity],
+});
+
+export const fetchLeagues = createAsyncThunk(
+	'leagues/requestStatus',
+	async () => {
+		//pass an obj with id (only allows one)
+		const axios = require('axios').default;
+		const response = await axios
+			.get(`https://api.statorium.com/api/v1/leagues/?apikey=${API_KEY}`)
+			.then(res => {
+				// console.log(res.data);
+				return res.data;
+			})
+			.catch(err => {
+				console.log(err);
+				return err;
+			});
+		// additional call for image base on id
+		// https://api.statorium.com/api/v1/leagues/1/?apikey=123_test_token_123
+
+		const normalized = normalize(response.leagues, [leagueListEntity]);
+		return normalized.entities;
+	}
+);
+
+const leagueSlice = createSlice({
+	name: 'leagues',
+	initialState: {
+		leagueList: [],
+		loading: 'idle',
+	},
+	reducers: {},
+	extraReducers: {
+		[fetchLeagues.pending]: state => {
+			state.loading = 'pending';
+		},
+		[fetchLeagues.fulfilled]: (state, { payload }) => {
+			state.loading = 'success';
+			state.leagueList = payload.leagueList;
+		},
+		[fetchLeagues.rejected]: state => {
+			state.loading = 'failed';
+		},
+	},
+});
+
+export default leagueSlice.reducer;

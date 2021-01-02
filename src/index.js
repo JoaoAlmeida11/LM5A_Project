@@ -11,14 +11,12 @@ import './index.css';
 // Application main routes
 
 // Store of app
-import configureAppStore from './redux/configureStore';
+import store from './redux/configureStore';
 
 // components
 import App from './App';
 
 /* import firebase from './config/fbConfig'; */
-
-const store = configureAppStore();
 
 ReactDOM.render(
 	<React.StrictMode>

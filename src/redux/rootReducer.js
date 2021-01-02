@@ -1,12 +1,15 @@
-import authReducer from './FireBase/AuthFireBase';
 import { combineReducers } from 'redux';
-import firebaseReducer from 'react-redux-firebase';
-import { usersSlice } from './usersSlice';
+// import authReducer from './FireBase/AuthFireBase';
+// import firebaseReducer from 'react-redux-firebase';
+// import { usersSlice } from './ducks/usersSlice';
+import leagueReducer from './ducks/leagueSlice'; //leagueReducer === leagueSlice
+
 const rootReducer = combineReducers({
-	auth: authReducer,
-	firebase: firebaseReducer,
+	// auth: authReducer,
+	// firebase: firebaseReducer,
 	// users is an example made by reading documentation
-	users: usersSlice,
+	// users: usersSlice,
+	league: leagueReducer,
 });
 
 export default rootReducer;

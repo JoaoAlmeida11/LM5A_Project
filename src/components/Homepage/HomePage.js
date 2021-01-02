@@ -1,27 +1,29 @@
 import ShowLeague from './ShowLeague';
-// import RequestLeague from "../../functions/Homepage/RequestLeague"
+import RequestLeague from '../../functions/Homepage/RequestLeague';
 import { Container, Row } from 'react-bootstrap';
+import { connect } from 'react-redux';
 
-export default function HomePage() {
-	const databaseLeague = [
-		{
-			id: 1,
-			name: 'La Liga',
-			img: '/leagues/Laliga.png',
-		},
-		{
-			id: 2,
-			name: 'Liga NOS',
-			img: '../../images/leagues/Liga_NOS.png',
-		},
-	];
+const HomePage = ({ leagueList, loading }) => {
+	if (loading === 'idle') {
+		RequestLeague();
+	}
+
 	return (
 		<Container>
 			<Row>
-				{databaseLeague.map(league => (
-					<ShowLeague league={league} key={league.id} />
-				))}
+				{!leagueList && <p>Loading...</p>}
+				{/* {console.log(league)} */}
+				{loading === 'success' &&
+					Object.entries(leagueList).map(league => {
+						return <ShowLeague league={league[1]} key={league[0]} />;
+					})}
 			</Row>
 		</Container>
 	);
-}
+};
+
+const mapStateToProps = state => {
+	return { leagueList: state.league.leagueList, loading: state.league.loading };
+};
+
+export default connect(mapStateToProps)(HomePage);
