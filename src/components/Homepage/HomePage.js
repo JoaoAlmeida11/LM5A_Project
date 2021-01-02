@@ -1,11 +1,17 @@
 import ShowLeague from './ShowLeague';
 // import RequestLeague from "../../functions/Homepage/RequestLeague"
 import { Container, Row } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { selectAllLeagues } from '../../redux/ducks/leagueSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectAllLeagues, fetchLeagues } from '../../redux/ducks/leagueSlice';
+
+const dispatch = useDispatch();
+const leagues = useSelector(selectAllLeagues);
 
 export default function HomePage() {
-	const leagues = useSelector(selectAllLeagues);
+	useEffect(() => {
+		dispatch(fetchLeagues());
+	}, [dispatch]);
+
 	return (
 		<Container>
 			<Row>

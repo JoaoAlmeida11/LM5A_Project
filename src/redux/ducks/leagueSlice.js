@@ -14,7 +14,7 @@ export const leagueEntity = new schema.Entity('leagues');
 
 const leaguesAdapter = createEntityAdapter();
 
-const fetchLeagues = createAsyncThunk(
+export const fetchLeagues = createAsyncThunk(
 	'leagues/requestStatus',
 	async thunkAPI => {
 		const axios = require('axios').default;
