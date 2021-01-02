@@ -1,49 +1,32 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-  authError: null,
-};
-
-const authReducer = createSlice({
-  name: "auth",
-  initialState,
-  reducers: {
-    loginError(state) {
-      console.log("login error");
-      return {
-        ...state,
-        authError: "Login failed",
-      };
-    },
-    loginSuccess(state) {
-      console.log("login error");
-      return {
-        ...state,
-        authError: "Login failed",
-      };
-    },
-    signOutSuccess(state) {
-      console.log("login error");
-      return {
-        ...state,
-        authError: "Login failed",
-      };
-    },
-    signUpSuccess(state) {
-      console.log("login error");
-      return {
-        ...state,
-        authError: "Login failed",
-      };
-    },
-    signUpError(state) {
-      console.log("login error");
-      return {
-        ...state,
-        authError: "Login failed",
-      };
-    },
-  },
+const authSlice = createSlice({
+	name: 'auth',
+	initialState: {
+		authError: null,
+	},
+	reducers: {
+		loginError(state) {
+			console.log('login error');
+			state.authError = 'Login failed';
+		},
+		loginSuccess(state) {
+			console.log('login success');
+			state.authError = null;
+		},
+		signOutSuccess(state) {
+			console.log('signout success');
+			state.authError = null;
+		},
+		signUpSuccess(state) {
+			console.log('signup success');
+			state.authError = null;
+		},
+		signUpError(state, { payload }) {
+			console.log('signup error');
+			state.authError = payload.err.message;
+		},
+	},
 });
 
-export default authReducer;
+export default authSlice.reducer;
