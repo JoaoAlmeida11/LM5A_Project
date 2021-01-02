@@ -1,28 +1,24 @@
-import {
-	createAsyncThunk,
-	createEntityAdapter,
-	createSlice,
-} from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { schema, normalize } from 'normalizr';
-
+import { API_KEY } from '../../apiKey';
 // access API key
-require('dotenv').config();
-const API_KEY = process.env.API_KEY;
+// require('dotenv').config();
+// dotenv.config();
+// const API_KEY = process.env.API_KEY;
 
 export const leagueEntity = new schema.Entity('leagues');
 
-const leaguesAdapter = createEntityAdapter();
-
 export const fetchLeagues = createAsyncThunk(
 	'leagues/requestStatus',
-	async thunkAPI => {
+	async () => {
+		//pass an obj with id (only allows one)
 		const axios = require('axios').default;
 		const response = await axios
 			.get(`https://api.statorium.com/api/v1/leagues/?apikey=${API_KEY}`)
 			.then(res => {
-				console.log(res.json());
-				return res;
+				console.log(res.data);
+				return res.data;
 			})
 			.catch(err => {
 				console.log(err);
@@ -31,39 +27,32 @@ export const fetchLeagues = createAsyncThunk(
 		// additional call for image base on id
 		// https://api.statorium.com/api/v1/leagues/1/?apikey=123_test_token_123
 
-		const normalized = normalize(response.entities, [leagueEntity]);
+		const normalized = normalize(response.leagues, [leagueEntity]);
 		return normalized.entities;
 	}
 );
 
-export const leagueSlice = createSlice({
-	name: 'league',
-	initialState: leaguesAdapter.getInitialState(),
-	// initialState: {
-	// 	league: [],
-	// 	loading: 'idle',
-	// 	error: '',
-	// },
+const leagueSlice = createSlice({
+	name: 'leagues',
+	initialState: {
+		leagueList: [],
+		loading: 'idle',
+	},
+	reducers: {},
 	extraReducers: {
-		[fetchLeagues.fulfilled]: (state, action) => {
-			//handle result
-			// state.league.push(action.payload);
-			leaguesAdapter.upsertMany(state, action.payload.leagues);
+		[fetchLeagues.pending]: state => {
+			state.loading = 'pending';
+		},
+		[fetchLeagues.fulfilled]: (state, { payload }) => {
+			state.loading = 'success';
+			state.leagueList = payload.leagues;
+		},
+		[fetchLeagues.rejected]: state => {
+			state.loading = 'failed';
 		},
 	},
 });
-export default leagueSlice;
 
-// Rename the exports for readability in component usage
-export const {
-	selectById: selectLeagueById,
-	selectIds: selectLeagueIds,
-	selectEntities: selectLeagueEntities,
-	selectAll: selectAllLeagues,
-	selectTotal: selectTotalLeagues,
-} = leaguesAdapter.getSelectors(state => state.leagues);
+export const selectLeagues = ({ leagues }) => leagues;
 
-// Later, dispatch the thunk as needed in the app
-// dispatch(fetchUserById(123))
-
-// do not use
+export default leagueSlice.reducer;
