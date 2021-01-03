@@ -12,12 +12,10 @@ import './index.css';
 // Application main routes
 
 // Store of app
-import store from './redux/configureStore';
+import store, { rrfProps } from './redux/configureStore';
 
 // components
 import App from './App';
-
-/* import firebase from './config/fbConfig'; */
 
 ReactDOM.render(
 	<React.StrictMode>
