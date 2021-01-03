@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
+import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 
 // css files
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,17 +12,17 @@ import './index.css';
 // Application main routes
 
 // Store of app
-import store from './redux/configureStore';
+import store, { rrfProps } from './redux/configureStore';
 
 // components
 import App from './App';
 
-/* import firebase from './config/fbConfig'; */
-
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
-			<App />
+			<ReactReduxFirebaseProvider {...rrfProps}>
+				<App />
+			</ReactReduxFirebaseProvider>
 		</Provider>
 	</React.StrictMode>,
 	document.getElementById('root')
