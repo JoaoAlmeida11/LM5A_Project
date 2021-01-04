@@ -30,7 +30,6 @@ export const rrfProps = {
 	config: rrfConfig,
 	dispatch: store.dispatch,
 };
-console.log(process.env);
 
 export const fbConfig = {
 	apiKey: [process.env.FIREBASE_API_KEY],

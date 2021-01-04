@@ -1,4 +1,17 @@
+//import React, { useState } from 'react';
 import { Form, Button, Container, Row } from 'react-bootstrap';
+
+// export function LoginT() {
+// 	const [email, setEmail] = useState("");
+// 	const [password, setPassword] = useState("");
+
+// 	function validateForm() {
+// 	  return email.length > 0 && password.length > 0;
+// 	}
+
+// 	function handleSubmit(e) {
+// 	  e.preventDefault();
+// 	}
 
 export default function Login() {
 	return (
