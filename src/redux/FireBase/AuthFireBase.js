@@ -12,6 +12,8 @@ const authSlice = createSlice({
 			state.authError = 'Login failed';
 			state.errorMessage = payload;
 		},
+		// see if GoogleAuth is using only one
+		// loginSuccess === signUpSuccess
 		loginSuccess(state, { payload }) {
 			console.log('login success');
 			state.isLogged = true;
@@ -32,5 +34,11 @@ const authSlice = createSlice({
 	},
 });
 
-// const { actions } = authSlice;
+export const {
+	loginError,
+	loginSuccess,
+	logOutSuccess,
+	signUpSuccess,
+	signUpError,
+} = authSlice.actions;
 export default authSlice.reducer;
