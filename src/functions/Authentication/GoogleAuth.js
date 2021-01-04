@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginSuccess, logOutSuccess } from '../../redux/FireBase/AuthFireBase';
+import { Button } from 'react-bootstrap';
 
 const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY;
 
@@ -52,23 +53,23 @@ const GoogleAuth = () => {
 			return null;
 		} else if (isLogged) {
 			return (
-				<button
+				<Button
 					onClick={onlogOutSuccessOnClick}
 					className="ui red google button"
 				>
 					<i className="google icon" />
 					Sign Out
-				</button>
+				</Button>
 			);
 		} else {
 			return (
-				<button
+				<Button
 					onClick={onloginSuccessOnClick}
 					className="ui red google button"
 				>
 					<i className="google icon" />
 					Sign In with Google
-				</button>
+				</Button>
 			);
 		}
 	};

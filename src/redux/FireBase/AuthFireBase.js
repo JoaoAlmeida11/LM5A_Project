@@ -17,6 +17,7 @@ const authSlice = createSlice({
 		loginSuccess(state, { payload }) {
 			console.log('login success');
 			state.isLogged = true;
+			// state.token=
 		},
 
 		logOutSuccess(state, { payload }) {
