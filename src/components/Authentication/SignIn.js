@@ -1,18 +1,22 @@
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 // import GoogleAuth from '../../functions/Authentication/GoogleAuth';
 // import { signIn } from '../../store/actions/authActions';
 //import { Redirect } from 'react-router-dom'
 import GoogleButton from 'react-google-button';
 
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { useFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
 
-const SignIn = () => {
+const SignIn = ({ auth }) => {
 	const firebase = useFirebase();
-	const auth = useSelector(state => state.firebase.auth);
+	const firebaseAuth = firebase.auth();
+	console.log(firebase);
+	console.log(firebaseAuth);
+
+	// const auth = useSelector(state => state.firebase.auth);
 
 	function loginWithGoogle() {
 		return firebase.login({ provider: 'google', type: 'popup' });
@@ -20,29 +24,38 @@ const SignIn = () => {
 
 	// const auth = useSelector(state => state.firebase.auth);
 	// const authError = useSelector(state => state.auth.authError);
+
+	const handleEmailChange = e => {};
+	const handlePasswordChange = e => {};
+
 	return (
 		<Container>
 			<Row className="centerLogin">
+				<Col xl={12} lg={6} className="mx-auto my-auto text-center">
+					<h3 className="mt-4">Sign In</h3>
+				</Col>
+
+				<Col xl={12} lg={6} className="d-flex justify-content-center">
+					{!isLoaded(auth) ? (
+						<span>Loading...</span>
+					) : isEmpty(auth) ? (
+						<GoogleButton type="light" onClick={loginWithGoogle} />
+					) : (
+						<pre>{JSON.stringify(auth, null, 2)}</pre>
+					)}
+				</Col>
+				<Col xl={12} lg={6} className="mx-auto my-auto text-center">
+					<h4 className="mt-4">or</h4>
+				</Col>
 				<Col xl={12} lg={6} className="mx-auto my-auto">
 					<Form>
-						<h3 className="text-center mt-4">Sign In</h3>
-
-						{/* <GoogleAuth /> */}
-						{!isLoaded(auth) ? (
-							<span>Loading...</span>
-						) : isEmpty(auth) ? (
-							<GoogleButton type="light" onClick={loginWithGoogle} />
-						) : (
-							<pre>{JSON.stringify(auth, null, 2)}</pre>
-						)}
-
-						<Form.Group controlId="formBasicEmail" className="text-left">
+						<Form.Group className="text-left">
 							<Form.Label>Email Address</Form.Label>
 							<Form.Control
 								value="email"
 								placeholder="Enter email"
 								id="email"
-								//  onChange={this.handleChange}
+								onChange={handleEmailChange}
 							/>
 						</Form.Group>
 
@@ -52,7 +65,7 @@ const SignIn = () => {
 								value="password"
 								placeholder="Enter password"
 								id="password"
-								//  onChange={this.handleChange}
+								onChange={handlePasswordChange}
 							/>
 						</Form.Group>
 
@@ -71,12 +84,13 @@ const SignIn = () => {
 	);
 };
 
-// const mapStateToProps = state => {
-// 	return {
-// 		auth: state.firebase.auth,
-// 		authError: state.auth.authError,
-// 	};
-// };
+const mapStateToProps = state => {
+	console.log(state.firebase);
+	return {
+		auth: state.firebase.auth,
+		// authError: state.auth.authError,
+	};
+};
 
 // const mapDispatchToProps = dispatch => {
 // 	return {
@@ -84,5 +98,5 @@ const SignIn = () => {
 // 	};
 // };
 
-export default SignIn;
+export default connect(mapStateToProps)(SignIn);
 // export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
