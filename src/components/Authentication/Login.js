@@ -1,20 +1,41 @@
-import { Form, Button, Container, Row } from 'react-bootstrap';
+//import React, { useState } from 'react';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+
+// export function LoginT() {
+// 	const [email, setEmail] = useState("");
+// 	const [password, setPassword] = useState("");
+
+// 	function validateForm() {
+// 	  return email.length > 0 && password.length > 0;
+// 	}
+
+// 	function handleSubmit(e) {
+// 	  e.preventDefault();
+// 	}
 
 export default function Login() {
 	return (
 		<Container>
 			<Row className="centerLogin">
-				<article className="col-12 col-lg-6 mx-auto my-auto">
+				<Col xl={12} lg={6} className="mx-auto my-auto">
 					<Form>
-						<h3 className="text-center mt-4">Sign In</h3>
+						<h3 className="text-center mt-4">Log In</h3>
 						<Form.Group controlId="formBasicEmail" className="text-left">
 							<Form.Label>Email Address</Form.Label>
-							<Form.Control value="email" placeholder="Enter email" />
+							<Form.Control
+								value="email"
+								placeholder="Enter email"
+								id="email"
+							/>
 						</Form.Group>
 
 						<Form.Group>
 							<Form.Label className="text-left">Password</Form.Label>
-							<Form.Control value="password" placeholder="Enter password" />
+							<Form.Control
+								value="password"
+								placeholder="Enter password"
+								id="password"
+							/>
 						</Form.Group>
 
 						<Form.Group className="text-center">
@@ -33,7 +54,7 @@ export default function Login() {
 							Forgot Password?
 						</Form.Text>
 					</Form>
-				</article>
+				</Col>
 			</Row>
 		</Container>
 	);

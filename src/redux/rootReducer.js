@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import authReducer from './FireBase/AuthFireBase';
-import firebaseReducer from 'react-redux-firebase';
+import authReducer from './ducks/AuthSlice';
+import { firebaseReducer } from 'react-redux-firebase';
 // import { usersSlice } from './ducks/usersSlice';
 import leagueReducer from './ducks/leagueSlice'; //leagueReducer === leagueSlice
 import clubReducer from './ducks/clubsSlice';

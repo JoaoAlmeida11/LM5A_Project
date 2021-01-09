@@ -28,6 +28,7 @@ const HomePage = ({ leagueList, loading }) => {
 };
 
 const mapStateToProps = state => {
+	console.log(state);
 	return { leagueList: state.league.leagueList, loading: state.league.loading };
 };
 
