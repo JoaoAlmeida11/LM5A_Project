@@ -24,8 +24,6 @@ const store = configureStore({
 export default store;
 const rrfConfig = {
 	userProfile: 'users',
-	presence: 'presence',
-	sessions: 'sessions',
 };
 export const rrfProps = {
 	firebase,

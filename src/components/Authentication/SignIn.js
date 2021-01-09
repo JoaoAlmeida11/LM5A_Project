@@ -1,32 +1,67 @@
+import { useState } from 'react';
+
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
 import { connect } from 'react-redux';
 
 // import GoogleAuth from '../../functions/Authentication/GoogleAuth';
-// import { signIn } from '../../store/actions/authActions';
+// import { signUp } from '../../redux/ducks/AuthSlice';
 //import { Redirect } from 'react-router-dom'
 import GoogleButton from 'react-google-button/dist/react-google-button'; //forced fix do to known issue https://github.com/prescottprue/react-google-button/issues/28
 
 // import { useSelector } from 'react-redux';
 import { useFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
 
+// handleSubmit
+// import { useDispatch } from 'react-redux';
+
 const SignIn = ({ auth }) => {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+
 	const firebase = useFirebase();
-	const firebaseAuth = firebase.auth();
-	console.log(firebase);
-	console.log(firebaseAuth);
+	// const firebaseAuth = firebase.auth();
+	// console.log(firebase);
+	// console.log(firebaseAuth);
 
-	// const auth = useSelector(state => state.firebase.auth);
+	// TODO: validation of email (@) and password (at least 8 digits with letters, numbers and symbols)
+	const EmailHandler = e => {
+		e.preventDefault();
+		setEmail(e.target.value);
+	};
+	const PasswordHandler = e => {
+		e.preventDefault();
+		setPassword(e.target.value);
+	};
 
-	function loginWithGoogle() {
-		return firebase.login({ provider: 'google', type: 'popup' });
-	}
+	const loginWithGoogle = () => {
+		const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY;
+		const login = {
+			provider: 'google',
+			type: 'popup',
+			token: FIREBASE_API_KEY,
+		};
+		// console.log(login);
 
-	// const auth = useSelector(state => state.firebase.auth);
-	// const authError = useSelector(state => state.auth.authError);
-
-	const handleEmailChange = e => {};
-	const handlePasswordChange = e => {};
+		return firebase.login(login);
+	};
+	// TODO: add to another page; give as params email + pass in an obj
+	// const ClickSubmit = e => {
+	// 	e.preventDefault();
+	// 	// console.log(e);
+	// 	// const dispatch = useDispatch();
+	// 	// dispatch(signUp({ e }));
+	// 	console.log(e.target);
+	// };
+	const HandleSubmit = e => {
+		e.preventDefault();
+		const data = new FormData(e.target);
+		console.log(data.get('email'));
+		// console.log(e);
+		// const dispatch = useDispatch();
+		// dispatch(signUp({ e }));
+		// console.log(e.target);
+	};
 
 	return (
 		<Container>
@@ -48,28 +83,33 @@ const SignIn = ({ auth }) => {
 					<h4 className="mt-4">or</h4>
 				</Col>
 				<Col xl={12} lg={6} className="mx-auto my-auto">
-					<Form>
+					{/* <Form> */}
+					<Form onSubmit={HandleSubmit}>
 						<Form.Group className="text-left">
 							<Form.Label>Email Address</Form.Label>
 							<Form.Control
-								value="email"
+								autoComplete="email"
+								value={email}
 								placeholder="Enter email"
 								id="email"
-								onChange={handleEmailChange}
+								onChange={EmailHandler}
 							/>
 						</Form.Group>
 
 						<Form.Group>
 							<Form.Label className="text-left">Password</Form.Label>
 							<Form.Control
-								value="password"
+								autoComplete="current-password"
+								type="password"
+								value={password}
 								placeholder="Enter password"
 								id="password"
-								onChange={handlePasswordChange}
+								onChange={PasswordHandler}
 							/>
 						</Form.Group>
 
 						<div className="text-center">
+							{/* <Button value="submit" variant="primary" onClick={ClickSubmit}> */}
 							<Button value="submit" variant="primary">
 								Submit
 							</Button>
@@ -85,7 +125,7 @@ const SignIn = ({ auth }) => {
 };
 
 const mapStateToProps = state => {
-	console.log(state.firebase);
+	// console.log(state.firebase);
 	return {
 		auth: state.firebase.auth,
 		// authError: state.auth.authError,
