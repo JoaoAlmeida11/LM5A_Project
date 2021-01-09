@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 // import GoogleAuth from '../../functions/Authentication/GoogleAuth';
 // import { signIn } from '../../store/actions/authActions';
 //import { Redirect } from 'react-router-dom'
-import GoogleButton from 'react-google-button';
+import GoogleButton from 'react-google-button/dist/react-google-button'; //forced fix do to known issue https://github.com/prescottprue/react-google-button/issues/28
 
 // import { useSelector } from 'react-redux';
 import { useFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
