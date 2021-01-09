@@ -1,9 +1,9 @@
 import { useDispatch } from 'react-redux';
-import { fetchLeagues } from '../../redux/ducks/leagueSlice';
+import { fetchLeaguesAll } from '../../redux/ducks/leagueSlice';
 
 const RequestLeague = () => {
 	const dispatch = useDispatch();
-	dispatch(fetchLeagues());
+	dispatch(fetchLeaguesAll());
 };
 
 export default RequestLeague;
