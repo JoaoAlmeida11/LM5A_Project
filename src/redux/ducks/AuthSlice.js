@@ -6,6 +6,7 @@ const authSlice = createSlice({
 		token: '',
 		errorMessage: '',
 		isLogged: false,
+		firebaseInit: false,
 	},
 	reducers: {
 		loginError(state, { payload }) {
@@ -19,19 +20,20 @@ const authSlice = createSlice({
 			state.isLogged = true;
 			// state.token=
 		},
-
+		//needed
 		logOutSuccess(state, { payload }) {
 			console.log('signout success');
 			state.isLogged = false;
 		},
 
-		signUpSuccess(state, { payload }) {
-			console.log('signup success');
-			state.isLogged = true;
-		},
-		signUpError(state, { payload }) {
-			console.log('signup error');
-		},
+		// not being used
+		// signUpSuccess(state, { payload }) {
+		// 	console.log('signup success');
+		// 	state.isLogged = true;
+		// },
+		// signUpError(state, { payload }) {
+		// 	console.log('signup error');
+		// },
 	},
 });
 

@@ -1,72 +1,74 @@
-import React, { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { loginSuccess, logOutSuccess } from '../../redux/FireBase/AuthFireBase';
+// import { loginSuccess, logOutSuccess } from '../../redux/ducks/AuthSlice';
 import { Button } from 'react-bootstrap';
 
-const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY;
+// const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY;
+
+const isFirebaseInit = firebaseInit => {
+	if (firebaseInit === false) window.gapi.auth2.init();
+};
 
 const GoogleAuth = () => {
 	const isLogged = useSelector(state => state.auth.isLogged);
+	const firebaseInit = useSelector(state => state.auth.firebaseInit);
+
+	isFirebaseInit(firebaseInit);
+
 	console.log('IsLogged useSelector: ' + isLogged);
+
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		const onAuthChange = () => {
-			if (isLogged) {
-				dispatch(
-					loginSuccess(
-						window.gapi.auth2.getAuthInstance().currentUser.get().getId()
-					)
-				);
-			} else {
-				dispatch(logOutSuccess());
-			}
-		};
+	// useEffect(() => {
+	// 	const onAuthChange = () => {
+	// 		if (isLogged) {
+	// 			dispatch(
+	// 				loginSuccess(
+	// 					window.gapi.auth2.getAuthInstance().currentUser.get().getId()
+	// 				)
+	// 			);
+	// 		} else {
+	// 			dispatch(logOutSuccess());
+	// 		}
+	// 	};
 
-		window.gapi.load('client:auth2', () => {
-			window.gapi.client
-				.init({
-					clientId: FIREBASE_API_KEY,
-					scope: 'email',
-				})
-				.then(() => {
-					onAuthChange(window.gapi.auth2.getAuthInstance().isLogged.get());
-					console.log(
-						'isLogged.get(): ' +
-							window.gapi.auth2.getAuthInstance().isLogged.get()
-					);
-					window.gapi.auth2.getAuthInstance().isLogged.listen(onAuthChange);
-				});
-		});
-	}, [dispatch, isLogged]);
+	// 	window.gapi.load('client:auth2', () => {
+	// 		window.gapi.client
+	// 			.init({
+	// 				clientId: FIREBASE_API_KEY,
+	// 				scope: 'email',
+	// 			})
+	// 			.then(() => {
+	// 				onAuthChange(window.gapi.auth2.getAuthInstance().isLogged.get());
+	// 				console.log(
+	// 					'isLogged.get(): ' +
+	// 						window.gapi.auth2.getAuthInstance().isLogged.get()
+	// 				);
+	// 				window.gapi.auth2.getAuthInstance().isLogged.listen(onAuthChange);
+	// 			});
+	// 	});
+	// }, [dispatch, isLogged]);
 
-	const onloginSuccessOnClick = () => {
+	const logOutOnClick = () => {
 		dispatch(window.gapi.auth2.getAuthInstance().loginSuccess());
 	};
 
-	const onlogOutSuccessOnClick = () => {
+	const loginOnClick = () => {
 		dispatch(window.gapi.auth2.getAuthInstance().logOutSuccess());
 	};
 
 	const renderAuthButton = () => {
-		if (isLogged === null) {
-			return null;
-		} else if (isLogged) {
+		if (isLogged === null) return null;
+		else if (isLogged) {
 			return (
-				<Button
-					onClick={onlogOutSuccessOnClick}
-					className="ui red google button"
-				>
+				<Button onClick={logOutOnClick} className="ui red google button">
 					<i className="google icon" />
 					Sign Out
 				</Button>
 			);
 		} else {
 			return (
-				<Button
-					onClick={onloginSuccessOnClick}
-					className="ui red google button"
-				>
+				<Button onClick={loginOnClick} className="ui red google button">
 					<i className="google icon" />
 					Sign In with Google
 				</Button>

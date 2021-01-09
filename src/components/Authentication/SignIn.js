@@ -1,13 +1,25 @@
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
-import React from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
-import GoogleAuth from '../../functions/Authentication/GoogleAuth';
+// import GoogleAuth from '../../functions/Authentication/GoogleAuth';
 // import { signIn } from '../../store/actions/authActions';
 //import { Redirect } from 'react-router-dom'
+import GoogleButton from 'react-google-button';
 
-const SignIn = ({ auth, authError }) => {
+import { useSelector } from 'react-redux';
+import { useFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
+
+const SignIn = () => {
+	const firebase = useFirebase();
+	const auth = useSelector(state => state.firebase.auth);
+
+	function loginWithGoogle() {
+		return firebase.login({ provider: 'google', type: 'popup' });
+	}
+
+	// const auth = useSelector(state => state.firebase.auth);
+	// const authError = useSelector(state => state.auth.authError);
 	return (
 		<Container>
 			<Row className="centerLogin">
@@ -15,7 +27,14 @@ const SignIn = ({ auth, authError }) => {
 					<Form>
 						<h3 className="text-center mt-4">Sign In</h3>
 
-						<GoogleAuth />
+						{/* <GoogleAuth /> */}
+						{!isLoaded(auth) ? (
+							<span>Loading...</span>
+						) : isEmpty(auth) ? (
+							<GoogleButton type="light" onClick={loginWithGoogle} />
+						) : (
+							<pre>{JSON.stringify(auth, null, 2)}</pre>
+						)}
 
 						<Form.Group controlId="formBasicEmail" className="text-left">
 							<Form.Label>Email Address</Form.Label>
@@ -52,17 +71,18 @@ const SignIn = ({ auth, authError }) => {
 	);
 };
 
-const mapStateToProps = state => {
-	return {
-		auth: state.firebase.auth,
-		authError: state.auth.authError,
-	};
-};
+// const mapStateToProps = state => {
+// 	return {
+// 		auth: state.firebase.auth,
+// 		authError: state.auth.authError,
+// 	};
+// };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		SignIn: creds => dispatch(SignIn(creds)),
-	};
-};
+// const mapDispatchToProps = dispatch => {
+// 	return {
+// 		SignIn: creds => dispatch(SignIn(creds)),
+// 	};
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default SignIn;
+// export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
