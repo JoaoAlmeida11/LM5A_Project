@@ -50,21 +50,28 @@ export const fetchLeaguesAll = createAsyncThunk(
 		const response = firstCall.then(leagueSet => {
 			console.log('YAA');
 			console.log(leagueSet);
-			let a = 0;
-			for (let item in leagueSet) {
-				console.log('item');
-				console.log(item);
-				// if (a === 0) {
-				// 	const url1 = axios.get(
-				// 		`https://api.statorium.com/api/v1/leagues/${item}/?apikey=f74d57716d0cb84d043c77b384885aeb`
-				// 	);
-				// 	a += 1;
-				// } else {
-				// 	const url2 = axios.get(
-				// 		`https://api.statorium.com/api/v1/leagues/${item}/?apikey=f74d57716d0cb84d043c77b384885aeb`
-				// 	);
-				// }
-			}
+			const urls = new Set();
+			leagueSet.forEach(value => {
+				urls.add(
+					`https://api.statorium.com/api/v1/leagues/${value}/?apikey=f74d57716d0cb84d043c77b384885aeb`
+				);
+			});
+			console.log(urls);
+			// let a = 0;
+			// for (let item in leagueSet) {
+			// 	console.log('item');
+			// 	console.log(item);
+			// 	// if (a === 0) {
+			// 	// 	const url1 = axios.get(
+			// 	// 		`https://api.statorium.com/api/v1/leagues/${item}/?apikey=f74d57716d0cb84d043c77b384885aeb`
+			// 	// 	);
+			// 	// 	a += 1;
+			// 	// } else {
+			// 	// 	const url2 = axios.get(
+			// 	// 		`https://api.statorium.com/api/v1/leagues/${item}/?apikey=f74d57716d0cb84d043c77b384885aeb`
+			// 	// 	);
+			// 	// }
+			// }
 
 			// console.log(url1);
 			// console.log(url2);
