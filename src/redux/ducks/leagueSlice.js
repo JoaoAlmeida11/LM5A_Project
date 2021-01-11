@@ -15,7 +15,6 @@ export const leagueEntity = new schema.Entity('leagues', {
 	name: String,
 	seasons: [leagueSeasonsEntity],
 });
-// export const leagueEntity = new schema.Entity('leagues');
 export const leagueListEntity = new schema.Entity('leagueList', {
 	list: [leagueEntity],
 });
@@ -24,7 +23,6 @@ export const fetchData = url => {
 	return axios
 		.get(url)
 		.then(function (response) {
-			// console.log(response.data);
 			return response.data;
 		})
 		.catch(function (err) {
@@ -38,12 +36,10 @@ export const getAllData = urls => {
 export const fetchLeaguesAll = createAsyncThunk(
 	'leagues/requestStatus',
 	async () => {
-		//pass an obj with id (only allows one)
 		const axios = require('axios').default;
 		const response = await axios
 			.get(`https://api.statorium.com/api/v1/leagues/?apikey=${API_KEY}`)
 			.then(res => {
-				// console.log(res.data);
 				const leagueSet = new Set();
 				for (let i in res.data.leagues) {
 					// the key corresponds to the position on the array from the first call and its used to match each league with its image
@@ -53,8 +49,6 @@ export const fetchLeaguesAll = createAsyncThunk(
 				return ids;
 			})
 			.then(res => {
-				// console.log('SecondThen');
-				// console.log(res);
 				const urls = [];
 				res.forEach(value => {
 					urls.push(
@@ -75,38 +69,24 @@ export const fetchLeaguesAll = createAsyncThunk(
 				console.log(err);
 				return err;
 			});
-		// additional call for image base on id
-		// https://api.statorium.com/api/v1/leagues/1/?apikey=123_test_token_123
 
-		// const responseAll = fetchLeaguesEach(response);
-		console.log('ResonseMainThunk');
-		console.log(response);
 		// keeps only the leagues
 		const responseList = [];
 		for (let i in response) {
 			responseList.push(response[i].league);
 		}
-		console.log('responseList');
-		console.log(responseList);
+
 		// keeps only the last season
 		for (let i in responseList) {
 			responseList[i].seasons = [
 				responseList[i].seasons[responseList[i].seasons.length - 1],
 			];
 		}
-		console.log('seasons');
-		console.log(responseList);
 
 		const normalized = normalize(responseList, [leagueListEntity]);
-		// console.log(normalized.entities);
 		return normalized.entities;
 	}
 );
-
-// const normalized = normalize(response.leagues, [leagueListEntity]);
-// return normalized.entities;
-// 	}
-// );
 
 const leagueSlice = createSlice({
 	name: 'leagues',
@@ -121,26 +101,11 @@ const leagueSlice = createSlice({
 		},
 		[fetchLeaguesAll.fulfilled]: (state, { payload }) => {
 			state.loading = 'success';
-			// ! its only receiving one
-
-			console.log('payload');
-			console.log(payload);
-			state.leagueList = payload;
+			state.leagueList = payload.leagueList;
 		},
 		[fetchLeaguesAll.rejected]: state => {
 			state.loading = 'failed';
 		},
-		// [fetchLeaguesEach.pending]: state => {
-		// 	state.loading = 'pending';
-		// },
-		// [fetchLeaguesEach.fulfilled]: (state, { payload }) => {
-		// 	state.loading = 'success';
-
-		// 	state.leagueList = payload.leagueList;
-		// },
-		// [fetchLeaguesEach.rejected]: state => {
-		// 	state.loading = 'failed';
-		// },
 	},
 });
 
