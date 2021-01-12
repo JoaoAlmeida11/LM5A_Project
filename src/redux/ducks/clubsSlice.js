@@ -8,44 +8,92 @@ export const clubListEntity = new schema.Entity('clubList', {
 	list: [clubEntity],
 });
 
-export const fetchClubs = createAsyncThunk('clubs/requestStatus', async () => {
-	//pass an obj with id (only allows one)
-	const axios = require('axios').default;
-	const response = await axios
-		.get(`https://api.statorium.com/api/v1/standings/1?apikey=${API_KEY}`)
-		.then(res => {
-			// console.log(res.data);
-			return res.data;
-		})
-		.catch(err => {
-			console.log(err);
-			return err;
-		});
-	// additional call for image base on id
-	// https://api.statorium.com/api/v1/leagues/1/?apikey=123_test_token_123
+// ** needs the seasonId
+export const fetchClubs = createAsyncThunk(
+	'clubs/requestStatus',
+	async (leagueId, thunkAPI) => {
+		// ** get the last season of the league from the store
+		// ! this page can't be de first to be opened so there needs to be an automatic redirect or something
+		const state = thunkAPI.getState();
+		const leagueList = state.league.leagueList;
 
-	// console.log(response);
-	const normalized = normalize(response.leagues, [clubListEntity]);
-	return normalized.entities;
-});
+		// to transform object into an array
+		const leagueListArray = Object.entries(leagueList);
+		console.log('leagueListArray');
+		console.log(leagueListArray);
+
+		let seasonId;
+		for (let item in leagueListArray) {
+			if (item[1].id === leagueId) {
+				seasonId = item[1].seasons[0].seasonId;
+				break;
+			}
+		}
+		// ! for some reason doesn't show on the console
+		console.log('seasonId');
+		console.log(seasonId);
+		// let seasonId;
+
+		// Object.entries(leagueList).forEach(item => {
+		// 	console.log(item);
+		// 	if (item[1].id === leagueId) {
+		// 		seasonId = item[1].seasons[0].seasonId;
+		// 		break;
+		// 	}
+		// });
+		console.log(seasonId);
+		// const seasonId = 1;
+
+		const axios = require('axios').default;
+		const response = await axios
+			.get(
+				`https://api.statorium.com/api/v1/seasons/${seasonId}/?apikey=${API_KEY}`
+			)
+			.then(res => {
+				// ** get the ids of the clubs
+				// console.log(res.data);
+				console.log('YAA');
+				return res.data;
+			})
+			// .then(res =>{
+			// ** get the data of each club
+
+			// })
+			.catch(err => {
+				console.log('NOO');
+
+				console.log(err);
+				return err;
+			});
+
+		// console.log(response);
+		const normalized = normalize(response.leagues, [clubListEntity]);
+		return normalized.entities;
+	}
+);
 
 const clubsSlice = createSlice({
 	name: 'clubs',
 	initialState: {
-		clubList: [],
-		loading: 'idle',
+		leagueId: {
+			id: '',
+			clubList: [],
+			loading: 'idle',
+		},
 	},
 	reducers: {},
 	extraReducers: {
 		[fetchClubs.pending]: state => {
-			state.loading = 'pending';
+			state.leagueId.loading = 'pending';
 		},
 		[fetchClubs.fulfilled]: (state, { payload }) => {
-			state.loading = 'success';
+			state.leagueId.loading = 'success';
+			console.log('payload');
+			console.log(payload);
 			state.clubList = payload.clubList;
 		},
 		[fetchClubs.rejected]: state => {
-			state.loading = 'failed';
+			state.leagueId.loading = 'failed';
 		},
 	},
 });

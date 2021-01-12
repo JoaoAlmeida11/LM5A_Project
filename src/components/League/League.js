@@ -1,19 +1,21 @@
 import { Container, Row } from 'react-bootstrap';
 // import { useParams } from 'react-router-dom';
 import ClubeDaLiga from './ClubeDaLiga';
-import RequestClub from '../../functions/League/RequestClub';
+import RequestClubs from '../../functions/League/RequestClubs';
 import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 const League = ({ clubList, loading }) => {
+	let { leagueId } = useParams();
 	// send params by redux
 	// let { paramsId } = useParams();
 
 	// console.log(paramsId);
 
 	if (loading === 'idle') {
-		RequestClub();
+		RequestClubs(leagueId);
 	}
-
+	// ** Esta a ser chamado
 	return (
 		<Container>
 			<Row>
@@ -28,7 +30,6 @@ const League = ({ clubList, loading }) => {
 						persists contact an administrator
 					</p>
 				)}
-				{/* {console.log(league)} */}
 				{loading === 'success' &&
 					Object.entries(clubList).map(club => {
 						return <ClubeDaLiga club={club[1]} key={club[0]} />;
@@ -39,7 +40,10 @@ const League = ({ clubList, loading }) => {
 };
 
 const mapStateToProps = state => {
-	return { leagueList: state.league.leagueList, loading: state.league.loading };
+	return {
+		clubList: state.club.leagueId.clubList,
+		loading: state.club.leagueId.loading,
+	};
 };
 
 export default connect(mapStateToProps)(League);
