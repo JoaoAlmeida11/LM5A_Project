@@ -15,8 +15,8 @@ export const fetchSeasonIdAxios = leagueId => {
 			`https://api.statorium.com/api/v1/leagues/${leagueId}/?apikey=${API_KEY}`
 		)
 		.then(function (response) {
-			console.log('fetchSeasonIdAxios');
-			console.log(response.data);
+			// console.log('fetchSeasonIdAxios');
+			// console.log(response.data);
 			return response.data;
 		})
 		.catch(function (err) {
@@ -25,6 +25,7 @@ export const fetchSeasonIdAxios = leagueId => {
 		});
 };
 export const fetchSeasonId = leagueId => {
+	console.log('Here');
 	return Promise.resolve(fetchSeasonIdAxios(leagueId));
 };
 
@@ -45,10 +46,8 @@ export const fetchClubs = createAsyncThunk(
 		console.log(leagueListArray);
 
 		let seasonId;
-		console.log('state.league.leagueList');
-		console.log(state.league.leagueList);
 		let response;
-		if (leagueListArray !== null || leagueListArray !== undefined) {
+		if (leagueListArray.length !== 0) {
 			// get the existing ids of the leagues in the store
 			let storeLeagueIds = [];
 			for (let i in state.league.leagueList) {
@@ -56,22 +55,24 @@ export const fetchClubs = createAsyncThunk(
 			}
 
 			// ** fetch the id of the clubs of a league (participantID)
-			seasonId = storeLeagueIds[storeLeagueIds.length - 1];
+			seasonId = storeLeagueIds[storeLeagueIds.length - 1]; //retrieve the last position of the seasons array
+			console.log(seasonId);
 			const axios = require('axios').default;
 			response = await axios
 				.get(
 					`https://api.statorium.com/api/v1/seasons/${seasonId}/?apikey=${API_KEY}`
 				)
 				.then(res => {
-					// ** get the ids of the clubs
+					// ** get the ids of the clubs as participants
 					console.log(res.data);
 					console.log('YAA');
-					return res.data;
+					return res.data.season.participants;
 				})
-				// .then(res =>{
-				// ** get the data of each club
-
-				// })
+				.then(res => {
+					// ** get the data of each club
+					console.log(res);
+					// fetchAllClubsData(res)
+				})
 				.catch(err => {
 					console.log('NOO');
 
@@ -81,11 +82,18 @@ export const fetchClubs = createAsyncThunk(
 		} else {
 			// call API to get the last seasonID of each league
 			console.log('Store is empty!');
-			const response = fetchSeasonId(leagueId)
+			response = fetchSeasonId(leagueId)
 				.then(res => {
-					console.log('InMainThunk');
-					console.log(res);
+					// console.log('InMainThunk');
+					// console.log(res);
 					return res;
+				})
+				.then(res => {
+					// retrive the seasonId
+					seasonId = res.league.seasons[res.league.seasons.length - 1].seasonID;
+					console.log('seasonId');
+					console.log(seasonId);
+					// extractSeasonId(r)
 				})
 				.catch(err => {
 					console.log(err);
