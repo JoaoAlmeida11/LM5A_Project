@@ -50,7 +50,12 @@ export const fetchAllDataConcurrently = urls => {
 // ** Functions on Promise Chaining that ask data
 export const fetchPlayersId = res => {
 	// ** get the ids of the clubs as participants
-	const seasonId = res.league.seasons[res.league.seasons.length - 1].seasonID;
+	console.log('fetchPlayersId - Here');
+	console.log(res);
+	// console.log(res.needsLeagueList)
+	let seasonId;
+	if (res.needsLeagueList === false) seasonId = res.leagueId;
+	else seasonId = res.league.seasons[res.league.seasons.length - 1].seasonID;
 	const url = `https://api.statorium.com/api/v1/seasons/${seasonId}/?apikey=${API_KEY}`;
 	return fetchAllData(url);
 };
@@ -72,7 +77,7 @@ export const conditionalChaining = ({ needsLeagueList, leagueId }) => {
 		const url = `https://api.statorium.com/api/v1/leagues/${leagueId}/?apikey=${API_KEY}`;
 		return fetchAllData(url);
 	}
-	return Promise.resolve(true);
+	return Promise.resolve({ needsLeagueList, leagueId });
 };
 
 // ** needs the seasonId
@@ -85,6 +90,8 @@ export const fetchClubs = createAsyncThunk(
 		const leagueListArray = Object.entries(leagueList);
 
 		const needsLeagueList = leagueListArray.length !== 0 ? false : true;
+		console.log('needsLeagueList');
+		console.log(needsLeagueList);
 		const response = await conditionalChaining({ needsLeagueList, leagueId })
 			.then(res => fetchPlayersId(res))
 			.then(res => fetchEachClub(res))
