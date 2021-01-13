@@ -8,23 +8,11 @@ import { useParams } from 'react-router-dom';
 const League = ({ clubList, loading, idLeagueStore }) => {
 	let { leagueId } = useParams();
 
-	let checkIfLeaguesWasLoadedBefore = false;
-
 	console.log('idLeagueStore');
 	console.log(idLeagueStore);
-	if (idLeagueStore.length !== 0) {
-		for (let i in idLeagueStore) {
-			if (idLeagueStore[i] === leagueId) checkIfLeaguesWasLoadedBefore = true;
-		}
-	}
 
-	if (
-		loading === 'idle' ||
-		(loading === 'success' && checkIfLeaguesWasLoadedBefore)
-	) {
-		if (loading !== 'stop') {
-			RequestClubs(leagueId);
-		}
+	if (loading === 'idle') {
+		RequestClubs(leagueId);
 	}
 	return (
 		<Container>
@@ -51,9 +39,9 @@ const League = ({ clubList, loading, idLeagueStore }) => {
 
 const mapStateToProps = state => {
 	return {
-		clubList: state.club.leagueId.clubList,
-		loading: state.club.leagueId.loading,
-		idLeagueStore: state.club.leagueId.id,
+		clubList: state.club.clubList,
+		loading: state.club.loading,
+		idLeagueStore: state.club.id,
 	};
 };
 

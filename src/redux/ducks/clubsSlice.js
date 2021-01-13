@@ -118,58 +118,26 @@ const clubsSlice = createSlice({
 	name: 'clubs',
 	// TODO: initial state needs to store an array like a map with a key being the id
 	initialState: {
-		// currentPage: {
-		// 	// ** if the current page doesn't have the same id and subject as the last one than it triggers a rendering (if its equal than its the same page)
-		// 	id: '', //react-router-dom Params
-		// 	subject: '', //like club or player
-		// 	loading: 'idle', //TODO: need to make a dispatch that when the page is changed sets it to back to 'idle'
-		// },
-		leagueId: {
-			clubList: [],
-			loading: 'idle',
-			id: '', //this is only to know which leagues clubs where loaded
-		},
+		clubList: [],
+		loading: 'idle',
+		id: '', //this is only to know which leagues clubs where loaded
 	},
 	reducers: {},
 	extraReducers: {
 		[fetchClubs.pending]: (state, payload) => {
 			console.log('PendingPayload');
 			console.log(payload);
-			// state.leagueId.loading = 'pending';
-			state.leagueId.loading = 'stop';
+			state.loading = 'pending';
 		},
 		[fetchClubs.fulfilled]: (state, { payload }) => {
-			// state.leagueId.loading = 'success';
-			state.leagueId.loading = 'stop';
-
+			state.loading = 'success';
 			console.log('payload');
 			console.log(payload);
-			state.leagueId.clubList = [state.leagueId.clubList, ...payload.teams];
-			console.log('state.leagueId.id.length');
-			console.log(state.leagueId.id.length);
-
-			//! this doesn't add a new one
-			if (state.leagueId.id.length === 0) {
-				state.leagueId.id = [...payload.leagueId];
-			} else {
-				let add = true;
-				for (let a in state.leagueId.id) {
-					if (state.leagueId.id[a] === payload.leagueId) {
-						add = false;
-						break;
-					}
-				}
-				if (add)
-					state.leagueId.id = [...state.leagueId.id, ...payload.leagueId];
-			}
-			let i = state.leagueId.id;
-			console.log('state.leagueId.id');
-			console.log(i);
+			state.clubList = [state.clubList, ...payload.teams];
+			state.id = payload.leagueId;
 		},
 		[fetchClubs.rejected]: state => {
-			state.leagueId.loading = 'stop';
-
-			// state.leagueId.loading = 'failed';
+			state.loading = 'failed';
 		},
 	},
 });
