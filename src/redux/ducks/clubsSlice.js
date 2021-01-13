@@ -45,11 +45,6 @@ export const fetchClubs = createAsyncThunk(
 		console.log(leagueListArray);
 
 		let seasonId;
-		// console.log('leagueListArray.length');
-		// console.log(leagueListArray.length);
-
-		// console.log('state');
-		// console.log(state);
 		console.log('state.league.leagueList');
 		console.log(state.league.leagueList);
 		let response;
@@ -59,8 +54,8 @@ export const fetchClubs = createAsyncThunk(
 			for (let i in state.league.leagueList) {
 				storeLeagueIds.push(state.league.leagueList[i].seasons[0].seasonID);
 			}
-			console.log('storeLeagueIds');
-			console.log(storeLeagueIds);
+
+			// ** fetch the id of the clubs of a league (participantID)
 			seasonId = storeLeagueIds[storeLeagueIds.length - 1];
 			const axios = require('axios').default;
 			response = await axios
