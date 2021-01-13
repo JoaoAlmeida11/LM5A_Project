@@ -8,15 +8,27 @@ export const clubListEntity = new schema.Entity('clubList', {
 	list: [clubEntity],
 });
 
-export const fetchSeasonIdAxios = leagueId => {
+// export const fetchSeasonIdAxios = leagueId => {
+// 	const axios = require('axios').default;
+// 	return axios
+// 		.get(
+// 			`https://api.statorium.com/api/v1/leagues/${leagueId}/?apikey=${API_KEY}`
+// 		)
+// 		.then(function (response) {
+// 			// console.log('fetchSeasonIdAxios');
+// 			// console.log(response.data);
+// 			return response.data;
+// 		})
+// 		.catch(function (err) {
+// 			console.log(err);
+// 			return err;
+// 		});
+// };
+export const fetchData = url => {
 	const axios = require('axios').default;
 	return axios
-		.get(
-			`https://api.statorium.com/api/v1/leagues/${leagueId}/?apikey=${API_KEY}`
-		)
+		.get(url)
 		.then(function (response) {
-			// console.log('fetchSeasonIdAxios');
-			// console.log(response.data);
 			return response.data;
 		})
 		.catch(function (err) {
@@ -24,9 +36,13 @@ export const fetchSeasonIdAxios = leagueId => {
 			return err;
 		});
 };
-export const fetchSeasonId = leagueId => {
-	console.log('Here');
-	return Promise.resolve(fetchSeasonIdAxios(leagueId));
+
+export const fetchAllData = url => {
+	return Promise.resolve(fetchData(url));
+};
+
+export const fetchAllDataConcurrently = urls => {
+	return Promise.all(urls.map(fetchData));
 };
 
 // ** needs the seasonId
@@ -57,21 +73,23 @@ export const fetchClubs = createAsyncThunk(
 			// ** fetch the id of the clubs of a league (participantID)
 			seasonId = storeLeagueIds[storeLeagueIds.length - 1]; //retrieve the last position of the seasons array
 			console.log(seasonId);
-			const axios = require('axios').default;
-			response = await axios
-				.get(
-					`https://api.statorium.com/api/v1/seasons/${seasonId}/?apikey=${API_KEY}`
-				)
+			// const axios = require('axios').default;
+			const url = `https://api.statorium.com/api/v1/seasons/${seasonId}/?apikey=${API_KEY}`;
+			response = fetchAllData(url)
 				.then(res => {
 					// ** get the ids of the clubs as participants
-					console.log(res.data);
+					console.log(res);
 					console.log('YAA');
-					return res.data.season.participants;
+					return res.season;
 				})
 				.then(res => {
 					// ** get the data of each club
+					// needs seasonID and participantID
+					// needs the urls in an array
 					console.log(res);
-					// fetchAllClubsData(res)
+					response = fetchAllDataConcurrently(res);
+					console.log('fetchAllDataConcurrently');
+					console.log(response);
 				})
 				.catch(err => {
 					console.log('NOO');
@@ -82,10 +100,11 @@ export const fetchClubs = createAsyncThunk(
 		} else {
 			// call API to get the last seasonID of each league
 			console.log('Store is empty!');
-			response = fetchSeasonId(leagueId)
+			const url = `https://api.statorium.com/api/v1/leagues/${leagueId}/?apikey=${API_KEY}`;
+			response = fetchAllData(url)
 				.then(res => {
-					// console.log('InMainThunk');
-					// console.log(res);
+					console.log('InMainThunk');
+					console.log(res);
 					return res;
 				})
 				.then(res => {
