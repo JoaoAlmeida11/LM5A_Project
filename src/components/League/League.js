@@ -5,17 +5,27 @@ import RequestClubs from '../../functions/League/RequestClubs';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-const League = ({ clubList, loading }) => {
+const League = ({ clubList, loading, idLeagueStore }) => {
 	let { leagueId } = useParams();
-	// send params by redux
-	// let { paramsId } = useParams();
 
-	// console.log(paramsId);
+	let checkIfLeaguesWasLoadedBefore = false;
 
-	if (loading === 'idle') {
-		RequestClubs(leagueId);
+	console.log('idLeagueStore');
+	console.log(idLeagueStore);
+	if (idLeagueStore.length !== 0) {
+		for (let i in idLeagueStore) {
+			if (idLeagueStore[i] === leagueId) checkIfLeaguesWasLoadedBefore = true;
+		}
 	}
-	// ** Esta a ser chamado
+
+	if (
+		loading === 'idle' ||
+		(loading === 'success' && checkIfLeaguesWasLoadedBefore)
+	) {
+		if (loading !== 'stop') {
+			RequestClubs(leagueId);
+		}
+	}
 	return (
 		<Container>
 			<Row>
@@ -43,6 +53,7 @@ const mapStateToProps = state => {
 	return {
 		clubList: state.club.leagueId.clubList,
 		loading: state.club.leagueId.loading,
+		idLeagueStore: state.club.leagueId.id,
 	};
 };
 
