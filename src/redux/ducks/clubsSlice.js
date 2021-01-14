@@ -28,7 +28,19 @@ const API_KEY = process.env.REACT_APP_API_KEY;
 // 	teamName: String,
 // });
 
+//! doesn't work
+// ,{headers: {
+// 	'Access-Control-Allow-Origin': '*',
+// 	'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+// },
+// proxy: {
+// 	//** work around CORS ISSUE - may cause less security (the other option would be to contact the API)*/
+// 	host: '104.236.174.88',
+// 	port: 3128,
+// },}
+
 // ** functions to call data from the API
+// ! weird bug: if you go to one of the leagues, then the other, then back to the first you get CORS ERROR on the last...
 export const fetchData = url => {
 	const axios = require('axios').default;
 	return axios
@@ -51,8 +63,8 @@ export const fetchAllDataConcurrently = urls => {
 // ** Functions on Promise Chaining that ask data
 export const fetchPlayersId = res => {
 	// ** get the ids of the clubs as participants
-	console.log('fetchPlayersId - Here');
-	console.log(res);
+	// console.log('fetchPlayersId - Here');
+	// console.log(res);
 	// console.log(res.needsLeagueList)
 	let seasonId;
 	if (res.needsLeagueList === false) seasonId = res.leagueId;
@@ -89,8 +101,17 @@ export const fetchClubs = createAsyncThunk(
 		const state = thunkAPI.getState();
 		const leagueList = state.league.leagueList;
 		const leagueListArray = Object.entries(leagueList);
+		// console.log('leagueListArray');
+		// console.log(leagueListArray);
+
+		// TODO: check if information already exists
+		if (state.club.id === leagueId) {
+			console.log('Store already has the info');
+			return { changeStore: false };
+		}
 
 		const needsLeagueList = leagueListArray.length !== 0 ? false : true;
+
 		// console.log('needsLeagueList');
 		// console.log(needsLeagueList);
 
@@ -109,7 +130,7 @@ export const fetchClubs = createAsyncThunk(
 		}
 
 		// !normalize not working and since it wasn't needed it was removed
-		return { teams, leagueId };
+		return { teams, leagueId, changeStore: true };
 	}
 );
 
@@ -131,10 +152,26 @@ const clubsSlice = createSlice({
 		},
 		[fetchClubs.fulfilled]: (state, { payload }) => {
 			state.loading = 'success';
-			console.log('payload');
-			console.log(payload);
-			state.clubList = [state.clubList, ...payload.teams];
-			state.id = payload.leagueId;
+
+			// ** if the store already has the values doesn't cause a store change
+			if (payload.changeStore) {
+				// console.log('payload');
+				// console.log(payload);
+				const mergeData = [];
+				for (let i in state.clubList) {
+					mergeData.push(state.clubList[i]);
+				}
+				// console.log('mergeDataOnlyStore');
+				// console.log(mergeData);
+				for (let i in payload.teams) {
+					mergeData.push(payload.teams[i]);
+				}
+				// console.log('mergeDataAll');
+				// console.log(mergeData);
+
+				state.clubList = mergeData;
+				state.id = payload.leagueId;
+			}
 		},
 		[fetchClubs.rejected]: state => {
 			state.loading = 'failed';
