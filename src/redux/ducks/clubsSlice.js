@@ -154,15 +154,15 @@ const clubsSlice = createSlice({
 
 			// ** if the store already has the values doesn't cause a store change
 			if (payload.changeStore) {
-				const mergeDataSet = new Set();
-				for (let i in state.clubList) {
-					mergeDataSet.add(state.clubList[i]);
-				}
-				for (let i in payload.teams) {
-					mergeDataSet.add(payload.teams[i]);
-				}
-				const mergeDataArray = [...mergeDataSet];
-				state.clubList = mergeDataArray;
+				// const mergeDataSet = new Set();
+				// for (let i in state.clubList) {
+				// 	mergeDataSet.add(state.clubList[i]);
+				// }
+				// for (let i in payload.teams) {
+				// 	mergeDataSet.add(payload.teams[i]);
+				// }
+				// const mergeDataArray = [...mergeDataSet];
+				state.clubList = payload.teams;
 				state.id = payload.leagueId;
 			}
 		},
