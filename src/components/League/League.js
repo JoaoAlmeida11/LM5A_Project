@@ -6,11 +6,12 @@ import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 const League = ({ clubList, loading, idLeagueStore }) => {
-	let { leagueId } = useParams();
+	const { leagueId } = useParams();
 
 	if (loading === 'idle') {
 		RequestClubs(leagueId);
 	}
+
 	return (
 		<Container>
 			<Row>

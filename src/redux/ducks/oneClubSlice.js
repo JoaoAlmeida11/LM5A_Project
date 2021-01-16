@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 // import { schema, normalize } from 'normalizr';
+
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 export const fetchData = url => {
@@ -16,14 +17,15 @@ export const fetchData = url => {
 			return err;
 		});
 };
-export const fetchAllData = url => {
-	return Promise.resolve(fetchData(url));
-};
+
+// export const fetchAllData = url => {
+// 	return Promise.resolve(fetchData(url));
+// };
 
 // ** get the club
 export const fetchEachClub = ({ seasonId, clubId }) => {
 	const url = `https://api.statorium.com/api/v1/teams/${clubId}/?season_id=${seasonId}&apikey=${API_KEY}`;
-	return Promise.resolve(fetchAllData(url));
+	return Promise.resolve(fetchData(url));
 };
 
 export const fetchOneClub = createAsyncThunk(
@@ -69,6 +71,8 @@ const oneClubSlice = createSlice({
 	reducers: {
 		// to be call when entering other pages
 		setLoadingToIdleOneClubSlice(state) {
+			console.table([1, 2, 3, 4]);
+			console.log('setLoadingToIdleOneClubSlice');
 			state.loading = 'idle';
 		},
 	},
