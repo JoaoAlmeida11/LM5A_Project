@@ -57,7 +57,7 @@ export const fetchLeaguesAll = createAsyncThunk(
 				});
 				return getAllData(urls)
 					.then(res => {
-						console.log(res);
+						// console.log(res);
 						return res;
 					})
 					.catch(err => {
