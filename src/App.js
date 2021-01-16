@@ -7,7 +7,7 @@ import Club from './components/Club/Club';
 import Player from './components/Player/Player';
 import Ideal11 from './components/Ideal11/Ideal11';
 import Login from './components/Authentication/Login';
-import SignIn from './components/Authentication/SignIn';
+import SignIn from './components/Authentication/SignUp';
 import Footer from './components/Layout/Footer';
 import NavCostum from './components/Layout/NavCostum';
 

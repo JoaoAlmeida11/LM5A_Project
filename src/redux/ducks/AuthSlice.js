@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getFirebase } from 'react-redux-firebase';
-import { useDispatch } from 'react-redux';
 
 //TODO: check if works
 // based of https://github.com/iamshaunjp/React-Redux-Firebase-App/blob/lesson-39/marioplan/src/store/actions/authActions.js
@@ -20,7 +19,7 @@ import { useDispatch } from 'react-redux';
 // 	};
 // };
 //TODO: check if works
-export const LogOut = dispatch => {
+export const logOut = dispatch => {
 	const firebase = getFirebase();
 	return firebase
 		.auth()
@@ -31,7 +30,7 @@ export const LogOut = dispatch => {
 };
 //TODO: check if works
 //! stopped giving error at least
-export const SignUp = ({ email, password, dispatch }) => {
+export const signUp = (dispatch, { email, password }, { getFirebase }) => {
 	console.log('SignUp - Here');
 	const firebase = getFirebase();
 

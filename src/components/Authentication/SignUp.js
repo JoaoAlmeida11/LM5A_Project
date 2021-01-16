@@ -5,22 +5,19 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 // import GoogleAuth from '../../functions/Authentication/GoogleAuth';
-import { SignUp } from '../../redux/ducks/AuthSlice';
+import { signUp } from '../../redux/ducks/AuthSlice';
 // import { Redirect } from 'react-router-dom'
 import GoogleButton from 'react-google-button/dist/react-google-button'; //forced fix do to known issue https://github.com/prescottprue/react-google-button/issues/28
 
 // import { useSelector } from 'react-redux';
 import { useFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
 
-// handleSubmit
-import { useDispatch } from 'react-redux';
+const SignUp = ({ auth }) => {
+	const emailRef = useRef();
+	const passwordRef = useRef();
+	const passwordConfirmRef = useRef();
 
-const SignIn = ({ auth }) => {
-	const dispatch = useDispatch();
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-
-	const firebase = useFirebase();
+	// const firebase = useFirebase();
 	// const firebaseAuth = firebase.auth();
 	// console.log(firebase);
 	// console.log(firebaseAuth);
@@ -35,14 +32,11 @@ const SignIn = ({ auth }) => {
 		setPassword(e.target.value);
 	};
 
-	const HandleSubmit = ({ e, dispatch }) => {
+	const HandleSubmit = e => {
 		e.preventDefault();
-
 		const email = e.target[0].value;
 		const password = e.target[1].value;
-		console.log(email, password);
-		// console.log(e.target[0].value);
-		dispatch(SignUp({ email, password, dispatch }));
+		SignUp({ email, password });
 	};
 
 	const loginWithGoogle = () => {
@@ -104,10 +98,10 @@ const SignIn = ({ auth }) => {
 							<Form.Control
 								autoComplete="current-password"
 								type="password"
-								value={password}
+								ref={passwordRef}
 								placeholder="Enter password"
 								id="password"
-								onChange={PasswordHandler}
+								required
 							/>
 						</Form.Group>
 
@@ -131,15 +125,14 @@ const mapStateToProps = state => {
 	// console.log(state.firebase);
 	return {
 		auth: state.firebase.auth,
-		// authError: state.auth.authError,
+		authError: state.auth.authError,
 	};
 };
 
-// const mapDispatchToProps = dispatch => {
-// 	return {
-// 		SignIn: creds => dispatch(SignIn(creds)),
-// 	};
-// };
+const mapDispatchToProps = dispatch => {
+	return {
+		signUp: creds => dispatch(signUp(creds)),
+	};
+};
 
-export default connect(mapStateToProps)(SignIn);
-// export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
