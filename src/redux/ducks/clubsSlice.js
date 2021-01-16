@@ -45,10 +45,10 @@ export const fetchData = url => {
 	const axios = require('axios').default;
 	return axios
 		.get(url)
-		.then(function (response) {
+		.then(response => {
 			return response.data;
 		})
-		.catch(function (err) {
+		.catch(err => {
 			console.log(err);
 			return err;
 		});
@@ -144,7 +144,12 @@ const clubsSlice = createSlice({
 		loading: 'idle',
 		id: '', //this is only to know which leagues clubs where loaded
 	},
-	reducers: {},
+	reducers: {
+		// to be call when entering other pages
+		setLoadingToIdleClubsSlice(state) {
+			state.loading = 'idle';
+		},
+	},
 	extraReducers: {
 		[fetchClubs.pending]: (state, payload) => {
 			state.loading = 'pending';
@@ -173,3 +178,4 @@ const clubsSlice = createSlice({
 });
 
 export default clubsSlice.reducer;
+export const { setLoadingToIdleClubsSlice } = clubsSlice.actions;

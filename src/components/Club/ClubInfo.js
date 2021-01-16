@@ -1,3 +1,4 @@
+// ! NOT BEING USED
 export default function ClubInfo() {
 	return (
 		<p>

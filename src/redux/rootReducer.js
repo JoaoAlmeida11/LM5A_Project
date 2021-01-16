@@ -4,6 +4,7 @@ import { firebaseReducer } from 'react-redux-firebase';
 // import { usersSlice } from './ducks/usersSlice';
 import leagueReducer from './ducks/leagueSlice'; //leagueReducer === leagueSlice
 import clubReducer from './ducks/clubsSlice';
+import oneClubReducer from './ducks/oneClubSlice';
 
 const rootReducer = combineReducers({
 	auth: authReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
 	// users: usersSlice,
 	league: leagueReducer,
 	club: clubReducer,
+	oneClub: oneClubReducer,
 });
 
 export default rootReducer;

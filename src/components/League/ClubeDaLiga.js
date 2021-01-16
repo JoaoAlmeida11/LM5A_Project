@@ -8,7 +8,10 @@ export default function ClubeDaLiga({ club }) {
 
 			<h3 className="text-center">{club.teamName}</h3>
 			<Button className="homepageButtonLeague">
-				<Link to={`/lm5a_project/club/${club.id}`} className="text-white">
+				<Link
+					to={`/lm5a_project/club/${club.seasonID}/${club.teamID}`}
+					className="text-white"
+				>
 					View more!
 				</Link>
 			</Button>
