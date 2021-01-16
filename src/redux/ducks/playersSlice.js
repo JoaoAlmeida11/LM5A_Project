@@ -22,14 +22,16 @@ export const fetchEachPlayer = ({ seasonId, playerId }) => {
 };
 
 export const fetchOnePlayer = createAsyncThunk(
-	'clubs/requestStatus',
+	'players/requestStatus',
 	async ({ seasonId, playerId }, thunkAPI) => {
-		console.log('fetchOneClub');
+		console.log('PlayersSlice');
+		console.log(seasonId);
+		console.log(playerId);
 
 		const state = thunkAPI.getState();
 
 		// check if store has data in oneClub.club
-		const player = state.oneClub;
+		const player = state.player;
 		if (player.seasonId === seasonId) return { changeStore: false };
 
 		// check if store has data in club.clubList
@@ -41,20 +43,21 @@ export const fetchOnePlayer = createAsyncThunk(
 		// 		console.log(storeData);
 		// 		return { storeData, changeStore: true };
 		// 	}
+
 		// }
 
 		const response = await fetchEachPlayer({ seasonId, playerId });
 		console.log('response from fetchEachPlayer');
 		console.log(response);
-		// const clubResponse = response.team;
+		const playerResponse = response.player;
 		// console.log('clubResponse');
 		// console.log(clubResponse);
-		return { response, changeStore: true, seasonId, playerId };
+		return { playerResponse, changeStore: true, seasonId, playerId };
 	}
 );
 
 const playersSlice = createSlice({
-	name: 'clubs',
+	name: 'players',
 	// TODO: initial state needs to store an array like a map with a key being the id
 	initialState: {
 		onePlayerInfo: [],
@@ -81,7 +84,7 @@ const playersSlice = createSlice({
 			if (payload.changeStore) {
 				state.playerId = payload.playerId;
 				state.seasonId = payload.seasonId;
-				// state.oneClubInfo = payload.clubResponse;
+				state.onePlayerInfo = payload.playerResponse;
 			}
 		},
 		[fetchOnePlayer.rejected]: state => {

@@ -61,7 +61,7 @@ export const fetchAllDataConcurrently = urls => {
 };
 
 // ** Functions on Promise Chaining that ask data
-export const fetchPlayersId = res => {
+export const fetchClubIds = res => {
 	// ** get the ids of the clubs as participants
 	const seasonId =
 		res.needsLeagueList === false
@@ -116,14 +116,13 @@ export const fetchClubs = createAsyncThunk(
 		// console.log(needsLeagueList);
 
 		const response = await conditionalChaining({ needsLeagueList, leagueId })
-			.then(res => fetchPlayersId(res))
+			.then(res => fetchClubIds(res))
 			.then(res => fetchEachClub(res))
 			.catch(error => {
 				console.log(error);
 				return error;
 			});
 
-		// TODO: fix mutability (this needs to return an array)
 		const teamsSet = new Set();
 		for (let i in response) {
 			teamsSet.add(response[i].team);

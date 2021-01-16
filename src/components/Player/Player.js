@@ -4,11 +4,10 @@ import { Container, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import RequestPlayer from '../../functions/Player/RequestPlayer';
 const Player = ({ player, loading, seasonIdStore, playerIdStore }) => {
-	const { seasonId, playerId } = useParams;
+	const { seasonId, playerId } = useParams();
 
 	if (
-		seasonId === seasonIdStore &&
-		playerId === playerIdStore &&
+		(seasonId !== seasonIdStore || playerId !== playerIdStore) &&
 		loading !== 'failed'
 	)
 		loading = 'idle';
