@@ -1,9 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 // import monitorReducersEnhancer from "./enhancers/monitorReducers";
 
 import logger from 'redux-logger';
 import rootReducer from './rootReducer';
-import { getFirebase } from 'react-redux-firebase';
+import {
+	getFirebase,
+	actionTypes as rrfActionTypes,
+} from 'react-redux-firebase';
 // import firebase from './FireBase/fbConfig';
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -11,15 +14,20 @@ const reducer = rootReducer;
 
 const store = configureStore({
 	reducer,
-	middleware: getDefaultMiddleware =>
-		getDefaultMiddleware({
-			thunk: {
-				extraArgument: getFirebase,
-			},
-		}).concat(logger),
+	middleware: getDefaultMiddleware({
+		serializableCheck: {
+			ignoredActions: [
+				...Object.keys(rrfActionTypes).map(
+					type => `@@reactReduxFirebase/${type}`
+				),
+			],
+			ignoredPaths: ['firebase'],
+		},
+		thunk: {
+			extraArgument: getFirebase,
+		},
+	}).concat(logger),
 	devTools: process.env.NODE_ENV !== 'production',
-	// preloadedState,
-	// enhancers: [reduxBatch],
 });
 export default store;
 const rrfConfig = {

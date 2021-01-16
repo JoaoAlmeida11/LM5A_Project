@@ -1,50 +1,51 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getFirebase } from 'react-redux-firebase';
+import { useDispatch } from 'react-redux';
 
 //TODO: check if works
 // based of https://github.com/iamshaunjp/React-Redux-Firebase-App/blob/lesson-39/marioplan/src/store/actions/authActions.js
-export const logIn = credentials => {
-	return (dispatch, getState, { getFirebase }) => {
-		const firebase = getFirebase();
+// export const logIn = credentials => {
+// 	return (dispatch, getState, { getFirebase }) => {
+// 		const firebase = getFirebase();
 
-		firebase
-			.auth()
-			.signInWithEmailAndPassword(credentials.email, credentials.password)
-			.then(() => {
-				dispatch({ type: 'auth/loginSuccess' });
-			})
-			.catch(err => {
-				dispatch({ type: 'auth/loginError', err });
-			});
-	};
+// 		firebase
+// 			.auth()
+// 			.signInWithEmailAndPassword(credentials.email, credentials.password)
+// 			.then(() => {
+// 				dispatch({ type: 'auth/loginSuccess' });
+// 			})
+// 			.catch(err => {
+// 				dispatch({ type: 'auth/loginError', err });
+// 			});
+// 	};
+// };
+//TODO: check if works
+export const LogOut = dispatch => {
+	const firebase = getFirebase();
+	return firebase
+		.auth()
+		.signOut()
+		.then(() => {
+			dispatch(logOutSuccess());
+		});
 };
 //TODO: check if works
-export const logOut = () => {
-	return (dispatch, getState, { getFirebase }) => {
-		const firebase = getFirebase();
+//! stopped giving error at least
+export const SignUp = ({ email, password, dispatch }) => {
+	console.log('SignUp - Here');
+	const firebase = getFirebase();
 
-		firebase
-			.auth()
-			.signOut()
-			.then(() => {
-				dispatch({ type: 'auth/logOutSuccess' });
-			});
-	};
-};
-//TODO: check if works
-export const signUp = newUser => {
-	return (dispatch, getState, { getFirebase }) => {
-		const firebase = getFirebase();
-
-		firebase
-			.auth()
-			.createUserWithEmailAndPassword(newUser.email, newUser.password)
-			.then(() => {
-				dispatch({ type: 'SIGNUP_SUCCESS' });
-			})
-			.catch(err => {
-				dispatch({ type: 'SIGNUP_ERROR', err });
-			});
-	};
+	return firebase
+		.auth()
+		.createUserWithEmailAndPassword(email, password)
+		.then(user => {
+			dispatch(signUpSuccess({ user }));
+			// dispatch({ type: 'auth/signUpSuccess', payload: { user } });
+		})
+		.catch(err => {
+			dispatch(signUpError({ err }));
+			// dispatch({ type: 'auth/signUpError', payload: { err } });
+		});
 };
 
 const authSlice = createSlice({
@@ -76,9 +77,14 @@ const authSlice = createSlice({
 		signUpSuccess(state, { payload }) {
 			console.log('signup success');
 			state.isLogged = true;
+
+			console.log('signUpSuccess');
+			console.log(payload);
 		},
 		signUpError(state, { payload }) {
 			console.log('signup error');
+			console.log(payload.err);
+			state.errorMessage = payload.err;
 		},
 	},
 });

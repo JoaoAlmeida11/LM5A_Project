@@ -5,17 +5,18 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 // import GoogleAuth from '../../functions/Authentication/GoogleAuth';
-// import { signUp } from '../../redux/ducks/AuthSlice';
-//import { Redirect } from 'react-router-dom'
+import { SignUp } from '../../redux/ducks/AuthSlice';
+// import { Redirect } from 'react-router-dom'
 import GoogleButton from 'react-google-button/dist/react-google-button'; //forced fix do to known issue https://github.com/prescottprue/react-google-button/issues/28
 
 // import { useSelector } from 'react-redux';
 import { useFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
 
 // handleSubmit
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const SignIn = ({ auth }) => {
+	const dispatch = useDispatch();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -34,6 +35,16 @@ const SignIn = ({ auth }) => {
 		setPassword(e.target.value);
 	};
 
+	const HandleSubmit = ({ e, dispatch }) => {
+		e.preventDefault();
+
+		const email = e.target[0].value;
+		const password = e.target[1].value;
+		console.log(email, password);
+		// console.log(e.target[0].value);
+		dispatch(SignUp({ email, password, dispatch }));
+	};
+
 	const loginWithGoogle = () => {
 		const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY;
 		const login = {
@@ -41,6 +52,7 @@ const SignIn = ({ auth }) => {
 			type: 'popup',
 			token: FIREBASE_API_KEY,
 		};
+
 		// console.log(login);
 
 		return firebase.login(login);
@@ -53,15 +65,6 @@ const SignIn = ({ auth }) => {
 	// 	// dispatch(signUp({ e }));
 	// 	console.log(e.target);
 	// };
-	const HandleSubmit = e => {
-		e.preventDefault();
-		const data = new FormData(e.target);
-		console.log(data.get('email'));
-		// console.log(e);
-		// const dispatch = useDispatch();
-		// dispatch(signUp({ e }));
-		// console.log(e.target);
-	};
 
 	return (
 		<Container>
@@ -110,7 +113,7 @@ const SignIn = ({ auth }) => {
 
 						<div className="text-center">
 							{/* <Button value="submit" variant="primary" onClick={ClickSubmit}> */}
-							<Button value="submit" variant="primary">
+							<Button type="submit" variant="primary">
 								Submit
 							</Button>
 						</div>
