@@ -65,8 +65,8 @@ const oneClubSlice = createSlice({
 	reducers: {
 		// to be call when entering other pages
 		setLoadingToIdleOneClubSlice(state) {
-			console.table([1, 2, 3, 4]);
-			console.log('setLoadingToIdleOneClubSlice');
+			// console.table([1, 2, 3, 4]);
+			// console.log('setLoadingToIdleOneClubSlice');
 			state.loading = 'idle';
 		},
 	},
