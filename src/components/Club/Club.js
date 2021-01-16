@@ -2,7 +2,7 @@ import { Container, Row, Col, Image } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import RequestOneClub from '../../functions/Club/RequestOneClub';
 import Stadium from './Stadium';
-import PlayerList from './PlayerList';
+import ShowPlayer from './ShowPlayer';
 // import ClubInfo from './ClubInfo';
 import { connect } from 'react-redux';
 
@@ -39,7 +39,15 @@ const Club = ({ club, loading }) => {
 							/>
 						</Col>
 						<Col xs={12} lg={6}>
-							<PlayerList players={club.players} />
+							{club.players.map(player => {
+								return (
+									<ShowPlayer
+										player={player}
+										seasonId={seasonId}
+										key={player.playerID}
+									/>
+								);
+							})}
 						</Col>
 					</Row>
 					{/* <Row>
