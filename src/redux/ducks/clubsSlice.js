@@ -45,10 +45,10 @@ export const fetchData = url => {
 	const axios = require('axios').default;
 	return axios
 		.get(url)
-		.then(function (response) {
+		.then(response => {
 			return response.data;
 		})
-		.catch(function (err) {
+		.catch(err => {
 			console.log(err);
 			return err;
 		});

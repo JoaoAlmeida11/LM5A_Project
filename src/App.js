@@ -21,9 +21,12 @@ export default function App() {
 					path="/lm5a_project/league/:leagueId/"
 					component={League}
 				></Route>
-				<Route path="/lm5a_project/club/:clubId/" component={Club}></Route>
 				<Route
-					path="/lm5a_project/player/:playerId/"
+					path="/lm5a_project/club/:seasonId/:clubId/"
+					component={Club}
+				></Route>
+				<Route
+					path="/lm5a_project/player/:seasonId/:playerId/"
 					component={Player}
 				></Route>
 				<Route path="/lm5a_project/ideal11/" component={Ideal11}></Route>
