@@ -7,6 +7,8 @@ export const fetchData = url => {
 	return axios
 		.get(url)
 		.then(response => {
+			console.log('response.data');
+			console.log(response.data);
 			return response.data;
 		})
 		.catch(err => {
@@ -27,6 +29,8 @@ export const fetchEachClub = ({ seasonId, clubId }) => {
 export const fetchOneClub = createAsyncThunk(
 	'clubs/requestStatus',
 	async ({ seasonId, clubId }, thunkAPI) => {
+		console.log('fetchOneClub');
+
 		const state = thunkAPI.getState();
 
 		// check if store has data in oneClub.club
@@ -39,14 +43,20 @@ export const fetchOneClub = createAsyncThunk(
 		for (let i in clubList) {
 			if (clubList[i].seasonID === seasonId && clubList[i].teamID === clubId) {
 				const storeData = clubList[i];
+				console.log('storeData');
+				console.log(storeData);
 				return { storeData, changeStore: true };
 			}
 		}
 		const response = await fetchEachClub({ seasonId, clubId });
-		return { response, changeStore: true };
+		const clubResponse = response.team;
+		console.log('clubResponse');
+		console.log(clubResponse);
+		return { clubResponse, changeStore: true, seasonId, clubId };
 	}
 );
 
+// TODO: When opening another page change the loading of the others to idle
 const oneClubSlice = createSlice({
 	name: 'clubs',
 	// TODO: initial state needs to store an array like a map with a key being the id
@@ -56,9 +66,14 @@ const oneClubSlice = createSlice({
 		clubId: '',
 		seasonId: '',
 	},
-	reducers: {},
+	reducers: {
+		// to be call when entering other pages
+		setLoadingToIdleOneClubSlice(state) {
+			state.loading = 'idle';
+		},
+	},
 	extraReducers: {
-		[fetchOneClub.pending]: (state, payload) => {
+		[fetchOneClub.pending]: state => {
 			state.loading = 'pending';
 		},
 		[fetchOneClub.fulfilled]: (state, { payload }) => {
@@ -66,6 +81,9 @@ const oneClubSlice = createSlice({
 
 			// ** if the store already has the values doesn't cause a store change
 			if (payload.changeStore) {
+				state.clubId = payload.clubId;
+				state.seasonId = payload.seasonId;
+				state.club = payload.clubResponse;
 			}
 		},
 		[fetchOneClub.rejected]: state => {
@@ -75,3 +93,4 @@ const oneClubSlice = createSlice({
 });
 
 export default oneClubSlice.reducer;
+export const { setLoadingToIdleOneClubSlice } = oneClubSlice.actions;

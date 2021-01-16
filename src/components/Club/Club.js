@@ -1,14 +1,13 @@
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Image } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import RequestOneClub from '../../functions/Club/RequestOneClub';
 import Stadium from './Stadium';
 import PlayerList from './PlayerList';
-import ClubInfo from './ClubInfo';
+// import ClubInfo from './ClubInfo';
 import { connect } from 'react-redux';
 
-const Club = () => {
+const Club = ({ club, loading }) => {
 	const { seasonId, clubId } = useParams();
-	const loading = 'idle';
 
 	if (loading === 'idle') {
 		RequestOneClub({ seasonId, clubId });
@@ -27,17 +26,22 @@ const Club = () => {
 				<div>
 					<Row>
 						<Col xs={12} lg={6}>
-							<Stadium />
+							<div>{club.teamName}</div>
+							<Image src={`${club.logo}`} alt={club.teamName} fluid />
+							<Stadium
+								stadiumName={club.homeVenue.name}
+								key={club.homeVenue.id}
+							/>
 						</Col>
 						<Col xs={12} lg={6}>
-							<PlayerList />
+							<PlayerList players={club.players} />
 						</Col>
 					</Row>
-					<Row>
+					{/* <Row>
 						<Col xs={12}>
 							<ClubInfo />
 						</Col>
-					</Row>
+					</Row> */}
 				</div>
 			)}
 		</Container>
@@ -45,11 +49,10 @@ const Club = () => {
 };
 
 const mapStateToProps = state => {
-	// return {
-	// 	clubList: state.club.clubList,
-	// 	loading: state.club.loading,
-	// 	idLeagueStore: state.club.id,
-	// };
+	return {
+		club: state.oneClub.club,
+		loading: state.oneClub.loading,
+	};
 };
 
 export default connect(mapStateToProps)(Club);
