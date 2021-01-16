@@ -8,8 +8,6 @@ export const fetchData = url => {
 	return axios
 		.get(url)
 		.then(response => {
-			console.log('response.data');
-			console.log(response.data);
 			return response.data;
 		})
 		.catch(err => {
@@ -17,10 +15,6 @@ export const fetchData = url => {
 			return err;
 		});
 };
-
-// export const fetchAllData = url => {
-// 	return Promise.resolve(fetchData(url));
-// };
 
 // ** get the club
 export const fetchEachClub = ({ seasonId, clubId }) => {
@@ -63,7 +57,7 @@ const oneClubSlice = createSlice({
 	name: 'clubs',
 	// TODO: initial state needs to store an array like a map with a key being the id
 	initialState: {
-		club: [],
+		oneClubInfo: [],
 		loading: 'idle',
 		clubId: '',
 		seasonId: '',
@@ -87,7 +81,7 @@ const oneClubSlice = createSlice({
 			if (payload.changeStore) {
 				state.clubId = payload.clubId;
 				state.seasonId = payload.seasonId;
-				state.club = payload.clubResponse;
+				state.oneClubInfo = payload.clubResponse;
 			}
 		},
 		[fetchOneClub.rejected]: state => {

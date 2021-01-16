@@ -9,6 +9,11 @@ import { connect } from 'react-redux';
 const Club = ({ club, loading }) => {
 	const { seasonId, clubId } = useParams();
 
+	// !Forced Fix: see what is setting the loading to success or preventing it from being set to 'idle' in the correspondent reducer
+	// ! its when the League page is opened
+	if ((club === undefined || club === null) && loading !== 'failed')
+		loading = 'idle';
+
 	if (loading === 'idle') {
 		RequestOneClub({ seasonId, clubId });
 	}
@@ -50,7 +55,7 @@ const Club = ({ club, loading }) => {
 
 const mapStateToProps = state => {
 	return {
-		club: state.oneClub.club,
+		club: state.oneClub.oneClubInfo,
 		loading: state.oneClub.loading,
 	};
 };

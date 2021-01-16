@@ -5,6 +5,8 @@ import RequestClubs from '../../functions/League/RequestClubs';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
+// ! comment below
+// TODO: see why when this page is opened oneClub.loading is set to 'success
 const League = ({ clubList, loading, idLeagueStore }) => {
 	const { leagueId } = useParams();
 
