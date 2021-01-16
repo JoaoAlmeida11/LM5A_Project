@@ -7,8 +7,11 @@ const RequestLeague = () => {
 	const dispatch = useDispatch();
 	dispatch(fetchLeaguesAll());
 	// to set loading of other pages to idle
-	dispatch(setLoadingToIdleClubsSlice());
-	dispatch(setLoadingToIdleOneClubSlice());
+
+	useEffect(() => {
+		dispatch(setLoadingToIdleClubsSlice());
+		dispatch(setLoadingToIdleOneClubSlice());
+	});
 };
 
 export default RequestLeague;
