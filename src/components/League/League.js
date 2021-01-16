@@ -8,9 +8,6 @@ import { useParams } from 'react-router-dom';
 const League = ({ clubList, loading, idLeagueStore }) => {
 	let { leagueId } = useParams();
 
-	// console.log('idLeagueStore');
-	// console.log(idLeagueStore);
-
 	if (loading === 'idle') {
 		RequestClubs(leagueId);
 	}
@@ -34,8 +31,6 @@ const League = ({ clubList, loading, idLeagueStore }) => {
 };
 
 const mapStateToProps = state => {
-	console.log('stateLeague');
-	console.log(state);
 	return {
 		clubList: state.club.clubList,
 		loading: state.club.loading,

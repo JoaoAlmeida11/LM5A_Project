@@ -63,12 +63,10 @@ export const fetchAllDataConcurrently = urls => {
 // ** Functions on Promise Chaining that ask data
 export const fetchPlayersId = res => {
 	// ** get the ids of the clubs as participants
-	// console.log('fetchPlayersId - Here');
-	// console.log(res);
-	// console.log(res.needsLeagueList)
-	let seasonId;
-	if (res.needsLeagueList === false) seasonId = res.leagueId;
-	else seasonId = res.league.seasons[res.league.seasons.length - 1].seasonID;
+	const seasonId =
+		res.needsLeagueList === false
+			? res.leagueId
+			: res.league.seasons[res.league.seasons.length - 1].seasonID;
 	const url = `https://api.statorium.com/api/v1/seasons/${seasonId}/?apikey=${API_KEY}`;
 	return fetchAllData(url);
 };
@@ -76,13 +74,15 @@ export const fetchEachClub = res => {
 	// ** get each club
 	const participants = res.season.participants;
 	const seasonId = res.season.seasonID;
-	let urls = [];
+	const urlsSet = new Set();
 	for (let i in participants) {
-		urls.push(
+		urlsSet.add(
 			`https://api.statorium.com/api/v1/teams/${participants[i].participantID}/?season_id=${seasonId}&apikey=${API_KEY}`
 		);
 	}
-	return Promise.resolve(fetchAllDataConcurrently(urls));
+	const urlsArray = [...urlsSet];
+
+	return Promise.resolve(fetchAllDataConcurrently(urlsArray));
 };
 // ** Promise Chaining
 export const conditionalChaining = ({ needsLeagueList, leagueId }) => {
@@ -124,10 +124,11 @@ export const fetchClubs = createAsyncThunk(
 			});
 
 		// TODO: fix mutability (this needs to return an array)
-		let teams = [];
+		const teamsSet = new Set();
 		for (let i in response) {
-			teams.push(response[i].team);
+			teamsSet.add(response[i].team);
 		}
+		const teams = [...teamsSet];
 
 		// !normalize not working and since it wasn't needed it was removed
 		return { teams, leagueId, changeStore: true };
@@ -146,8 +147,6 @@ const clubsSlice = createSlice({
 	reducers: {},
 	extraReducers: {
 		[fetchClubs.pending]: (state, payload) => {
-			console.log('PendingPayload');
-			console.log(payload);
 			state.loading = 'pending';
 		},
 		[fetchClubs.fulfilled]: (state, { payload }) => {
@@ -155,21 +154,15 @@ const clubsSlice = createSlice({
 
 			// ** if the store already has the values doesn't cause a store change
 			if (payload.changeStore) {
-				// console.log('payload');
-				// console.log(payload);
-				const mergeData = [];
+				const mergeDataSet = new Set();
 				for (let i in state.clubList) {
-					mergeData.push(state.clubList[i]);
+					mergeDataSet.add(state.clubList[i]);
 				}
-				// console.log('mergeDataOnlyStore');
-				// console.log(mergeData);
 				for (let i in payload.teams) {
-					mergeData.push(payload.teams[i]);
+					mergeDataSet.add(payload.teams[i]);
 				}
-				// console.log('mergeDataAll');
-				// console.log(mergeData);
-
-				state.clubList = mergeData;
+				const mergeDataArray = [...mergeDataSet];
+				state.clubList = mergeDataArray;
 				state.id = payload.leagueId;
 			}
 		},
