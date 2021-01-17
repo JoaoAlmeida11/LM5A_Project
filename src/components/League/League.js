@@ -28,7 +28,6 @@ const League = ({ clubList, loading, idLeagueStore }) => {
 				)}
 				{loading === 'success' &&
 					Object.entries(clubList).map(club => {
-						console.log(club);
 						return <ClubeDaLiga club={club[1]} key={club[0]} />;
 					})}
 			</Row>

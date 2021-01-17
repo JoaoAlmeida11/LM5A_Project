@@ -7,6 +7,7 @@ import { loginAction, signupAction } from '../../redux/ducks/AuthSlice';
 import GoogleButton from 'react-google-button/dist/react-google-button'; //forced fix do to known issue https://github.com/prescottprue/react-google-button/issues/28
 import { useFirebase } from 'react-redux-firebase';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 // import { useFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
 
 /* Validates the form fields */
@@ -28,10 +29,8 @@ const hasValid = values => {
 };
 
 const SignUp = props => {
-	const { isSignup } = props;
+	const { isLogged } = props;
 	const firebase = useFirebase();
-	console.log('firebase');
-	console.log(firebase);
 	const loginWithGoogle = () => {
 		const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY;
 		const login = {
@@ -67,7 +66,7 @@ const SignUp = props => {
 				console.log(error);
 			});
 	};
-
+	if (isLogged === true) return <Redirect to="/lm5a_project/" />;
 	return (
 		<Container>
 			<Row className="centerLogin">
@@ -88,11 +87,12 @@ const SignUp = props => {
 						onSubmit={(values, { setSubmitting }) => {
 							setSubmitting(true);
 							const { email, password } = values;
-							console.log('isSignup');
-							console.log(isSignup);
+
 							try {
 								signup(email, password);
 							} catch (e) {
+								// TODO: error handling
+								console.log('Error singUp');
 								console.log(e);
 								setSubmitting(false);
 							}

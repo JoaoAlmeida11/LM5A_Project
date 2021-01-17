@@ -8,10 +8,10 @@ import {
 	actionTypes as rrfActionTypes,
 } from 'react-redux-firebase';
 import { constants as rfConstants } from 'redux-firestore';
-import 'firebase/database';
 
 // import firebase from './FireBase/fbConfig';
 import firebase from 'firebase/app';
+import 'firebase/database';
 import 'firebase/auth';
 const reducer = rootReducer;
 
