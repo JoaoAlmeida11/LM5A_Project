@@ -26,7 +26,7 @@ function NavCostum() {
 						<FormControl type="text" placeholder="Search" className="mr-sm-2" />
 						<Button variant="outline-success">Search</Button>
 						<Nav.Link href="/lm5a_project/login/">Login</Nav.Link>
-						<Nav.Link href="/lm5a_project/signIn/">Sign In</Nav.Link>
+						<Nav.Link href="/lm5a_project/signIn/">Sign Up</Nav.Link>
 					</Form>
 				</Navbar.Collapse>
 			</Navbar>

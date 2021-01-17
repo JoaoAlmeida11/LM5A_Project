@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getFirebase } from 'react-redux-firebase';
+// import { getFirebase } from 'react-redux-firebase';
 
 //TODO: check if works
 // based of https://github.com/iamshaunjp/React-Redux-Firebase-App/blob/lesson-39/marioplan/src/store/actions/authActions.js
@@ -18,44 +18,52 @@ import { getFirebase } from 'react-redux-firebase';
 // 			});
 // 	};
 // };
-//TODO: check if works
-export const logOut = dispatch => {
-	const firebase = getFirebase();
-	return firebase
-		.auth()
-		.signOut()
-		.then(() => {
-			dispatch(logOutSuccess());
-		});
-};
-//TODO: check if works
-//! stopped giving error at least
-export const signUp = (dispatch, { email, password }, { getFirebase }) => {
-	console.log('SignUp - Here');
-	const firebase = getFirebase();
 
-	return firebase
-		.auth()
-		.createUserWithEmailAndPassword(email, password)
-		.then(user => {
-			dispatch(signUpSuccess({ user }));
-			// dispatch({ type: 'auth/signUpSuccess', payload: { user } });
-		})
-		.catch(err => {
-			dispatch(signUpError({ err }));
-			// dispatch({ type: 'auth/signUpError', payload: { err } });
-		});
-};
+// //TODO: check if works
+// export const logOut = dispatch => {
+// 	const firebase = getFirebase();
+// 	return firebase
+// 		.auth()
+// 		.signOut()
+// 		.then(() => {
+// 			dispatch(logOutSuccess());
+// 		});
+// };
+// //TODO: check if works
+// //! stopped giving error at least
+// export const signUp = (dispatch, { email, password }, { getFirebase }) => {
+// 	console.log('SignUp - Here');
+// 	const firebase = getFirebase();
+
+// 	return firebase
+// 		.auth()
+// 		.createUserWithEmailAndPassword(email, password)
+// 		.then(user => {
+// 			dispatch(signUpSuccess({ user }));
+// 			// dispatch({ type: 'auth/signUpSuccess', payload: { user } });
+// 		})
+// 		.catch(err => {
+// 			dispatch(signUpError({ err }));
+// 			// dispatch({ type: 'auth/signUpError', payload: { err } });
+// 		});
+// };
 
 const authSlice = createSlice({
 	name: 'auth',
 	initialState: {
-		token: '',
-		errorMessage: '',
+		userEmail: '',
 		isLogged: false,
-		firebaseInit: false,
+		// firebaseInit: false,
 	},
 	reducers: {
+		loginAction(state) {
+			state.isLogged = true;
+		},
+		signupAction(state) {
+			state.isLogged = true;
+		},
+
+		// !not being used
 		// see if GoogleAuth is using only one
 		// loginSuccess === signUpSuccess
 		loginSuccess(state) {
@@ -89,6 +97,10 @@ const authSlice = createSlice({
 });
 
 export const {
+	loginAction,
+	signupAction,
+
+	// !not being used
 	loginError,
 	loginSuccess,
 	logOutSuccess,
