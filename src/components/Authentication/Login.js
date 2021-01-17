@@ -31,15 +31,17 @@ const hasValid = values => {
 const Login = props => {
 	const { isLogged } = props;
 	const firebase = useFirebase();
+
 	const loginWithGoogle = () => {
-		const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY;
+		const FIREBASE_API_KEY = process.env.REACT_APP_FIREBASE_API_KEY;
 		const login = {
 			provider: 'google',
 			type: 'popup',
 			token: FIREBASE_API_KEY,
 		};
+		firebase.login(login);
 
-		return firebase.login(login);
+		return <Redirect to="/lm5a_project/" />;
 	};
 
 	const login = (email, password) => {
@@ -77,7 +79,6 @@ const Login = props => {
 						onSubmit={(values, { setSubmitting }) => {
 							setSubmitting(true);
 							const { email, password } = values;
-
 							try {
 								login(email, password);
 							} catch (e) {
@@ -86,11 +87,8 @@ const Login = props => {
 								console.log(e);
 								setSubmitting(false);
 							}
-
-							// isSignup ? signup(email, password) : login(email, password);
 						}}
 					>
-						{/* Callback function containing Formik state and helpers that handle common form actions */}
 						{({
 							values,
 							errors,

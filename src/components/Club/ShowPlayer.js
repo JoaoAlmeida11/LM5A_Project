@@ -3,9 +3,14 @@ import { Col, Button, Image } from 'react-bootstrap';
 
 const ShowPlayer = ({ player, seasonId }) => {
 	return (
-		<Col xs={12} md={6} lg={4}>
-			<Image src={`${player.photo}`} alt={player.shortName} fluid />
-			<Button className="homepageButtonLeague">
+		<Col xs={4} md={3} lg={2} className="text-center">
+			<Image
+				className="border border-secondary "
+				src={`${player.photo}`}
+				alt={player.shortName}
+				fluid
+			/>
+			<Button className="viewMoreButton mt-2 mb-3">
 				<Link
 					to={`/lm5a_project/player/${seasonId}/${player.playerID}/`}
 					className="text-white"

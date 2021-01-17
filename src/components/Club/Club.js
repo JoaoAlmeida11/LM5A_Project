@@ -7,6 +7,9 @@ import ShowPlayer from './ShowPlayer';
 import { connect } from 'react-redux';
 
 const Club = ({ club, loading }) => {
+	console.log('club');
+	console.log(club);
+
 	const { seasonId, clubId } = useParams();
 
 	// !Forced Fix: see what is setting the loading to success or preventing it from being set to 'idle' in the correspondent reducer
@@ -29,32 +32,29 @@ const Club = ({ club, loading }) => {
 			{/*//TODO: remove the div (its needed because there can only be a parent element)*/}
 			{loading === 'success' && (
 				<div>
-					<Row>
-						<Col xs={12} lg={6}>
-							<div>{club.teamName}</div>
+					<Row className="pb-4 justify-content-center">
+						<Col xs={6} lg={3}>
+							<h2 className="font-weight-bolder text-center pt-4">
+								{club.teamName}
+							</h2>
 							<Image src={`${club.logo}`} alt={club.teamName} fluid />
 							<Stadium
 								stadiumName={club.homeVenue.name}
 								key={club.homeVenue.id}
 							/>
 						</Col>
-						<Col xs={12} lg={6}>
-							{club.players.map(player => {
-								return (
-									<ShowPlayer
-										player={player}
-										seasonId={seasonId}
-										key={player.playerID}
-									/>
-								);
-							})}
-						</Col>
 					</Row>
-					{/* <Row>
-						<Col xs={12}>
-							<ClubInfo />
-						</Col>
-					</Row> */}
+					<Row>
+						{club.players.map(player => {
+							return (
+								<ShowPlayer
+									player={player}
+									seasonId={seasonId}
+									key={player.playerID}
+								/>
+							);
+						})}
+					</Row>
 				</div>
 			)}
 		</Container>

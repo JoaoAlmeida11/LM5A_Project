@@ -10,7 +10,7 @@ const HomePage = ({ leagueList, loading }) => {
 
 	return (
 		<Container>
-			<Row>
+			<Row className="justify-content-center pdImgLeague">
 				{loading === 'idle' && <p>Loading...</p>}
 				{loading === 'failed' && (
 					<p>

@@ -28,7 +28,7 @@ const Player = ({ player, loading, seasonIdStore, playerIdStore }) => {
 				{loading === 'success' && (
 					<Col xs={12} md={6} lg={4}>
 						<Image src={`${player.photo}`} alt={player.shortName} fluid />
-						<Button className="homepageButtonLeague">
+						<Button className="viewMoreButton">
 							<Link
 								to={`/lm5a_project/player/${seasonId}/${player.playerID}/`}
 								className="text-white"

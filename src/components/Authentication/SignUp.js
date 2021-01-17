@@ -1,15 +1,11 @@
 import React from 'react';
-// import { Button, TextInput, View, Text } from "react-native";
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
-// import { logInAction, signUpAction } from '../../redux/ducks/AuthSlice';
 import { signUpAction } from '../../redux/ducks/AuthSlice';
-// import * as firebase from "firebase";
 import GoogleButton from 'react-google-button/dist/react-google-button'; //forced fix do to known issue https://github.com/prescottprue/react-google-button/issues/28
 import { useFirebase } from 'react-redux-firebase';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-// import { useFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
 
 /* Validates the form fields */
 const hasValid = values => {
@@ -33,14 +29,14 @@ const SignUp = props => {
 	const { isLogged } = props;
 	const firebase = useFirebase();
 	const loginWithGoogle = () => {
-		const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY;
+		const FIREBASE_API_KEY = process.env.REACT_APP_FIREBASE_API_KEY;
 		const login = {
 			provider: 'google',
 			type: 'popup',
 			token: FIREBASE_API_KEY,
 		};
-
-		return firebase.login(login);
+		firebase.login(login);
+		return <Redirect to="/lm5a_project/" />;
 	};
 
 	const signup = (email, password) => {
@@ -85,11 +81,8 @@ const SignUp = props => {
 								console.log(e);
 								setSubmitting(false);
 							}
-
-							// isSignup ? signup(email, password) : login(email, password);
 						}}
 					>
-						{/* Callback function containing Formik state and helpers that handle common form actions */}
 						{({
 							values,
 							errors,
@@ -164,7 +157,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		// login: () => dispatch(logInAction()),
 		signup: email => dispatch(signUpAction(email)),
 	};
 };

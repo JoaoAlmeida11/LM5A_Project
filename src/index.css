@@ -3,6 +3,11 @@
 	padding-top: 22vh;
 }
 
+/* for league */
+.pdImgLeague {
+	padding-top: 18.5vh;
+}
+
 /*
 #37505C (charcoal)
 #F07167 (bittersweet)
@@ -10,20 +15,34 @@
 /* change the colors 
 add fix css states
 */
-.homepageButtonLeague {
+.viewMoreButton {
 	color: white;
 	background-color: #37505c;
 }
-.homepageButtonLeague:hover,
-.homepageButtonLeague:active {
+.viewMoreButton:hover,
+.viewMoreButton:active {
 	color: #f07167;
 }
 
-.imgConfig {
+/* alterações na página Club */
+
+.imgClubConfig {
 	max-width: 45%;
 	height: auto;
 }
 
 .clubName {
 	font-size: 1rem;
+}
+
+/* alterações na página League */
+
+.imgLeagueConfig {
+	max-width: 60%;
+	height: auto;
+}
+
+.imgHeightLeague {
+	height: 200px;
+	width: auto;
 }
