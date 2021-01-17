@@ -30,6 +30,8 @@ const hasValid = values => {
 const SignUp = props => {
 	const { isSignup } = props;
 	const firebase = useFirebase();
+	console.log('firebase');
+	console.log(firebase);
 	const loginWithGoogle = () => {
 		const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY;
 		const login = {
@@ -41,23 +43,24 @@ const SignUp = props => {
 		return firebase.login(login);
 	};
 
-	const login = (email, password) => {
-		firebase
-			.auth()
-			.signInWithEmailAndPassword(email, password)
-			.then(res => {
-				return res && props.login();
-			})
-			.catch(error => {
-				console.log(error);
-			});
-	};
+	// const login = (email, password) => {
+	// 	firebase
+	// 		.auth()
+	// 		.signInWithEmailAndPassword(email, password)
+	// 		.then(res => {
+	// 			return res && props.login();
+	// 		})
+	// 		.catch(error => {
+	// 			console.log(error);
+	// 		});
+	// };
 
 	const signup = (email, password) => {
 		firebase
 			.auth()
 			.createUserWithEmailAndPassword(email, password)
 			.then(res => {
+				console.log('Success create User');
 				return res && props.signup();
 			})
 			.catch(error => {
@@ -85,9 +88,19 @@ const SignUp = props => {
 						onSubmit={(values, { setSubmitting }) => {
 							setSubmitting(true);
 							const { email, password } = values;
-							isSignup ? signup(email, password) : login(email, password);
+							console.log('isSignup');
+							console.log(isSignup);
+							try {
+								signup(email, password);
+							} catch (e) {
+								console.log(e);
+								setSubmitting(false);
+							}
+
+							// isSignup ? signup(email, password) : login(email, password);
 						}}
 					>
+						{/* Callback function containing Formik state and helpers that handle common form actions */}
 						{({
 							values,
 							errors,
@@ -97,7 +110,7 @@ const SignUp = props => {
 							handleSubmit,
 							isSubmitting,
 						}) => (
-							<Form onSubmit={HandleSubmit}>
+							<Form onSubmit={handleSubmit}>
 								<Form.Group className="text-left">
 									<Form.Label>Email Address</Form.Label>
 									<Form.Control

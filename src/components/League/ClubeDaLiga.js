@@ -4,7 +4,7 @@ import { Col, Button, Image } from 'react-bootstrap';
 export default function ClubeDaLiga({ club }) {
 	return (
 		<Col xs={12} md={6} lg={4}>
-			<Image src={`${club.logo}`} alt={club.teamName} fluid />
+			<Image className=" " src={`${club.logo}`} alt={club.teamName} fluid />
 
 			<h3 className="text-center">{club.teamName}</h3>
 			<Button className="homepageButtonLeague">

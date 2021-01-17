@@ -14,6 +14,8 @@ const League = ({ clubList, loading, idLeagueStore }) => {
 		RequestClubs(leagueId);
 	}
 
+	console.log(clubList);
+
 	return (
 		<Container>
 			<Row>
@@ -26,6 +28,7 @@ const League = ({ clubList, loading, idLeagueStore }) => {
 				)}
 				{loading === 'success' &&
 					Object.entries(clubList).map(club => {
+						console.log(club);
 						return <ClubeDaLiga club={club[1]} key={club[0]} />;
 					})}
 			</Row>
@@ -34,6 +37,8 @@ const League = ({ clubList, loading, idLeagueStore }) => {
 };
 
 const mapStateToProps = state => {
+	console.log('state');
+	console.log(state);
 	return {
 		clubList: state.club.clubList,
 		loading: state.club.loading,

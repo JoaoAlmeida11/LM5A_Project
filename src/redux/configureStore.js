@@ -7,6 +7,9 @@ import {
 	getFirebase,
 	actionTypes as rrfActionTypes,
 } from 'react-redux-firebase';
+import { constants as rfConstants } from 'redux-firestore';
+import 'firebase/database';
+
 // import firebase from './FireBase/fbConfig';
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -17,11 +20,15 @@ const store = configureStore({
 	middleware: getDefaultMiddleware({
 		serializableCheck: {
 			ignoredActions: [
+				// just ignore every redux-firebase and react-redux-firebase action type
+				...Object.keys(rfConstants.actionTypes).map(
+					type => `${rfConstants.actionsPrefix}/${type}`
+				),
 				...Object.keys(rrfActionTypes).map(
 					type => `@@reactReduxFirebase/${type}`
 				),
 			],
-			ignoredPaths: ['firebase'],
+			ignoredPaths: ['firebase', 'firestore'],
 		},
 		thunk: {
 			extraArgument: getFirebase,
@@ -40,12 +47,11 @@ export const rrfProps = {
 };
 
 export const fbConfig = {
-	apiKey: [process.env.FIREBASE_API_KEY],
-	authDomain: [process.env.FIREBASE_AUTH_DOMAIN],
-	projectId: [process.env.FIREBASE_PROJECT_ID],
-	storageBucket: [process.env.FIREBASE_STORAGE_BUCKET],
-	messagingSenderId: [process.env.FIREBASE_MESSAGING_SENDER_ID],
-	appId: [process.env.FIREBASE_APP_ID],
+	apiKey: [process.env.REACT_APP_FIREBASE_API_KEY],
+	authDomain: [process.env.REACT_APP_FIREBASE_AUTH_DOMAIN],
+	projectId: [process.env.REACT_APP_FIREBASE_PROJECT_ID],
+	storageBucket: [process.env.REACT_APP_FIREBASE_STORAGE_BUCKET],
+	messagingSenderId: [process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID],
+	appId: [process.env.REACT_APP_FIREBASE_APP_ID],
 };
-// const API_KEY = process.env.REACT_APP_API_KEY;
 firebase.initializeApp(fbConfig);
