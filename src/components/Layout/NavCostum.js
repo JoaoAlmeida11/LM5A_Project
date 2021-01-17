@@ -6,12 +6,12 @@ import {
 	Button,
 	Container,
 } from 'react-bootstrap';
-// import { connect } from 'react-redux';
-
+import { connect } from 'react-redux';
+import logOut from '../../functions/Authentication/LogOut';
 // mudar estilos da NavCostum
 // adicionar Brand
 
-function NavCostum() {
+function NavCostum({ isLogged }) {
 	return (
 		<Container fluid>
 			<Navbar bg="light" expand="md">
@@ -25,8 +25,16 @@ function NavCostum() {
 					<Form inline>
 						<FormControl type="text" placeholder="Search" className="mr-sm-2" />
 						<Button variant="outline-success">Search</Button>
-						<Nav.Link href="/lm5a_project/login/">Login</Nav.Link>
-						<Nav.Link href="/lm5a_project/signIn/">Sign Up</Nav.Link>
+						{!isLogged ? (
+							<>
+								<Nav.Link href="/lm5a_project/login/">Login</Nav.Link>
+								<Nav.Link href="/lm5a_project/signIn/">Sign Up</Nav.Link>
+							</>
+						) : (
+							<Button variant="outline-success" onClick={logOut}>
+								LogOut
+							</Button>
+						)}
 					</Form>
 				</Navbar.Collapse>
 			</Navbar>
@@ -34,10 +42,11 @@ function NavCostum() {
 	);
 }
 
-// const mapStateToProps = state => {
-// 	console.log(state);
-// 	return {};
-// };
+const mapStateToProps = state => {
+	console.log(state);
+	return {
+		isLogged: state.auth.isLogged,
+	};
+};
 
-export default NavCostum;
-// export default connect(mapStateToProps)(NavCostum);
+export default connect(mapStateToProps)(NavCostum);

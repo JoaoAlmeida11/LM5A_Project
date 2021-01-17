@@ -56,11 +56,15 @@ const authSlice = createSlice({
 		// firebaseInit: false,
 	},
 	reducers: {
-		loginAction(state) {
+		logInAction(state) {
 			state.isLogged = true;
 		},
-		signupAction(state) {
+		signUpAction(state) {
 			state.isLogged = true;
+		},
+		logOutAction(state) {
+			state.isLogged = false;
+			state.userEmail = '';
 		},
 
 		// !not being used
@@ -97,8 +101,9 @@ const authSlice = createSlice({
 });
 
 export const {
-	loginAction,
-	signupAction,
+	logInAction,
+	signUpAction,
+	logOutAction,
 
 	// !not being used
 	loginError,

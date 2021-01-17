@@ -19,16 +19,15 @@ add fix css states
 	color: #f07167;
 }
 
-.imgClub {
-	padding-top: 8%;
+.imgConfig {
 	max-width: 45%;
 	height: auto;
 }
 
 .clubName {
-	font-size: 23px;
-	padding-right: 50%;
+	font-size: 1rem;
 }
 
-/* .viewMoreButton {
-} */
+.viewMoreButton {
+	margin-left: 7%;
+}

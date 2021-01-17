@@ -3,16 +3,13 @@ import { Col, Button, Image } from 'react-bootstrap';
 
 export default function ClubeDaLiga({ club }) {
 	return (
-		<Col xs={12} md={6} lg={3}>
-			<div>
-				<Image
-					className="imgClub"
-					src={`${club.logo}`}
-					alt={club.teamName}
-					fluid
-				/>
-			</div>
-
+		<Col xs={12} md={6} lg={3} className="text-center pt-4">
+			<Image
+				className="imgConfig"
+				src={`${club.logo}`}
+				alt={club.teamName}
+				fluid
+			/>
 			<h3 className="text-center clubName">{club.teamName}</h3>
 			<Button size="sm" className="homepageButtonLeague">
 				<Link

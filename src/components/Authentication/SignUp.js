@@ -2,7 +2,8 @@ import React from 'react';
 // import { Button, TextInput, View, Text } from "react-native";
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
-import { loginAction, signupAction } from '../../redux/ducks/AuthSlice';
+// import { logInAction, signUpAction } from '../../redux/ducks/AuthSlice';
+import { signUpAction } from '../../redux/ducks/AuthSlice';
 // import * as firebase from "firebase";
 import GoogleButton from 'react-google-button/dist/react-google-button'; //forced fix do to known issue https://github.com/prescottprue/react-google-button/issues/28
 import { useFirebase } from 'react-redux-firebase';
@@ -60,7 +61,7 @@ const SignUp = props => {
 			.createUserWithEmailAndPassword(email, password)
 			.then(res => {
 				console.log('Success create User');
-				return res && props.signup();
+				return res && props.signup(email);
 			})
 			.catch(error => {
 				console.log(error);
@@ -175,8 +176,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		login: () => dispatch(loginAction()),
-		signup: () => dispatch(signupAction()),
+		// login: () => dispatch(logInAction()),
+		signup: email => dispatch(signUpAction(email)),
 	};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
