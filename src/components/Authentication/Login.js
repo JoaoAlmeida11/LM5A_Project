@@ -1,61 +1,171 @@
-//import React, { useState } from 'react';
+import React from 'react';
+// import { Button, TextInput, View, Text } from "react-native";
+import { Formik } from 'formik';
+import { connect } from 'react-redux';
+import { logInAction } from '../../redux/ducks/AuthSlice';
+// import * as firebase from "firebase";
+import GoogleButton from 'react-google-button/dist/react-google-button'; //forced fix do to known issue https://github.com/prescottprue/react-google-button/issues/28
+import { useFirebase } from 'react-redux-firebase';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
+// import { useFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
 
-// export function LoginT() {
-// 	const [email, setEmail] = useState("");
-// 	const [password, setPassword] = useState("");
+/* Validates the form fields */
+const hasValid = values => {
+	let errors = {};
+	let { email, password } = values;
+	if (!email) {
+		errors.email = 'Email is required!';
+	} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+		errors.email = 'Invalid email address';
+	}
+	if (!password) {
+		errors.password = 'Password is required!';
+	} else if (/^(.{0,7}|[^0-9]*|[^A-Z]*|[^a-z]*)$/i.test(password)) {
+		errors.password =
+			'Password has to be at least 8 characters, one letter and one number';
+	}
+	return errors;
+};
 
-// 	function validateForm() {
-// 	  return email.length > 0 && password.length > 0;
-// 	}
+const Login = props => {
+	const { isLogged } = props;
+	const firebase = useFirebase();
+	const loginWithGoogle = () => {
+		const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY;
+		const login = {
+			provider: 'google',
+			type: 'popup',
+			token: FIREBASE_API_KEY,
+		};
 
-// 	function handleSubmit(e) {
-// 	  e.preventDefault();
-// 	}
+		return firebase.login(login);
+	};
 
-export default function Login() {
+	const login = (email, password) => {
+		firebase
+			.auth()
+			.signInWithEmailAndPassword(email, password)
+			.then(res => {
+				console.log('Success Login User');
+
+				return res && props.login(email);
+			})
+			.catch(error => {
+				console.log(error);
+			});
+	};
+
+	if (isLogged === true) return <Redirect to="/lm5a_project/" />;
 	return (
 		<Container>
 			<Row className="centerLogin">
+				<Col xl={12} lg={6} className="mx-auto my-auto text-center">
+					<h3 className="mt-4">Login</h3>
+				</Col>
+
+				<Col xl={12} lg={6} className="d-flex justify-content-center">
+					<GoogleButton type="light" onClick={loginWithGoogle} />
+				</Col>
+				<Col xl={12} lg={6} className="mx-auto my-auto text-center">
+					<h4 className="mt-4">or</h4>
+				</Col>
 				<Col xl={12} lg={6} className="mx-auto my-auto">
-					<Form>
-						<h3 className="text-center mt-4">Log In</h3>
-						<Form.Group controlId="formBasicEmail" className="text-left">
-							<Form.Label>Email Address</Form.Label>
-							<Form.Control
-								value="email"
-								placeholder="Enter email"
-								id="email"
-							/>
-						</Form.Group>
+					<Formik
+						initialValues={{ email: '', password: '' }}
+						validate={hasValid}
+						onSubmit={(values, { setSubmitting }) => {
+							setSubmitting(true);
+							const { email, password } = values;
 
-						<Form.Group>
-							<Form.Label className="text-left">Password</Form.Label>
-							<Form.Control
-								value="password"
-								placeholder="Enter password"
-								id="password"
-							/>
-						</Form.Group>
+							try {
+								login(email, password);
+							} catch (e) {
+								// TODO: error handling
+								console.log('Error singUp');
+								console.log(e);
+								setSubmitting(false);
+							}
 
-						<Form.Group className="text-center">
-							<Form.Check
-								type="checkbox"
-								id="customCheck1"
-								label="Remember me"
-							/>
-						</Form.Group>
-						<div className="text-center">
-							<Button value="submit" variant="primary">
-								Submit
-							</Button>
-						</div>
-						<Form.Text className="forgot-password text-center mt-3">
-							Forgot Password?
-						</Form.Text>
-					</Form>
+							// isSignup ? signup(email, password) : login(email, password);
+						}}
+					>
+						{/* Callback function containing Formik state and helpers that handle common form actions */}
+						{({
+							values,
+							errors,
+							touched,
+							handleChange,
+							handleBlur,
+							handleSubmit,
+							isSubmitting,
+						}) => (
+							<Form onSubmit={handleSubmit}>
+								<Form.Group className="text-left">
+									<Form.Label>Email Address</Form.Label>
+									<Form.Control
+										name="email"
+										autoComplete="email"
+										value={values.email}
+										placeholder="Enter email"
+										id="email"
+										onChange={handleChange}
+										onBlur={handleBlur}
+									/>
+									{touched.email && errors.email ? (
+										<div className="error-message">{errors.email}</div>
+									) : null}
+								</Form.Group>
+								<Form.Group>
+									<Form.Label className="text-left">Password</Form.Label>
+									<Form.Control
+										name="password"
+										autoComplete="current-password"
+										type="password"
+										placeholder="Enter password"
+										id="password"
+										onChange={handleChange}
+										onBlur={handleBlur}
+										value={values.password}
+										required
+									/>
+									{touched.password && errors.password ? (
+										<div className="error-message">{errors.password}</div>
+									) : null}
+								</Form.Group>
+
+								<div className="text-center">
+									<Button
+										type="submit"
+										variant="primary"
+										disabled={isSubmitting}
+									>
+										Login
+									</Button>
+								</div>
+								<Form.Text className="forgot-password text-center mt-3">
+									Forgot Password?
+								</Form.Text>
+							</Form>
+						)}
+					</Formik>
 				</Col>
 			</Row>
 		</Container>
 	);
-}
+};
+
+const mapStateToProps = state => {
+	console.log('mapStateToProps');
+	console.log(state);
+	return {
+		isLogged: state.auth.isLogged,
+	};
+};
+
+const mapDispatchToProps = dispatch => {
+	return {
+		login: email => dispatch(logInAction(email)),
+	};
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

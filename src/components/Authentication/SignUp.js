@@ -43,18 +43,6 @@ const SignUp = props => {
 		return firebase.login(login);
 	};
 
-	// const login = (email, password) => {
-	// 	firebase
-	// 		.auth()
-	// 		.signInWithEmailAndPassword(email, password)
-	// 		.then(res => {
-	// 			return res && props.login();
-	// 		})
-	// 		.catch(error => {
-	// 			console.log(error);
-	// 		});
-	// };
-
 	const signup = (email, password) => {
 		firebase
 			.auth()
@@ -72,7 +60,7 @@ const SignUp = props => {
 		<Container>
 			<Row className="centerLogin">
 				<Col xl={12} lg={6} className="mx-auto my-auto text-center">
-					<h3 className="mt-4">Sign In</h3>
+					<h3 className="mt-4">Sign Up</h3>
 				</Col>
 
 				<Col xl={12} lg={6} className="d-flex justify-content-center">
@@ -151,7 +139,7 @@ const SignUp = props => {
 										variant="primary"
 										disabled={isSubmitting}
 									>
-										Submit
+										SignUp
 									</Button>
 								</div>
 								<Form.Text className="forgot-password text-center mt-3">
@@ -181,141 +169,3 @@ const mapDispatchToProps = dispatch => {
 	};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
-
-// import { useState } from 'react';
-
-// import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-
-// import { connect } from 'react-redux';
-
-// // import GoogleAuth from '../../functions/Authentication/GoogleAuth';
-// import { signUp } from '../../redux/ducks/AuthSlice';
-// // import { Redirect } from 'react-router-dom'
-
-// // import { useSelector } from 'react-redux';
-// import { useFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
-
-// const SignUp = ({ auth }) => {
-// 	const emailRef = useRef();
-// 	const passwordRef = useRef();
-// 	const passwordConfirmRef = useRef();
-
-// 	// const firebase = useFirebase();
-// 	// const firebaseAuth = firebase.auth();
-// 	// console.log(firebase);
-// 	// console.log(firebaseAuth);
-
-// 	// TODO: validation of email (@) and password (at least 8 digits with letters, numbers and symbols)
-// 	const EmailHandler = e => {
-// 		e.preventDefault();
-// 		setEmail(e.target.value);
-// 	};
-// 	const PasswordHandler = e => {
-// 		e.preventDefault();
-// 		setPassword(e.target.value);
-// 	};
-
-// 	const HandleSubmit = e => {
-// 		e.preventDefault();
-// 		const email = e.target[0].value;
-// 		const password = e.target[1].value;
-// 		SignUp({ email, password });
-// 	};
-
-// 	const loginWithGoogle = () => {
-// 		const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY;
-// 		const login = {
-// 			provider: 'google',
-// 			type: 'popup',
-// 			token: FIREBASE_API_KEY,
-// 		};
-
-// 		// console.log(login);
-
-// 		return firebase.login(login);
-// 	};
-// 	// TODO: add to another page; give as params email + pass in an obj
-// 	// const ClickSubmit = e => {
-// 	// 	e.preventDefault();
-// 	// 	// console.log(e);
-// 	// 	// const dispatch = useDispatch();
-// 	// 	// dispatch(signUp({ e }));
-// 	// 	console.log(e.target);
-// 	// };
-
-// 	return (
-// 		<Container>
-// 			<Row className="centerLogin">
-// 				<Col xl={12} lg={6} className="mx-auto my-auto text-center">
-// 					<h3 className="mt-4">Sign In</h3>
-// 				</Col>
-
-// 				<Col xl={12} lg={6} className="d-flex justify-content-center">
-// 					{!isLoaded(auth) ? (
-// 						<span>Loading...</span>
-// 					) : isEmpty(auth) ? (
-// 						<GoogleButton type="light" onClick={loginWithGoogle} />
-// 					) : (
-// 						<pre>{JSON.stringify(auth, null, 2)}</pre>
-// 					)}
-// 				</Col>
-// 				<Col xl={12} lg={6} className="mx-auto my-auto text-center">
-// 					<h4 className="mt-4">or</h4>
-// 				</Col>
-// 				<Col xl={12} lg={6} className="mx-auto my-auto">
-// 					{/* <Form> */}
-// 					<Form onSubmit={HandleSubmit}>
-// 						<Form.Group className="text-left">
-// 							<Form.Label>Email Address</Form.Label>
-// 							<Form.Control
-// 								autoComplete="email"
-// 								value={email}
-// 								placeholder="Enter email"
-// 								id="email"
-// 								onChange={EmailHandler}
-// 							/>
-// 						</Form.Group>
-
-// 						<Form.Group>
-// 							<Form.Label className="text-left">Password</Form.Label>
-// 							<Form.Control
-// 								autoComplete="current-password"
-// 								type="password"
-// 								ref={passwordRef}
-// 								placeholder="Enter password"
-// 								id="password"
-// 								required
-// 							/>
-// 						</Form.Group>
-
-// 						<div className="text-center">
-// 							{/* <Button value="submit" variant="primary" onClick={ClickSubmit}> */}
-// 							<Button type="submit" variant="primary">
-// 								Submit
-// 							</Button>
-// 						</div>
-// 						<Form.Text className="forgot-password text-center mt-3">
-// 							Forgot Password?
-// 						</Form.Text>
-// 					</Form>
-// 				</Col>
-// 			</Row>
-// 		</Container>
-// 	);
-// };
-
-// const mapStateToProps = state => {
-// 	// console.log(state.firebase);
-// 	return {
-// 		auth: state.firebase.auth,
-// 		authError: state.auth.authError,
-// 	};
-// };
-
-// const mapDispatchToProps = dispatch => {
-// 	return {
-// 		signUp: creds => dispatch(signUp(creds)),
-// 	};
-// };
-
-// export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
