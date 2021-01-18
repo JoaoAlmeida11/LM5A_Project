@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'; //change to connect-router
 import { Col, Button, Image } from 'react-bootstrap';
 
-export default function ClubeDaLiga({ club }) {
+export default function ShowClub({ club }) {
 	return (
 		<Col xs={12} md={6} lg={3} className="text-center pt-4">
 			<Image

@@ -6,7 +6,12 @@ export default function ShowLeague({ league }) {
 	return (
 		<Col xs={12} md={6} lg={4} className="text-center pt-4 ">
 			<div className="imgHeightLeague d-flex align-items-end justify-content-center">
-				<Image class="imgConfig " src={`${league.logo}`} alt={altImage} fluid />
+				<Image
+					className="imgConfig "
+					src={`${league.logo}`}
+					alt={altImage}
+					fluid
+				/>
 			</div>
 			<div className="pt-4">
 				<Button className="viewMoreButton">

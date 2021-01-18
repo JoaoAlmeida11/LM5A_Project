@@ -1,6 +1,6 @@
 import { Container, Row } from 'react-bootstrap';
 // import { useParams } from 'react-router-dom';
-import ClubeDaLiga from './ClubeDaLiga';
+import ShowClub from './ShowClub';
 import RequestClubs from '../../functions/League/RequestClubs';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -28,7 +28,7 @@ const League = ({ clubList, loading, idLeagueStore }) => {
 				)}
 				{loading === 'success' &&
 					Object.entries(clubList).map(club => {
-						return <ClubeDaLiga club={club[1]} key={club[0]} />;
+						return <ShowClub club={club[1]} key={club[0]} />;
 					})}
 			</Row>
 		</Container>

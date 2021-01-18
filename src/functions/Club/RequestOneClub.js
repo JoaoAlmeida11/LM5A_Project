@@ -10,6 +10,7 @@ const RequestOneClub = ({ seasonId, clubId }) => {
 	dispatch(fetchOneClub({ seasonId, clubId }));
 	// to set loading of other pages to idle
 
+	// TODO: see if it still needs
 	useEffect(() => {
 		dispatch(setLoadingToIdleLeagueSlice());
 		dispatch(setLoadingToIdleClubsSlice());

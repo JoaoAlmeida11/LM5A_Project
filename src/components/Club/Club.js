@@ -38,6 +38,7 @@ const Club = ({ club, loading }) => {
 								{club.teamName}
 							</h2>
 							<Image src={`${club.logo}`} alt={club.teamName} fluid />
+							{/* //TODO: change to div */}
 							<Stadium
 								stadiumName={club.homeVenue.name}
 								key={club.homeVenue.id}
@@ -46,13 +47,18 @@ const Club = ({ club, loading }) => {
 					</Row>
 					<Row>
 						{club.players.map(player => {
-							return (
-								<ShowPlayer
-									player={player}
-									seasonId={seasonId}
-									key={player.playerID}
-								/>
-							);
+							// TODO:
+							console.log('player');
+							console.log(player);
+							if (player.photo !== '')
+								return (
+									<ShowPlayer
+										player={player}
+										seasonId={seasonId}
+										key={player.playerID}
+									/>
+								);
+							return true;
 						})}
 					</Row>
 				</div>
