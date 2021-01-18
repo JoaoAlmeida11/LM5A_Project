@@ -11,6 +11,7 @@ import { constants as rfConstants } from 'redux-firestore';
 
 // import firebase from './FireBase/fbConfig';
 import firebase from 'firebase/app';
+
 import 'firebase/database';
 import 'firebase/auth';
 const reducer = rootReducer;

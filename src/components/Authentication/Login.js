@@ -1,7 +1,7 @@
 import React from 'react';
 // import { Button, TextInput, View, Text } from "react-native";
 import { Formik } from 'formik';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { logInAction } from '../../redux/ducks/AuthSlice';
 // import * as firebase from "firebase";
 import GoogleButton from 'react-google-button/dist/react-google-button'; //forced fix do to known issue https://github.com/prescottprue/react-google-button/issues/28
@@ -31,17 +31,22 @@ const hasValid = values => {
 const Login = props => {
 	const { isLogged } = props;
 	const firebase = useFirebase();
-
-	const loginWithGoogle = () => {
-		const FIREBASE_API_KEY = process.env.REACT_APP_FIREBASE_API_KEY;
-		const login = {
-			provider: 'google',
-			type: 'popup',
-			token: FIREBASE_API_KEY,
-		};
-		firebase.login(login);
-
-		return <Redirect to="/lm5a_project/" />;
+	const dispatch = useDispatch();
+	const loginWithGoogle = e => {
+		e.preventDefault();
+		const googleProvider = new firebase.auth.GoogleAuthProvider();
+		const auth = firebase.auth();
+		auth
+			.signInWithPopup(googleProvider)
+			.then(res => {
+				console.log(res.user);
+				dispatch(logInAction());
+				return <Redirect to="/lm5a_project/" />;
+			})
+			.catch(error => {
+				console.log('error.message');
+				console.log(error.message);
+			});
 	};
 
 	const login = (email, password) => {

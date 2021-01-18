@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { signUpAction } from '../../redux/ducks/AuthSlice';
 import GoogleButton from 'react-google-button/dist/react-google-button'; //forced fix do to known issue https://github.com/prescottprue/react-google-button/issues/28
 import { useFirebase } from 'react-redux-firebase';
@@ -24,19 +24,26 @@ const hasValid = values => {
 	}
 	return errors;
 };
-
+// export const auth = firebase.auth();
 const SignUp = props => {
 	const { isLogged } = props;
 	const firebase = useFirebase();
-	const loginWithGoogle = () => {
-		const FIREBASE_API_KEY = process.env.REACT_APP_FIREBASE_API_KEY;
-		const login = {
-			provider: 'google',
-			type: 'popup',
-			token: FIREBASE_API_KEY,
-		};
-		firebase.login(login);
-		return <Redirect to="/lm5a_project/" />;
+	const dispatch = useDispatch();
+	const loginWithGoogle = e => {
+		e.preventDefault();
+		const googleProvider = new firebase.auth.GoogleAuthProvider();
+		const auth = firebase.auth();
+		auth
+			.signInWithPopup(googleProvider)
+			.then(res => {
+				console.log(res.user);
+				dispatch(signUpAction());
+				return <Redirect to="/lm5a_project/" />;
+			})
+			.catch(error => {
+				console.log('error.message');
+				console.log(error.message);
+			});
 	};
 
 	const signup = (email, password) => {
