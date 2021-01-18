@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 
 // css files
+// TODO: why?
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
