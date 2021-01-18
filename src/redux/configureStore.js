@@ -14,6 +14,7 @@ import firebase from 'firebase/app';
 
 import 'firebase/database';
 import 'firebase/auth';
+
 const reducer = rootReducer;
 
 const store = configureStore({

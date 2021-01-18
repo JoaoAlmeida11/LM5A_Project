@@ -146,6 +146,7 @@ const Login = props => {
 										Login
 									</Button>
 								</div>
+								{/* Not implemented Forgot Password */}
 								<Form.Text className="forgot-password text-center mt-3">
 									Forgot Password?
 								</Form.Text>

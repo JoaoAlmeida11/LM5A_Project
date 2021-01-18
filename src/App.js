@@ -5,7 +5,6 @@ import HomePage from './components/Homepage/HomePage';
 import League from './components/League/League';
 import Club from './components/Club/Club';
 import Player from './components/Player/Player';
-import Ideal11 from './components/Ideal11/Ideal11';
 import Login from './components/Authentication/Login';
 import SignIn from './components/Authentication/SignUp';
 import Footer from './components/Layout/Footer';
@@ -29,7 +28,6 @@ export default function App() {
 					path="/lm5a_project/player/:seasonId/:playerId/"
 					component={Player}
 				></Route>
-				<Route path="/lm5a_project/ideal11/" component={Ideal11}></Route>
 				<Route path="/lm5a_project/login/" component={Login}></Route>
 				<Route path="/lm5a_project/signIn/" component={SignIn}></Route>
 			</Switch>

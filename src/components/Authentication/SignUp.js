@@ -142,9 +142,6 @@ const SignUp = props => {
 										SignUp
 									</Button>
 								</div>
-								<Form.Text className="forgot-password text-center mt-3">
-									Forgot Password?
-								</Form.Text>
 							</Form>
 						)}
 					</Formik>
