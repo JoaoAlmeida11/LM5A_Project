@@ -101,8 +101,6 @@ export const fetchClubs = createAsyncThunk(
 		const state = thunkAPI.getState();
 		const leagueList = state.league.leagueList;
 		const leagueListArray = Object.entries(leagueList);
-		// console.log('leagueListArray');
-		// console.log(leagueListArray);
 
 		// TODO: check if information already exists
 		if (state.club.id === leagueId) {
@@ -111,9 +109,6 @@ export const fetchClubs = createAsyncThunk(
 		}
 
 		const needsLeagueList = leagueListArray.length !== 0 ? false : true;
-
-		// console.log('needsLeagueList');
-		// console.log(needsLeagueList);
 
 		const response = await conditionalChaining({ needsLeagueList, leagueId })
 			.then(res => fetchClubIds(res))
@@ -150,7 +145,7 @@ const clubsSlice = createSlice({
 		},
 	},
 	extraReducers: {
-		[fetchClubs.pending]: (state, payload) => {
+		[fetchClubs.pending]: state => {
 			state.loading = 'pending';
 		},
 		[fetchClubs.fulfilled]: (state, { payload }) => {
@@ -158,14 +153,6 @@ const clubsSlice = createSlice({
 
 			// ** if the store already has the values doesn't cause a store change
 			if (payload.changeStore) {
-				// const mergeDataSet = new Set();
-				// for (let i in state.clubList) {
-				// 	mergeDataSet.add(state.clubList[i]);
-				// }
-				// for (let i in payload.teams) {
-				// 	mergeDataSet.add(payload.teams[i]);
-				// }
-				// const mergeDataArray = [...mergeDataSet];
 				state.clubList = payload.teams;
 				state.id = payload.leagueId;
 			}

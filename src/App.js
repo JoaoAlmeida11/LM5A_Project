@@ -12,26 +12,28 @@ import NavCostum from './components/Layout/NavCostum';
 
 export default function App() {
 	return (
-		<Router>
+		<>
 			<NavCostum />
-			<Switch>
-				<Route exact path="/lm5a_project/" component={HomePage}></Route>
-				<Route
-					path="/lm5a_project/league/:leagueId/"
-					component={League}
-				></Route>
-				<Route
-					path="/lm5a_project/club/:seasonId/:clubId/"
-					component={Club}
-				></Route>
-				<Route
-					path="/lm5a_project/player/:seasonId/:playerId/"
-					component={Player}
-				></Route>
-				<Route path="/lm5a_project/login/" component={Login}></Route>
-				<Route path="/lm5a_project/signIn/" component={SignIn}></Route>
-			</Switch>
-			<Footer />
-		</Router>
+			<Router>
+				<Switch>
+					<Route exact path="/lm5a_project/" component={HomePage}></Route>
+					<Route
+						path="/lm5a_project/league/:leagueId/"
+						component={League}
+					></Route>
+					<Route
+						path="/lm5a_project/club/:seasonId/:clubId/"
+						component={Club}
+					></Route>
+					<Route
+						path="/lm5a_project/player/:seasonId/:playerId/"
+						component={Player}
+					></Route>
+					<Route path="/lm5a_project/login/" component={Login}></Route>
+					<Route path="/lm5a_project/signIn/" component={SignIn}></Route>
+				</Switch>
+				<Footer />
+			</Router>
+		</>
 	);
 }

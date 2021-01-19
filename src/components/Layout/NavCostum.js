@@ -8,14 +8,10 @@ import {
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import logOut from '../../functions/Authentication/LogOut';
-import logo from '../../logo.png';
+// import logo from '../../logo.png';
 // mudar estilos da NavCostum
 // adicionar Brand
 
-console.log('logo');
-console.log(logo);
-console.log('process.env.PUBLIC_URL');
-console.log(process.env.PUBLIC_URL);
 const url = process.env.PUBLIC_URL;
 
 function NavCostum({ isLogged }) {
@@ -29,24 +25,22 @@ function NavCostum({ isLogged }) {
 				></Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
-					<Nav className="mr-auto">
-						<Nav.Link href="/lm5a_project/ideal11/">11 Ideal</Nav.Link>
-					</Nav>
-
-					<Form inline>
-						{/* <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+					<Nav className="ml-auto">
+						<Form inline>
+							{/* <FormControl type="text" placeholder="Search" className="mr-sm-2" />
 						<Button variant="outline-success">Search</Button> */}
-						{!isLogged ? (
-							<>
-								<Nav.Link href="/lm5a_project/login/">Login</Nav.Link>
-								<Nav.Link href="/lm5a_project/signIn/">Sign Up</Nav.Link>
-							</>
-						) : (
-							<Button variant="outline-success" onClick={logOut}>
-								LogOut
-							</Button>
-						)}
-					</Form>
+							{!isLogged ? (
+								<>
+									<Nav.Link href="/lm5a_project/login/">Login</Nav.Link>
+									<Nav.Link href="/lm5a_project/signIn/">Sign Up</Nav.Link>
+								</>
+							) : (
+								<Button variant="outline-success" onClick={logOut}>
+									LogOut
+								</Button>
+							)}
+						</Form>
+					</Nav>
 				</Navbar.Collapse>
 			</Navbar>
 		</Container>
@@ -54,7 +48,8 @@ function NavCostum({ isLogged }) {
 }
 
 const mapStateToProps = state => {
-	console.log(state);
+	// console.log('state at NavCostum');
+	// console.log(state);
 	return {
 		isLogged: state.auth.isLogged,
 	};
