@@ -33,12 +33,15 @@ const store = configureStore({
 			ignoredPaths: ['firebase', 'firestore'],
 		},
 		thunk: {
-			extraArgument: getFirebase,
+			extraArgument: {
+				getFirebase,
+			},
 		},
 	}).concat(logger),
 	devTools: process.env.NODE_ENV !== 'production',
 });
 export default store;
+
 const rrfConfig = {
 	userProfile: 'users',
 };

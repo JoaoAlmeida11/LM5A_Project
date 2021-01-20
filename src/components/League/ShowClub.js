@@ -3,14 +3,14 @@ import { Col, Button, Image } from 'react-bootstrap';
 
 export default function ShowClub({ club }) {
 	return (
-		<Col xs={12} md={6} lg={3} className="text-center pt-4">
+		<Col xs={12} md={6} lg={4} xl={3} className="text-center pt-4 pb-3">
 			<Image
 				className="imgClubConfig"
 				src={`${club.logo}`}
 				alt={club.teamName}
 				fluid
 			/>
-			<h3 className="text-center clubName">{club.teamName}</h3>
+			<h2 className="text-center mt-2 mb-2">{club.teamName}</h2>
 			<Button size="sm" className="viewMoreButton">
 				<Link
 					to={`/lm5a_project/club/${club.seasonID}/${club.teamID}`}

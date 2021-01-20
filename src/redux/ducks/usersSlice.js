@@ -43,20 +43,3 @@ export const usersSlice = createSlice({
 });
 
 export const { usersLoading, usersReceived } = usersSlice.actions;
-
-// old way -> normal thunk
-// const fetchUsers = () => async dispatch => {
-// 	dispatch(usersLoading());
-// 	const response = await useBootstrapPrefix.fetchAll();
-// 	dispatch(usersReceived(response.data));
-// };
-
-// new way -> createAsyncThunk
-// on top
-// const fetchUsersById = createAsyncThunk(
-// 	'users/fetchByIdStatus',
-// 	async (userId, thunkAPI) => {
-// 		const response = await useBootstrapPrefix.fetch(userId);
-// 		return response.data;
-// 	}
-// );

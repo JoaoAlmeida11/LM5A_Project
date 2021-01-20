@@ -10,30 +10,29 @@ import SignIn from './components/Authentication/SignUp';
 import Footer from './components/Layout/Footer';
 import NavCostum from './components/Layout/NavCostum';
 
-export default function App() {
+export const App = () => {
 	return (
-		<>
+		<Router>
 			<NavCostum />
-			<Router>
-				<Switch>
-					<Route exact path="/lm5a_project/" component={HomePage}></Route>
-					<Route
-						path="/lm5a_project/league/:leagueId/"
-						component={League}
-					></Route>
-					<Route
-						path="/lm5a_project/club/:seasonId/:clubId/"
-						component={Club}
-					></Route>
-					<Route
-						path="/lm5a_project/player/:seasonId/:playerId/"
-						component={Player}
-					></Route>
-					<Route path="/lm5a_project/login/" component={Login}></Route>
-					<Route path="/lm5a_project/signIn/" component={SignIn}></Route>
-				</Switch>
-				<Footer />
-			</Router>
-		</>
+			<Switch>
+				<Route exact path="/lm5a_project/" component={HomePage}></Route>
+				<Route
+					path="/lm5a_project/league/:leagueId/"
+					component={League}
+				></Route>
+				<Route
+					path="/lm5a_project/club/:seasonId/:clubId/"
+					component={Club}
+				></Route>
+				<Route
+					path="/lm5a_project/player/:seasonId/:playerId/"
+					component={Player}
+				></Route>
+				<Route path="/lm5a_project/login/" component={Login}></Route>
+				<Route path="/lm5a_project/signIn/" component={SignIn}></Route>
+			</Switch>
+			<Footer />
+		</Router>
 	);
-}
+};
+export default App;

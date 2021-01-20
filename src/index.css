@@ -1,3 +1,8 @@
+body {
+	color: black;
+	background-color: #f3f1eb;
+}
+
 /* for login */
 .centerLogin {
 	padding-top: 22vh;
@@ -17,7 +22,7 @@ add fix css states
 */
 .viewMoreButton {
 	color: white;
-	background-color: #37505c;
+	background-color: #031f50;
 }
 .viewMoreButton:hover,
 .viewMoreButton:active {
@@ -35,6 +40,13 @@ add fix css states
 	font-size: 1rem;
 }
 
+/* alterações na página Player */
+
+.imgPlayerConfig {
+	max-width: 90%;
+	height: auto;
+}
+
 /* alterações na página League */
 
 .imgLeagueConfig {
@@ -45,4 +57,55 @@ add fix css states
 .imgHeightLeague {
 	height: 200px;
 	width: auto;
+}
+
+/* blue: #0a2a61 */
+/* yellow: #fab500 */
+.navCostum {
+	background-color: #031f50;
+}
+
+/* Medium devices (768px --- 991px) */
+@media only screen and (min-width: 768px) {
+	html {
+		font-size: 1.4rem;
+	}
+
+	h1 {
+		font-size: 1.4rem;
+	}
+	h2 {
+		font-size: 1.2rem;
+	}
+	h4 {
+		font-size: 1rem;
+	}
+}
+
+/* Large devices (992px --- 1199px) */
+@media only screen and (min-width: 992px) {
+	html {
+		font-size: 1rem;
+	}
+
+	h1 {
+		font-size: 1.6rem;
+	}
+	h2 {
+		font-size: 1.4rem;
+	}
+	h4 {
+		font-size: 1.2rem;
+	}
+}
+
+/* Extra large devices (1200 --- superior) */
+@media only screen and (min-width: 1200px) {
+	html {
+		font-size: 1rem;
+	}
+
+	h1 {
+		font-size: 2rem;
+	}
 }

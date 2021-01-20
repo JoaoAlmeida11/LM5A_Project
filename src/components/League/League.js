@@ -18,7 +18,7 @@ const League = ({ clubList, loading, idLeagueStore }) => {
 
 	return (
 		<Container>
-			<Row>
+			<Row className="justify-content-center">
 				{loading === 'idle' && <p>Loading...</p>}
 				{loading === 'failed' && (
 					<p>

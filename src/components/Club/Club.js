@@ -33,10 +33,10 @@ const Club = ({ club, loading }) => {
 			{loading === 'success' && (
 				<div>
 					<Row className="pb-4 justify-content-center">
-						<Col xs={6} lg={3}>
-							<h2 className="font-weight-bolder text-center pt-4">
+						<Col xs={12} className="text-center">
+							<h1 className="font-weight-bolder text-center pt-4">
 								{club.teamName}
-							</h2>
+							</h1>
 							<Image src={`${club.logo}`} alt={club.teamName} fluid />
 							{/* //TODO: change to div */}
 							<Stadium
@@ -45,7 +45,7 @@ const Club = ({ club, loading }) => {
 							/>
 						</Col>
 					</Row>
-					<Row>
+					<Row className="justify-content-center">
 						{club.players.map(player => {
 							// TODO:
 							console.log('player');
