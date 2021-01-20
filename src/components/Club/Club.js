@@ -1,9 +1,7 @@
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import RequestOneClub from '../../functions/Club/RequestOneClub';
-import Stadium from './Stadium';
 import ShowPlayer from './ShowPlayer';
-// import ClubInfo from './ClubInfo';
 import { connect } from 'react-redux';
 
 const Club = ({ club, loading }) => {
@@ -39,10 +37,7 @@ const Club = ({ club, loading }) => {
 							</h1>
 							<Image src={`${club.logo}`} alt={club.teamName} fluid />
 							{/* //TODO: change to div */}
-							<Stadium
-								stadiumName={club.homeVenue.name}
-								key={club.homeVenue.id}
-							/>
+							<div>Nome do Estadio</div>
 						</Col>
 					</Row>
 					<Row className="justify-content-center">

@@ -13,7 +13,9 @@ import NavCostum from './components/Layout/NavCostum';
 export const App = () => {
 	return (
 		<Router>
-			<NavCostum />
+			<Switch>
+				<Route path="/lm5a_project/" component={NavCostum}></Route>
+			</Switch>
 			<Switch>
 				<Route exact path="/lm5a_project/" component={HomePage}></Route>
 				<Route
