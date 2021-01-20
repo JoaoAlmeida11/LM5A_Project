@@ -17,9 +17,9 @@ import logo from '../../logo.png';
 
 export const NavCostum = ({ isLogged }) => {
 	return (
-		<Navbar className="navCostum" variant="light" expand="md">
+		<Navbar className="navCostum pr-5 pl-5" variant="light" expand="md">
 			<Navbar.Brand>
-				<Image href="/lm5a_project/" src={logo} alt="logo" className="h-25" />
+				<Image href="/lm5a_project/" src={logo} alt="logo" className="w-50" />
 			</Navbar.Brand>
 			<Navbar.Toggle aria-controls="basic-navbar-nav" />
 			<Navbar.Collapse id="basic-navbar-nav">
@@ -32,7 +32,10 @@ export const NavCostum = ({ isLogged }) => {
 								<Nav.Link href="/lm5a_project/login/" className="text-white">
 									Login
 								</Nav.Link>
-								<Nav.Link href="/lm5a_project/signIn/" className="text-white">
+								<Nav.Link
+									href="/lm5a_project/signIn/"
+									className="text-white ml-4"
+								>
 									Sign Up
 								</Nav.Link>
 							</>

@@ -1,3 +1,6 @@
+* {
+	font-family: sans-serif;
+}
 body {
 	color: black;
 	background-color: #f3f1eb;
@@ -10,7 +13,8 @@ body {
 
 /* for league */
 .pdImgLeague {
-	padding-top: 18.5vh;
+	/* padding-top: 18.5vh; */
+	padding-top: 5vh;
 }
 
 /*

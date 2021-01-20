@@ -15,7 +15,10 @@ export default function ShowLeague({ league }) {
 			</div>
 			<div className="pt-4">
 				<Button className="viewMoreButton">
-					<Link to={`/lm5a_project/league/${league.id}`} className="text-white">
+					<Link
+						to={`/lm5a_project/league/${league.id}`}
+						className="text-white text-decoration-none"
+					>
 						View more!
 					</Link>
 				</Button>
