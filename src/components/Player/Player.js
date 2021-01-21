@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom';
 import { Col, Image } from 'react-bootstrap';
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { fetchOnePlayer } from '../../redux/ducks/playersSlice';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 const Player = ({ player, loading, seasonIdStore, playerIdStore }) => {
 	const { seasonId, playerId } = useParams();
@@ -34,8 +34,8 @@ const Player = ({ player, loading, seasonIdStore, playerIdStore }) => {
 			<Row className="pl-5 d-flex justify-content-around pt-4 pb-4">
 				{loading === 'idle' ? (
 					<Col xs={12} className="text-center">
-						<div class="spinner-border text-center" role="status">
-							<span class="sr-only">Loading...</span>
+						<div className="spinner-border text-center" role="status">
+							<span className="sr-only">Loading...</span>
 						</div>
 					</Col>
 				) : loading === 'success' ? (
@@ -72,23 +72,25 @@ const Player = ({ player, loading, seasonIdStore, playerIdStore }) => {
 								</li>
 							</ul>
 
-							{/* <Button className="viewMoreButton">
+							<Button className="viewMoreButton">
 								<Link
 									to={`/lm5a_project/club/${seasonId}/${player.teams[0].teamID}`}
 									className="text-white"
 								>
 									go back!
 								</Link>
-							</Button> */}
+							</Button>
 						</Col>
 					</>
-				) : (
+				) : loading === 'failed' ? (
 					<Col xs={12} className="text-center">
 						<h2>
 							An error has occurred. Please reload this page and if the error
 							persists contact an administrator
 						</h2>
 					</Col>
+				) : (
+					<Redirect to="/soccer/" />
 				)}
 			</Row>
 		</Container>

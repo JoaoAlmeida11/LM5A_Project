@@ -23,9 +23,9 @@ export const fetchEachPlayer = ({ seasonId, playerId }) => {
 export const fetchOnePlayer = createAsyncThunk(
 	'players/requestStatus',
 	async ({ seasonId, playerId }, thunkAPI) => {
-		console.log('PlayersSlice');
-		console.log(seasonId);
-		console.log(playerId);
+		// console.log('PlayersSlice');
+		// console.log(seasonId);
+		// console.log(playerId);
 
 		const state = thunkAPI.getState();
 
@@ -46,8 +46,8 @@ export const fetchOnePlayer = createAsyncThunk(
 		// }
 
 		const response = await fetchEachPlayer({ seasonId, playerId });
-		console.log('response from fetchEachPlayer');
-		console.log(response);
+		// console.log('response from fetchEachPlayer');
+		// console.log(response);
 		const playerResponse = response.player;
 		// console.log('clubResponse');
 		// console.log(clubResponse);
