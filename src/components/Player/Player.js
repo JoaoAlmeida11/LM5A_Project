@@ -32,14 +32,13 @@ const Player = ({ player, loading, seasonIdStore, playerIdStore }) => {
 	return (
 		<Container>
 			<Row className="pl-5 d-flex justify-content-around pt-4 pb-4">
-				{loading === 'idle' && <p>Loading...</p>}
-				{loading === 'failed' && (
-					<p>
-						An error has occurred. Please reload this page and if the error
-						persists contact an administrator
-					</p>
-				)}
-				{loading === 'success' && (
+				{loading === 'idle' ? (
+					<Col xs={12} className="text-center">
+						<div class="spinner-border text-center" role="status">
+							<span class="sr-only">Loading...</span>
+						</div>
+					</Col>
+				) : loading === 'success' ? (
 					<>
 						<Col xs={12} lg={6} className="text-center pt-3">
 							<Image
@@ -83,6 +82,13 @@ const Player = ({ player, loading, seasonIdStore, playerIdStore }) => {
 							</Button> */}
 						</Col>
 					</>
+				) : (
+					<Col xs={12} className="text-center">
+						<h2>
+							An error has occurred. Please reload this page and if the error
+							persists contact an administrator
+						</h2>
+					</Col>
 				)}
 			</Row>
 		</Container>

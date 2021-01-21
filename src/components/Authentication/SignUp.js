@@ -51,7 +51,6 @@ const SignUp = props => {
 			.auth()
 			.createUserWithEmailAndPassword(email, password)
 			.then(res => {
-				console.log('Success create User');
 				return res && props.signup(email);
 			})
 			.catch(error => {
