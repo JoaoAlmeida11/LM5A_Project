@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { schema, normalize } from 'normalizr';
+import { produce } from 'immer';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
@@ -59,13 +60,17 @@ export const fetchLeaguesAll = createAsyncThunk(
 		const leagueSet = new Set();
 		for (let i in response) leagueSet.add(response[i].league);
 
-		//keeps only the last season
-		const onlyLastSeasonSet = new Set();
-		leagueSet.forEach(item =>
-			onlyLastSeasonSet.add(item.seasons[item.seasons.length - 1])
-		);
+		const leagueArray = [...leagueSet];
 
-		const normalized = normalize([...leagueSet], [leagueListEntity]);
+		//keeps only the last season
+		const leagueArrayOnlyLastSeason = produce(leagueArray, draftArray => {
+			for (let i in draftArray)
+				draftArray[i].seasons = [
+					draftArray[i].seasons[draftArray[i].seasons.length - 1],
+				];
+		});
+
+		const normalized = normalize(leagueArrayOnlyLastSeason, [leagueListEntity]);
 		return normalized.entities;
 	}
 );

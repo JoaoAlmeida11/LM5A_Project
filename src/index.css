@@ -53,6 +53,10 @@ add fix css states
 	height: auto;
 }
 
+.fontSizeNamePlayer {
+	font-size: 25px;
+}
+
 /* alterações na página League */
 
 .imgLeagueConfig {
