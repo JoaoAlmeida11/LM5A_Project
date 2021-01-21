@@ -40,12 +40,10 @@ const HomePage = ({ leagueList, loading }) => {
 	);
 };
 
-const mapStateToProps = state => {
-	return {
-		leagueList: state.league.leagueList,
-		loading: state.league.loading,
-	};
-};
+const mapStateToProps = state => ({
+	leagueList: state.league.leagueList,
+	loading: state.league.loading,
+});
 
 // connects the component to the store
 export default connect(mapStateToProps)(HomePage);
