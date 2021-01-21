@@ -1,10 +1,20 @@
 import { Navbar, Nav, Form, Button, Image } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import logOut from '../../functions/Authentication/LogOut';
+// import logOut from '../../functions/Authentication/LogOut';
+import { useDispatch } from 'react-redux';
+import { logOutAction } from '../../redux/ducks/AuthSlice';
+import { useFirebase } from 'react-redux-firebase';
 
 import logo from '../../logo.png';
 
 export const NavCostum = ({ isLogged }) => {
+	const dispatch = useDispatch();
+	const firebase = useFirebase();
+	const logOut = () => {
+		dispatch(logOutAction());
+		firebase.logout();
+	};
+
 	return (
 		<Navbar className="navCostum pr-5 pl-5" variant="light" expand="md">
 			<Navbar.Brand>
