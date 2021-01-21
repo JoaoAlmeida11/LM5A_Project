@@ -82,7 +82,7 @@ const SignUp = props => {
 							try {
 								signup(email, password);
 							} catch (e) {
-								// TODO: error handling
+								// TODO: see if the user already has an account
 								console.log('Error singUp');
 								console.log(e);
 								setSubmitting(false);
@@ -154,9 +154,7 @@ const mapStateToProps = state => ({
 	isLogged: state.auth.isLogged,
 });
 
-const mapDispatchToProps = dispatch => {
-	return {
-		signup: email => dispatch(signUpAction(email)),
-	};
-};
+const mapDispatchToProps = dispatch => ({
+	signup: email => dispatch(signUpAction(email)),
+});
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
