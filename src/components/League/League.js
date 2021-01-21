@@ -41,14 +41,12 @@ const League = ({ clubList, loading, idLeagueStore }) => {
 	);
 };
 
-const mapStateToProps = state => {
-	// receives necessary info stored in the store
-	return {
-		clubList: state.club.clubList,
-		loading: state.club.loading,
-		idLeagueStore: state.club.leagueId,
-	};
-};
+// receives necessary info stored in the store
+const mapStateToProps = state => ({
+	clubList: state.club.clubList,
+	loading: state.club.loading,
+	idLeagueStore: state.club.leagueId,
+});
 
 // connects the component to the store
 export default connect(mapStateToProps)(League);

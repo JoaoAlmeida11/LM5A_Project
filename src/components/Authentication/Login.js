@@ -159,13 +159,9 @@ const Login = props => {
 	);
 };
 
-const mapStateToProps = state => {
-	console.log('mapStateToProps');
-	console.log(state);
-	return {
-		isLogged: state.auth.isLogged,
-	};
-};
+const mapStateToProps = state => ({
+	isLogged: state.auth.isLogged,
+});
 
 const mapDispatchToProps = dispatch => {
 	return {

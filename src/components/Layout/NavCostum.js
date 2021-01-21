@@ -61,10 +61,8 @@ export const NavCostum = ({ isLogged }) => {
 	);
 };
 
-const mapStateToProps = state => {
-	return {
-		isLogged: state.auth.isLogged,
-	};
-};
+const mapStateToProps = state => ({
+	isLogged: state.auth.isLogged,
+});
 
 export default connect(mapStateToProps)(NavCostum);

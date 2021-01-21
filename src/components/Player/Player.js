@@ -83,15 +83,11 @@ const Player = ({ player, loading, seasonIdStore, playerIdStore }) => {
 	);
 };
 
-const mapStateToProps = state => {
-	console.log('state of Player');
-	console.log(state);
-	return {
-		player: state.player.onePlayerInfo,
-		loading: state.player.loading,
-		seasonIdStore: state.player.seasonId,
-		playerIdStore: state.player.playerId,
-	};
-};
+const mapStateToProps = state => ({
+	player: state.player.onePlayerInfo,
+	loading: state.player.loading,
+	seasonIdStore: state.player.seasonId,
+	playerIdStore: state.player.playerId,
+});
 
 export default connect(mapStateToProps)(Player);
