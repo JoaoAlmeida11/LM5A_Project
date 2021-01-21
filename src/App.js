@@ -7,7 +7,6 @@ import Club from './components/Club/Club';
 import Player from './components/Player/Player';
 import Login from './components/Authentication/Login';
 import SignIn from './components/Authentication/SignUp';
-import Footer from './components/Layout/Footer';
 import NavCostum from './components/Layout/NavCostum';
 
 export const App = () => {
@@ -28,7 +27,6 @@ export const App = () => {
 				<Route path="/soccer/login/" component={Login}></Route>
 				<Route path="/soccer/signIn/" component={SignIn}></Route>
 			</Switch>
-			<Footer />
 		</Router>
 	);
 };
