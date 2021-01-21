@@ -2,7 +2,9 @@ import { useParams } from 'react-router-dom';
 import { Col, Image } from 'react-bootstrap';
 import { Container, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import RequestPlayer from '../../functions/Player/RequestPlayer';
+import { useDispatch } from 'react-redux';
+import { fetchOnePlayer } from '../../redux/ducks/playersSlice';
+
 const Player = ({ player, loading, seasonIdStore, playerIdStore }) => {
 	const { seasonId, playerId } = useParams();
 
@@ -17,8 +19,9 @@ const Player = ({ player, loading, seasonIdStore, playerIdStore }) => {
 	)
 		loading = 'idle';
 
+	const dispatch = useDispatch();
 	if (loading === 'idle') {
-		RequestPlayer({ seasonId, playerId });
+		dispatch(fetchOnePlayer({ seasonId, playerId }));
 	}
 	return (
 		<Container>

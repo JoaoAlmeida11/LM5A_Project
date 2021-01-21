@@ -1,12 +1,14 @@
 import ShowLeague from './ShowLeague';
-import RequestLeague from '../../functions/Homepage/RequestLeague';
 import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { fetchLeaguesAll } from '../../redux/ducks/leagueSlice';
 
 const HomePage = ({ leagueList, loading }) => {
 	// dispatch action to request data from API
+	const dispatch = useDispatch();
 	if (loading === 'idle') {
-		RequestLeague();
+		dispatch(fetchLeaguesAll());
 	}
 	return (
 		<Container>

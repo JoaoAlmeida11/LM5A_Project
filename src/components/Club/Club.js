@@ -1,8 +1,9 @@
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import RequestOneClub from '../../functions/Club/RequestOneClub';
 import ShowPlayer from './ShowPlayer';
 import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { fetchOneClub } from '../../redux/ducks/oneClubSlice';
 
 const Club = ({ club, loading }) => {
 	// get the url params
@@ -13,8 +14,9 @@ const Club = ({ club, loading }) => {
 		loading = 'idle';
 
 	// dispatch action to request data from API
+	const dispatch = useDispatch();
 	if (loading === 'idle') {
-		RequestOneClub({ seasonId, clubId });
+		dispatch(fetchOneClub({ seasonId, clubId }));
 	}
 
 	return (

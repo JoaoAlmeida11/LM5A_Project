@@ -1,8 +1,9 @@
 import { Container, Row } from 'react-bootstrap';
 import ShowClub from './ShowClub';
-import RequestClubs from '../../functions/League/RequestClubs';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { fetchClubs } from '../../redux/ducks/clubsSlice';
 
 // shows all the clubs participating in a league
 const League = ({ clubList, loading, idLeagueStore }) => {
@@ -16,8 +17,9 @@ const League = ({ clubList, loading, idLeagueStore }) => {
 	)
 		loading = 'idle';
 
+	const dispatch = useDispatch();
 	if (loading === 'idle') {
-		RequestClubs(leagueId);
+		dispatch(fetchClubs(leagueId));
 	}
 
 	return (
