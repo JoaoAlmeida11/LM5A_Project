@@ -2,14 +2,13 @@ import { Link } from 'react-router-dom';
 import { Col, Button, Image } from 'react-bootstrap';
 
 export default function ShowLeague({ league }) {
-	const altImage = 'League of ' + league.name;
 	return (
 		<Col xs={12} md={6} lg={4} className="text-center pt-4 ">
 			<div className="imgHeightLeague d-flex align-items-end justify-content-center">
 				<Image
 					className="imgConfig "
 					src={`${league.logo}`}
-					alt={altImage}
+					alt={'League of ' + league.name}
 					fluid
 				/>
 			</div>
