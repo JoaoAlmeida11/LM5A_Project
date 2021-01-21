@@ -46,8 +46,8 @@ export const fetchOneClub = createAsyncThunk(
 		}
 		const response = await fetchEachClub({ seasonId, clubId });
 		const clubResponse = response.team;
-		console.log('clubResponse');
-		console.log(clubResponse);
+		// console.log('clubResponse');
+		// console.log(clubResponse);
 		return { clubResponse, changeStore: true, seasonId, clubId };
 	}
 );

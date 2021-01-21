@@ -27,11 +27,11 @@ export const fetchOnePlayer = createAsyncThunk(
 		// console.log(seasonId);
 		// console.log(playerId);
 
-		const state = thunkAPI.getState();
+		// const state = thunkAPI.getState();
 
 		// check if store has data in oneClub.club
-		const player = state.player;
-		if (player.seasonId === seasonId) return { changeStore: false };
+		// const player = state.player;
+		// if (player.seasonId === seasonId) return { changeStore: false };
 
 		// check if store has data in club.clubList
 		// const clubList = state.club.clubList;
