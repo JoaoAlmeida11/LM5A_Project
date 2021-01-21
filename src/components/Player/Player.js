@@ -4,25 +4,31 @@ import { Container, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { fetchOnePlayer } from '../../redux/ducks/playersSlice';
+import { Redirect } from 'react-router-dom';
 
 const Player = ({ player, loading, seasonIdStore, playerIdStore }) => {
 	const { seasonId, playerId } = useParams();
-
+	const dispatch = useDispatch();
 	if (
-		seasonId !== undefined &&
-		seasonId !== null &&
-		playerId !== undefined &&
-		playerId !== null &&
-		loading !== 'failed' &&
+		seasonId === undefined ||
+		seasonId === 'undefined' ||
+		seasonId === null ||
+		seasonId === 'null' ||
+		seasonId === '' ||
+		playerId === undefined ||
+		playerId === 'undefined' ||
+		playerId === null ||
+		playerId === 'null' ||
+		playerId === ''
+	)
+		return <Redirect to="/soccer/" />;
+	else if (
+		loading !== 'failed' && //not idle do to a loading being success...
 		seasonIdStore !== seasonId &&
 		playerIdStore !== playerId
 	)
-		loading = 'idle';
-
-	const dispatch = useDispatch();
-	if (loading === 'idle') {
 		dispatch(fetchOnePlayer({ seasonId, playerId }));
-	}
+
 	return (
 		<Container>
 			<Row className="pl-5 d-flex justify-content-around pt-4 pb-4">
