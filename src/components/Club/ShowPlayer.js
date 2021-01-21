@@ -12,7 +12,7 @@ const ShowPlayer = ({ player, seasonId }) => {
 			/>
 			<Button className="viewMoreButton mt-2 mb-3">
 				<Link
-					to={`/lm5a_project/player/${seasonId}/${player.playerID}/`}
+					to={`/soccer/player/${seasonId}/${player.playerID}/`}
 					className="text-white"
 				>
 					View more!

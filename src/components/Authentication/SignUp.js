@@ -38,7 +38,7 @@ const SignUp = props => {
 			.then(res => {
 				console.log(res.user);
 				dispatch(signUpAction());
-				return <Redirect to="/lm5a_project/" />;
+				return <Redirect to="/soccer/" />;
 			})
 			.catch(error => {
 				console.log('error.message');
@@ -58,7 +58,7 @@ const SignUp = props => {
 				console.log(error);
 			});
 	};
-	if (isLogged === true) return <Redirect to="/lm5a_project/" />;
+	if (isLogged === true) return <Redirect to="/soccer/" />;
 	return (
 		<Container>
 			<Row className="centerLogin">

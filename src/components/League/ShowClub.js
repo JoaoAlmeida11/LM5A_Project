@@ -13,7 +13,7 @@ export default function ShowClub({ club }) {
 			<h2 className="text-center mt-2 mb-2">{club.teamName}</h2>
 			<Button size="sm" className="viewMoreButton">
 				<Link
-					to={`/lm5a_project/club/${club.seasonID}/${club.teamID}`}
+					to={`/soccer/club/${club.seasonID}/${club.teamID}`}
 					className="text-white"
 				>
 					View more!

@@ -14,24 +14,18 @@ export const App = () => {
 	return (
 		<Router>
 			<Switch>
-				<Route path="/lm5a_project/" component={NavCostum}></Route>
+				<Route path="/soccer/" component={NavCostum}></Route>
 			</Switch>
 			<Switch>
-				<Route exact path="/lm5a_project/" component={HomePage}></Route>
+				<Route exact path="/soccer/" component={HomePage}></Route>
+				<Route path="/soccer/league/:leagueId/" component={League}></Route>
+				<Route path="/soccer/club/:seasonId/:clubId/" component={Club}></Route>
 				<Route
-					path="/lm5a_project/league/:leagueId/"
-					component={League}
-				></Route>
-				<Route
-					path="/lm5a_project/club/:seasonId/:clubId/"
-					component={Club}
-				></Route>
-				<Route
-					path="/lm5a_project/player/:seasonId/:playerId/"
+					path="/soccer/player/:seasonId/:playerId/"
 					component={Player}
 				></Route>
-				<Route path="/lm5a_project/login/" component={Login}></Route>
-				<Route path="/lm5a_project/signIn/" component={SignIn}></Route>
+				<Route path="/soccer/login/" component={Login}></Route>
+				<Route path="/soccer/signIn/" component={SignIn}></Route>
 			</Switch>
 			<Footer />
 		</Router>

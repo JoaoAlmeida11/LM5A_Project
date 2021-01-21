@@ -41,7 +41,7 @@ const Login = props => {
 			.then(res => {
 				console.log(res.user);
 				dispatch(logInAction());
-				return <Redirect to="/lm5a_project/" />;
+				return <Redirect to="/soccer/" />;
 			})
 			.catch(error => {
 				console.log('error.message');
@@ -63,7 +63,7 @@ const Login = props => {
 			});
 	};
 
-	if (isLogged === true) return <Redirect to="/lm5a_project/" />;
+	if (isLogged === true) return <Redirect to="/soccer/" />;
 	return (
 		<Container>
 			<Row className="centerLogin">

@@ -1,8 +1,8 @@
 {
-	"name": "lm5_project",
+	"name": "soccer",
 	"version": "0.1.0",
 	"private": true,
-	"homepage": "https://JoaoAlmeida11.github.io/lm5a_project",
+	"homepage": "https://JoaoAlmeida11.github.io/soccer",
 	"dependencies": {
 		"@reduxjs/toolkit": "^1.5.0",
 		"@testing-library/jest-dom": "^5.11.6",
