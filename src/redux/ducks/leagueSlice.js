@@ -22,17 +22,14 @@ export const fetchData = url => {
 	const axios = require('axios').default;
 	return axios
 		.get(url)
-		.then(function (response) {
-			return response.data;
-		})
-		.catch(function (err) {
+		.then(response => response.data)
+		.catch(err => {
 			console.log(err);
 			return err;
 		});
 };
-export const getAllData = urls => {
-	return Promise.all(urls.map(fetchData));
-};
+export const getAllData = urls => Promise.all(urls.map(fetchData));
+
 export const fetchLeaguesAll = createAsyncThunk(
 	'leagues/requestStatus',
 	async () => {
