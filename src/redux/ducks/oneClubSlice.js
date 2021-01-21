@@ -62,14 +62,7 @@ const oneClubSlice = createSlice({
 		clubId: '',
 		seasonId: '',
 	},
-	reducers: {
-		// to be call when entering other pages
-		setLoadingToIdleOneClubSlice(state) {
-			// console.table([1, 2, 3, 4]);
-			// console.log('setLoadingToIdleOneClubSlice');
-			state.loading = 'idle';
-		},
-	},
+	reducers: {},
 	extraReducers: {
 		[fetchOneClub.pending]: state => {
 			state.loading = 'pending';

@@ -94,12 +94,7 @@ const leagueSlice = createSlice({
 		leagueList: [],
 		loading: 'idle',
 	},
-	reducers: {
-		// to be call when entering other pages
-		setLoadingToIdleLeagueSlice(state) {
-			state.loading = 'idle';
-		},
-	},
+	reducers: {},
 	extraReducers: {
 		[fetchLeaguesAll.pending]: state => {
 			state.loading = 'pending';

@@ -1,19 +1,8 @@
-import {
-	Navbar,
-	Nav,
-	Form,
-	// FormControl,
-	Button,
-	Image,
-} from 'react-bootstrap';
+import { Navbar, Nav, Form, Button, Image } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import logOut from '../../functions/Authentication/LogOut';
-// import logo from '../../logo.png';
-// mudar estilos da NavCostum
-// adicionar Brand
-import logo from '../../logo.png';
 
-// const url = process.env.PUBLIC_URL;
+import logo from '../../logo.png';
 
 export const NavCostum = ({ isLogged }) => {
 	return (
@@ -27,8 +16,6 @@ export const NavCostum = ({ isLogged }) => {
 			<Navbar.Collapse id="basic-navbar-nav">
 				<Nav className="ml-auto">
 					<Form inline>
-						{/* <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-						<Button variant="outline-success">Search</Button> */}
 						{!isLogged ? (
 							<>
 								<Nav.Link href="/soccer/login/" className="text-white">

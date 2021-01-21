@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-// import { schema, normalize } from 'normalizr';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
@@ -58,21 +57,13 @@ export const fetchOnePlayer = createAsyncThunk(
 
 const playersSlice = createSlice({
 	name: 'players',
-	// TODO: initial state needs to store an array like a map with a key being the id
 	initialState: {
 		onePlayerInfo: [],
 		loading: 'idle',
 		seasonId: '',
 		playerId: '',
 	},
-	reducers: {
-		// to be call when entering other pages
-		setLoadingToIdlePlayersSlice(state) {
-			// console.table([1, 2, 3, 4]);
-			// console.log('setLoadingToIdleOneClubSlice');
-			state.loading = 'idle';
-		},
-	},
+	reducers: {},
 	extraReducers: {
 		[fetchOnePlayer.pending]: state => {
 			state.loading = 'pending';
