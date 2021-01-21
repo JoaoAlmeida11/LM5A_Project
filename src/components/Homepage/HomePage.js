@@ -4,15 +4,10 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 const HomePage = ({ leagueList, loading }) => {
+	// dispatch action to request data from API
 	if (loading === 'idle') {
 		RequestLeague();
 	}
-	if (loading === 'success') {
-		console.log('Object.values(leagueList)');
-		console.log(Object.values(leagueList));
-		console.log(Object.values(leagueList)[0].seasons[0].seasonName);
-	}
-
 	return (
 		<Container>
 			<Row className="pt-5">
@@ -44,12 +39,11 @@ const HomePage = ({ leagueList, loading }) => {
 };
 
 const mapStateToProps = state => {
-	console.log('state in HomePage');
-	console.log(state);
 	return {
 		leagueList: state.league.leagueList,
 		loading: state.league.loading,
 	};
 };
 
+// connects the component to the store
 export default connect(mapStateToProps)(HomePage);

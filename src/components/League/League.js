@@ -1,23 +1,27 @@
 import { Container, Row } from 'react-bootstrap';
-// import { useParams } from 'react-router-dom';
 import ShowClub from './ShowClub';
 import RequestClubs from '../../functions/League/RequestClubs';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-// ! comment below
-// TODO: see why when this page is opened oneClub.loading is set to 'success
+// shows all the clubs participating in a league
 const League = ({ clubList, loading, idLeagueStore }) => {
 	const { leagueId } = useParams();
+
+	if (
+		leagueId !== undefined &&
+		leagueId !== null &&
+		loading !== 'failed' &&
+		leagueId !== idLeagueStore
+	)
+		loading = 'idle';
 
 	if (loading === 'idle') {
 		RequestClubs(leagueId);
 	}
 
-	console.log(clubList);
-
 	return (
-		<Container>
+		<Container className="pt-4 pb-5">
 			<Row className="justify-content-center">
 				{loading === 'idle' && <p>Loading...</p>}
 				{loading === 'failed' && (
@@ -36,13 +40,13 @@ const League = ({ clubList, loading, idLeagueStore }) => {
 };
 
 const mapStateToProps = state => {
-	console.log('state');
-	console.log(state);
+	// receives necessary info stored in the store
 	return {
 		clubList: state.club.clubList,
 		loading: state.club.loading,
-		idLeagueStore: state.club.id,
+		idLeagueStore: state.club.leagueId,
 	};
 };
 
+// connects the component to the store
 export default connect(mapStateToProps)(League);
