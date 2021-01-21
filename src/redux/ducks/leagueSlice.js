@@ -41,49 +41,34 @@ export const fetchLeaguesAll = createAsyncThunk(
 			.get(`https://api.statorium.com/api/v1/leagues/?apikey=${API_KEY}`)
 			.then(res => {
 				const leagueSet = new Set();
-				for (let i in res.data.leagues) {
-					// the key corresponds to the position on the array from the first call and its used to match each league with its image
-					leagueSet.add(res.data.leagues[i].id);
-				}
-				const ids = [...leagueSet];
-				return ids;
+				// the key corresponds to the position on the array from the first call and its used to match each league with its image
+				for (let i in res.data.leagues) leagueSet.add(res.data.leagues[i].id);
+				return [...leagueSet];
 			})
 			.then(res => {
-				const urls = [];
+				const urlsSet = new Set();
 				res.forEach(value => {
-					urls.push(
+					urlsSet.add(
 						`https://api.statorium.com/api/v1/leagues/${value}/?apikey=${API_KEY}`
 					);
 				});
-				return getAllData(urls)
-					.then(res => {
-						// console.log(res);
-						return res;
-					})
-					.catch(err => {
-						console.log(err);
-						return err;
-					});
+				const urls = [...urlsSet];
+				return getAllData(urls).then(res => res);
 			})
 			.catch(err => {
 				console.log(err);
 				return err;
 			});
 
-		console.log('response in leagueSlice');
-		console.log(response);
-
 		// keeps only the leagues
 		const leagueSet = new Set();
-		for (let i in response) {
-			leagueSet.add(response[i].league);
-		}
+		for (let i in response) leagueSet.add(response[i].league);
 
 		//keeps only the last season
 		const onlyLastSeasonSet = new Set();
-		leagueSet.forEach(item => {
-			onlyLastSeasonSet.add(item.seasons[item.seasons.length - 1]);
-		});
+		leagueSet.forEach(item =>
+			onlyLastSeasonSet.add(item.seasons[item.seasons.length - 1])
+		);
 
 		const leagueList = [...leagueSet];
 
