@@ -5,19 +5,18 @@ import ShowPlayer from './ShowPlayer';
 import { connect } from 'react-redux';
 
 const Club = ({ club, loading }) => {
-	console.log('club');
-	console.log(club);
-
+	// get the url params
 	const { seasonId, clubId } = useParams();
 
-	// !Forced Fix: see what is setting the loading to success or preventing it from being set to 'idle' in the correspondent reducer
-	// ! its when the League page is opened
+	// checks if the request already failed or the url didn't receive info
 	if ((club === undefined || club === null) && loading !== 'failed')
 		loading = 'idle';
 
+	// dispatch action to request data from API
 	if (loading === 'idle') {
 		RequestOneClub({ seasonId, clubId });
 	}
+
 	return (
 		<Container>
 			{loading === 'idle' && <p>Loading...</p>}
@@ -27,24 +26,19 @@ const Club = ({ club, loading }) => {
 					persists contact an administrator
 				</p>
 			)}
-			{/*//TODO: remove the div (its needed because there can only be a parent element)*/}
 			{loading === 'success' && (
-				<div>
+				<>
 					<Row className="pb-4 justify-content-center">
-						<Col xs={12} className="text-center">
+						<Col xs={12} className="text-center pt-5">
+							<Image src={`${club.logo}`} alt={club.teamName} fluid />
 							<h1 className="font-weight-bolder text-center pt-4">
 								{club.teamName}
 							</h1>
-							<Image src={`${club.logo}`} alt={club.teamName} fluid />
-							{/* //TODO: change to div */}
-							<div>Nome do Estadio</div>
+							<h2 className="mt-3">Stadium: {club.homeVenue.name}</h2>
 						</Col>
 					</Row>
 					<Row className="justify-content-center">
 						{club.players.map(player => {
-							// TODO:
-							console.log('player');
-							console.log(player);
 							if (player.photo !== '')
 								return (
 									<ShowPlayer
@@ -56,17 +50,19 @@ const Club = ({ club, loading }) => {
 							return true;
 						})}
 					</Row>
-				</div>
+				</>
 			)}
 		</Container>
 	);
 };
 
 const mapStateToProps = state => {
+	// receives necessary info stored in the store
 	return {
 		club: state.oneClub.oneClubInfo,
 		loading: state.oneClub.loading,
 	};
 };
 
+// connects the component to the store
 export default connect(mapStateToProps)(Club);

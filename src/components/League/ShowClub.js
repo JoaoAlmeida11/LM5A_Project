@@ -14,7 +14,7 @@ export default function ShowClub({ club }) {
 			<Button size="sm" className="viewMoreButton">
 				<Link
 					to={`/soccer/club/${club.seasonID}/${club.teamID}`}
-					className="text-white"
+					className="text-white text-decoration-none"
 				>
 					View more!
 				</Link>

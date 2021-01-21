@@ -14,6 +14,7 @@ export const App = () => {
 	return (
 		<Router>
 			<Switch>
+				{/*inside a switch so it properly connects to store and passes the test*/}
 				<Route path="/soccer/" component={NavCostum}></Route>
 			</Switch>
 			<Switch>
