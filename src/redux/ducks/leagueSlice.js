@@ -70,20 +70,24 @@ export const fetchLeaguesAll = createAsyncThunk(
 				return err;
 			});
 
+		console.log('response in leagueSlice');
+		console.log(response);
+
 		// keeps only the leagues
-		const responseList = [];
+		const leagueSet = new Set();
 		for (let i in response) {
-			responseList.push(response[i].league);
+			leagueSet.add(response[i].league);
 		}
 
-		// keeps only the last season
-		for (let i in responseList) {
-			responseList[i].seasons = [
-				responseList[i].seasons[responseList[i].seasons.length - 1],
-			];
-		}
+		//keeps only the last season
+		const onlyLastSeasonSet = new Set();
+		leagueSet.forEach(item => {
+			onlyLastSeasonSet.add(item.seasons[item.seasons.length - 1]);
+		});
 
-		const normalized = normalize(responseList, [leagueListEntity]);
+		const leagueList = [...leagueSet];
+
+		const normalized = normalize(leagueList, [leagueListEntity]);
 		return normalized.entities;
 	}
 );
