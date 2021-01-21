@@ -19,7 +19,9 @@ export const NavCostum = ({ isLogged }) => {
 	return (
 		<Navbar className="navCostum pr-5 pl-5" variant="light" expand="md">
 			<Navbar.Brand>
-				<Image href="/soccer/" src={logo} alt="logo" className="w-50" />
+				<a href="/soccer/">
+					<Image src={logo} alt="logo" className="w-50" />
+				</a>
 			</Navbar.Brand>
 			<Navbar.Toggle aria-controls="basic-navbar-nav" />
 			<Navbar.Collapse id="basic-navbar-nav">
