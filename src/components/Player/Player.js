@@ -82,15 +82,18 @@ const Player = props => {
 										{`${player.country.name}`}
 									</li>
 								</ul>
-
-								<Button className="viewMoreButton">
-									<Link
-										to={`/soccer/club/${seasonId}/${player.teams[0].teamID}`}
-										className="text-white"
-									>
-										go back!
-									</Link>
-								</Button>
+							</Col>
+							<Col xs={12} className="pt-3 justify-content-center">
+								<div className="text-center">
+									<Button className="viewMoreButton">
+										<Link
+											to={`/soccer/club/${seasonId}/${player.teams[0].teamID}`}
+											className="text-white"
+										>
+											Go back!
+										</Link>
+									</Button>
+								</div>
 							</Col>
 						</>
 					) : loading === 'failed' ? (
@@ -101,8 +104,7 @@ const Player = props => {
 							</h2>
 						</Col>
 					) : (
-						// <Redirect to="/soccer/" />
-						<p></p>
+						<Redirect to="/soccer/" />
 					)}
 				</Row>
 			</Container>
