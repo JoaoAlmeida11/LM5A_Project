@@ -1,5 +1,4 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-// import monitorReducersEnhancer from "./enhancers/monitorReducers";
 
 import logger from 'redux-logger';
 import rootReducer from './rootReducer';
@@ -8,8 +7,6 @@ import {
 	actionTypes as rrfActionTypes,
 } from 'react-redux-firebase';
 import { constants as rfConstants } from 'redux-firestore';
-
-// import firebase from './FireBase/fbConfig';
 
 import 'firebase/database';
 import 'firebase/auth';

@@ -24,6 +24,16 @@ export const NavCostum = ({ isLogged }) => {
 			</Navbar.Brand>
 			<Navbar.Toggle aria-controls="basic-navbar-nav" />
 			<Navbar.Collapse id="basic-navbar-nav">
+				<Nav className="mr-auto">
+					<Nav.Link
+						target="_blank"
+						rel="no opener"
+						href="https://statorium.com/"
+						className="text-white"
+					>
+						API
+					</Nav.Link>
+				</Nav>
 				<Nav className="ml-auto">
 					<Form inline>
 						{!isLogged ? (
