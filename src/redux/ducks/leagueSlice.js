@@ -6,9 +6,7 @@ const API_KEY = process.env.REACT_APP_API_KEY;
 export const leagueIdEntity = new schema.Entity('leagueId');
 export const leagueLogoEntity = new schema.Entity('leagueLogo');
 export const leagueNameEntity = new schema.Entity('leagueName');
-// TODO: se schema of seasons
 export const leagueSeasonsEntity = new schema.Entity('leagueSeasons');
-
 export const leagueEntity = new schema.Entity('leagues', {
 	id: Number,
 	logo: String,
@@ -67,9 +65,7 @@ export const fetchLeaguesAll = createAsyncThunk(
 			onlyLastSeasonSet.add(item.seasons[item.seasons.length - 1])
 		);
 
-		const leagueList = [...leagueSet];
-
-		const normalized = normalize(leagueList, [leagueListEntity]);
+		const normalized = normalize([...leagueSet], [leagueListEntity]);
 		return normalized.entities;
 	}
 );

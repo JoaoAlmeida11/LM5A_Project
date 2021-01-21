@@ -8,17 +8,14 @@ export const fetchData = url => {
 	const axios = require('axios').default;
 	return axios
 		.get(url)
-		.then(response => {
-			return response.data;
-		})
+		.then(response => response.data)
 		.catch(err => {
 			console.log(err);
 			return err;
 		});
 };
-export const fetchAllData = url => {
-	return Promise.resolve(fetchData(url));
-};
+export const fetchAllData = url => Promise.resolve(fetchData(url));
+
 // ** Functions on Promise Chaining that ask data
 export const fetchClubIds = res => {
 	// ** get the ids of the clubs as participants
@@ -62,10 +59,7 @@ export const fetchClubs = createAsyncThunk(
 		const leagueListArray = Object.entries(leagueList);
 
 		// check if information already exists
-		if (state.club.id === leagueId) {
-			console.log('Store already has the info');
-			return { changeStore: false };
-		}
+		if (state.club.id === leagueId) return { changeStore: false };
 
 		const needsLeagueList = leagueListArray.length !== 0 ? false : true;
 
