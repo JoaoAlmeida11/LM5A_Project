@@ -117,10 +117,9 @@ const mapStateToProps = state => ({
 });
 
 // used instead of useDispatch while trying to fix the bug where a component renders while another component (from another page) is being loaded
-const mapDispatchToProps = dispatch => {
-	return {
-		fetchPlayer: ({ seasonId, playerId }) =>
-			dispatch(fetchOnePlayer({ seasonId, playerId })),
-	};
-};
+// either way the code coverage prefers this method
+const mapDispatchToProps = dispatch => ({
+	fetchPlayer: ({ seasonId, playerId }) =>
+		dispatch(fetchOnePlayer({ seasonId, playerId })),
+});
 export default connect(mapStateToProps, mapDispatchToProps)(Player);
