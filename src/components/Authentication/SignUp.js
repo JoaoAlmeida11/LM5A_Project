@@ -69,7 +69,7 @@ const SignUp = props => {
 				<Col xs={12} className="d-flex justify-content-center">
 					<GoogleButton type="light" onClick={SignUpWithGoogle} />
 				</Col>
-				<Col xs={12} lg={6} className="mx-auto my-auto text-center">
+				<Col xs={12} className="mx-auto my-auto text-center">
 					<h4 className="mt-4">or</h4>
 				</Col>
 				<Col xs={12} lg={8} xl={6} className="mx-auto my-auto">
