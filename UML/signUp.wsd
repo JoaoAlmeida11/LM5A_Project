@@ -1,0 +1,19 @@
+@startuml
+
+actor User
+boundary UI
+control App
+control SignUp
+control signUpAction
+database store
+database Firebase
+
+User -> UI: sign up
+UI -> SignUp: resquest sign up
+SignUp -> Firebase: add new user
+Firebase -> SignUp: auth response
+SignUp -> signUpAction: dispatch auth response
+signUpAction -> store: auth data update
+SignUp -> UI: show Authentication response
+
+@enduml

@@ -25,3 +25,8 @@ yarn-error.log*
 # apiKey
 .env
 apiKey.js
+
+# SSL
+cert.pem
+keytmp.pem
+key.pem

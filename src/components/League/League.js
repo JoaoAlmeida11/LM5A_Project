@@ -1,44 +1,67 @@
-import { Container, Row } from 'react-bootstrap';
-// import { useParams } from 'react-router-dom';
-import ClubeDaLiga from './ClubeDaLiga';
-import RequestClubs from '../../functions/League/RequestClubs';
+import { Container, Row, Col } from 'react-bootstrap';
+import ShowClub from './ShowClub';
 import { connect } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, Redirect } from 'react-router-dom';
+import { fetchClubs } from '../../redux/ducks/clubsSlice';
 
-// ! comment below
-// TODO: see why when this page is opened oneClub.loading is set to 'success
-const League = ({ clubList, loading, idLeagueStore }) => {
+// shows all the clubs participating in a league
+const League = props => {
+	let { loading } = props;
+	const { clubList, idLeagueStore } = props;
 	const { leagueId } = useParams();
+	if (
+		leagueId !== undefined &&
+		leagueId !== 'undefined' &&
+		leagueId !== null &&
+		leagueId !== 'null' &&
+		leagueId !== '' &&
+		loading !== 'failed' &&
+		leagueId !== idLeagueStore
+	)
+		loading = 'idle';
 
 	if (loading === 'idle') {
-		RequestClubs(leagueId);
+		props.fetchClub(leagueId);
 	}
 
 	return (
-		<Container>
-			<Row>
-				{loading === 'idle' && <p>Loading...</p>}
-				{loading === 'failed' && (
-					<p>
-						An error has occurred. Please reload this page and if the error
-						persists contact an administrator
-					</p>
-				)}
-				{loading === 'success' &&
+		<Container className="pt-4 pb-5">
+			<Row className="justify-content-center">
+				{loading === 'idle' ? (
+					<Col xs={12} className="text-center">
+						<div className="spinner-border text-center" role="status">
+							<span className="sr-only">Loading...</span>
+						</div>
+					</Col>
+				) : loading === 'success' ? (
 					Object.entries(clubList).map(club => {
-						return <ClubeDaLiga club={club[1]} key={club[0]} />;
-					})}
+						return <ShowClub club={club[1]} key={club[0]} />;
+					})
+				) : loading === 'failed' ? (
+					<Col xs={12} className="text-center">
+						<h2>
+							An error has occurred. Please reload this page and if the error
+							persists contact an administrator
+						</h2>
+					</Col>
+				) : (
+					<Redirect to="/soccer/" />
+				)}
 			</Row>
 		</Container>
 	);
 };
 
-const mapStateToProps = state => {
-	return {
-		clubList: state.club.clubList,
-		loading: state.club.loading,
-		idLeagueStore: state.club.id,
-	};
-};
+// receives necessary info stored in the store
+const mapStateToProps = state => ({
+	clubList: state.club.clubList,
+	loading: state.club.loading,
+	idLeagueStore: state.club.leagueId,
+});
 
-export default connect(mapStateToProps)(League);
+const mapDispatchToProps = dispatch => ({
+	fetchClub: leagueId => dispatch(fetchClubs(leagueId)),
+});
+
+// connects the component to the store
+export default connect(mapStateToProps, mapDispatchToProps)(League);

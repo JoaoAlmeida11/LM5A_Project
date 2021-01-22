@@ -12,8 +12,8 @@ import './index.css';
 // Application main routes
 
 // Store of app
-import store, { rrfProps } from './redux/configureStore';
-
+import store from './redux/configureStore';
+import { rrfProps } from './redux/FireBase/fbConfig';
 // components
 import App from './App';
 

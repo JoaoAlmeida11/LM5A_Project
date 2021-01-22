@@ -1,0 +1,24 @@
+@startuml
+
+actor User
+boundary UI
+control App
+control Club
+control ShowPlayer
+control fetchOneClub
+database store
+database API
+
+User -> UI : opens page
+UI -> App: request Club UI
+App -> Club: request Club component
+Club-> fetchOneClub: dispatch API request 
+fetchOneClub -> API: HTTP GET request
+API -> fetchOneClub : HTTP response
+fetchOneClub -> store: updates store
+store -> Club : allow access to information
+Club -> ShowPlayer : send data of 1 Club and request component
+ShowPlayer -> Club: response ShowPlayer component
+Club -> App: response Club component
+App -> UI: response HTML, CSS and JS
+@enduml

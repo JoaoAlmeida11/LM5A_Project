@@ -1,14 +1,11 @@
 import React from 'react';
-// import { Button, TextInput, View, Text } from "react-native";
 import { Formik } from 'formik';
 import { connect, useDispatch } from 'react-redux';
-import { logInAction } from '../../redux/ducks/AuthSlice';
-// import * as firebase from "firebase";
+import { signUpAction } from '../../redux/ducks/AuthSlice';
 import GoogleButton from 'react-google-button/dist/react-google-button'; //forced fix do to known issue https://github.com/prescottprue/react-google-button/issues/28
 import { useFirebase } from 'react-redux-firebase';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-// import { useFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
 
 /* Validates the form fields */
 const hasValid = values => {
@@ -28,11 +25,12 @@ const hasValid = values => {
 	return errors;
 };
 
-const Login = props => {
+const SignUp = props => {
 	const { isLogged } = props;
 	const firebase = useFirebase();
 	const dispatch = useDispatch();
-	const loginWithGoogle = e => {
+
+	const SignUpWithGoogle = e => {
 		e.preventDefault();
 		const googleProvider = new firebase.auth.GoogleAuthProvider();
 		const auth = firebase.auth();
@@ -40,7 +38,7 @@ const Login = props => {
 			.signInWithPopup(googleProvider)
 			.then(res => {
 				console.log(res.user);
-				dispatch(logInAction());
+				dispatch(signUpAction());
 				return <Redirect to="/soccer/" />;
 			})
 			.catch(error => {
@@ -49,30 +47,27 @@ const Login = props => {
 			});
 	};
 
-	const login = (email, password) => {
+	const signup = (email, password) => {
 		firebase
 			.auth()
-			.signInWithEmailAndPassword(email, password)
+			.createUserWithEmailAndPassword(email, password)
 			.then(res => {
-				console.log('Success Login User');
-
-				return res && props.login(email);
+				return res && props.signup(email);
 			})
 			.catch(error => {
 				console.log(error);
 			});
 	};
-
 	if (isLogged === true) return <Redirect to="/soccer/" />;
 	return (
 		<Container>
 			<Row className="centerLogin">
 				<Col xs={12} className="mx-auto my-auto text-center">
-					<h3 className="mt-4">Login</h3>
+					<h3 className="mt-4">Sign Up</h3>
 				</Col>
 
 				<Col xs={12} className="d-flex justify-content-center">
-					<GoogleButton type="light" onClick={loginWithGoogle} />
+					<GoogleButton type="light" onClick={SignUpWithGoogle} />
 				</Col>
 				<Col xs={12} lg={6} className="mx-auto my-auto text-center">
 					<h4 className="mt-4">or</h4>
@@ -84,10 +79,11 @@ const Login = props => {
 						onSubmit={(values, { setSubmitting }) => {
 							setSubmitting(true);
 							const { email, password } = values;
+
 							try {
-								login(email, password);
+								signup(email, password);
 							} catch (e) {
-								// TODO: error handling
+								// TODO: see if the user already has an account
 								console.log('Error singUp');
 								console.log(e);
 								setSubmitting(false);
@@ -147,13 +143,9 @@ const Login = props => {
 										variant="primary"
 										disabled={isSubmitting}
 									>
-										Login
+										SignUp
 									</Button>
 								</div>
-								{/* Not implemented Forgot Password */}
-								<Form.Text className="forgot-password text-center mt-3">
-									Forgot Password?
-								</Form.Text>
 							</Form>
 						)}
 					</Formik>
@@ -168,6 +160,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-	login: email => dispatch(logInAction(email)),
+	signup: email => dispatch(signUpAction(email)),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

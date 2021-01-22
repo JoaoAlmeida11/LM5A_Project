@@ -1,0 +1,19 @@
+@startuml
+
+actor User
+boundary UI
+control App
+control NavCostum
+
+database store
+
+User -> UI : opens page
+UI -> App: request NavCostum UI
+App -> NavCostum: request NavCostum component
+NavCostum -> store: request access to information
+store -> NavCostum: gives access to current information
+NavCostum -> App : response NavCostum component
+App -> UI: response HTML, CSS and JS
+@enduml
+
+

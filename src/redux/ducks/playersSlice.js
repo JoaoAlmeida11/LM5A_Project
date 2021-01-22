@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-// import { schema, normalize } from 'normalizr';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
@@ -24,15 +23,15 @@ export const fetchEachPlayer = ({ seasonId, playerId }) => {
 export const fetchOnePlayer = createAsyncThunk(
 	'players/requestStatus',
 	async ({ seasonId, playerId }, thunkAPI) => {
-		console.log('PlayersSlice');
-		console.log(seasonId);
-		console.log(playerId);
+		// console.log('PlayersSlice');
+		// console.log(seasonId);
+		// console.log(playerId);
 
-		const state = thunkAPI.getState();
+		// const state = thunkAPI.getState();
 
 		// check if store has data in oneClub.club
-		const player = state.player;
-		if (player.seasonId === seasonId) return { changeStore: false };
+		// const player = state.player;
+		// if (player.seasonId === seasonId) return { changeStore: false };
 
 		// check if store has data in club.clubList
 		// const clubList = state.club.clubList;
@@ -47,8 +46,8 @@ export const fetchOnePlayer = createAsyncThunk(
 		// }
 
 		const response = await fetchEachPlayer({ seasonId, playerId });
-		console.log('response from fetchEachPlayer');
-		console.log(response);
+		// console.log('response from fetchEachPlayer');
+		// console.log(response);
 		const playerResponse = response.player;
 		// console.log('clubResponse');
 		// console.log(clubResponse);
@@ -58,21 +57,13 @@ export const fetchOnePlayer = createAsyncThunk(
 
 const playersSlice = createSlice({
 	name: 'players',
-	// TODO: initial state needs to store an array like a map with a key being the id
 	initialState: {
 		onePlayerInfo: [],
 		loading: 'idle',
 		seasonId: '',
 		playerId: '',
 	},
-	reducers: {
-		// to be call when entering other pages
-		setLoadingToIdlePlayersSlice(state) {
-			// console.table([1, 2, 3, 4]);
-			// console.log('setLoadingToIdleOneClubSlice');
-			state.loading = 'idle';
-		},
-	},
+	reducers: {},
 	extraReducers: {
 		[fetchOnePlayer.pending]: state => {
 			state.loading = 'pending';

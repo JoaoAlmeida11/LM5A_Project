@@ -5,35 +5,29 @@ import HomePage from './components/Homepage/HomePage';
 import League from './components/League/League';
 import Club from './components/Club/Club';
 import Player from './components/Player/Player';
-import Ideal11 from './components/Ideal11/Ideal11';
 import Login from './components/Authentication/Login';
-import SignIn from './components/Authentication/SignIn';
-import Footer from './components/Layout/Footer';
+import SignIn from './components/Authentication/SignUp';
 import NavCostum from './components/Layout/NavCostum';
 
-export default function App() {
+export const App = () => {
 	return (
 		<Router>
-			<NavCostum />
 			<Switch>
-				<Route exact path="/lm5a_project/" component={HomePage}></Route>
+				{/*inside a switch so it properly connects to store and passes the test*/}
+				<Route path="/soccer/" component={NavCostum}></Route>
+			</Switch>
+			<Switch>
+				<Route exact path="/soccer/" component={HomePage}></Route>
+				<Route path="/soccer/league/:leagueId/" component={League}></Route>
+				<Route path="/soccer/club/:seasonId/:clubId/" component={Club}></Route>
 				<Route
-					path="/lm5a_project/league/:leagueId/"
-					component={League}
-				></Route>
-				<Route
-					path="/lm5a_project/club/:seasonId/:clubId/"
-					component={Club}
-				></Route>
-				<Route
-					path="/lm5a_project/player/:seasonId/:playerId/"
+					path="/soccer/player/:seasonId/:playerId/"
 					component={Player}
 				></Route>
-				<Route path="/lm5a_project/ideal11/" component={Ideal11}></Route>
-				<Route path="/lm5a_project/login/" component={Login}></Route>
-				<Route path="/lm5a_project/signIn/" component={SignIn}></Route>
+				<Route path="/soccer/login/" component={Login}></Route>
+				<Route path="/soccer/signIn/" component={SignIn}></Route>
 			</Switch>
-			<Footer />
 		</Router>
 	);
-}
+};
+export default App;
