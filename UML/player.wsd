@@ -1,0 +1,21 @@
+@startuml
+
+actor User
+boundary UI
+control App
+control Player
+control fetchOnePlayer
+database store
+database API
+
+User -> UI : opens page
+UI -> App: request Player UI
+App -> Player: request Player component
+Player-> fetchOnePlayer: dispatch API request 
+fetchOnePlayer -> API: HTTP GET request
+API -> fetchOnePlayer : HTTP response
+fetchOnePlayer -> store: updates store
+store -> Player : allow access to information
+Player -> App: response Player component
+App -> UI: response HTML, CSS and JS
+@enduml
