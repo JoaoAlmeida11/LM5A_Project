@@ -24,12 +24,13 @@ const hasValid = values => {
 	}
 	return errors;
 };
-// export const auth = firebase.auth();
+
 const SignUp = props => {
 	const { isLogged } = props;
 	const firebase = useFirebase();
 	const dispatch = useDispatch();
-	const loginWithGoogle = e => {
+
+	const SignUpWithGoogle = e => {
 		e.preventDefault();
 		const googleProvider = new firebase.auth.GoogleAuthProvider();
 		const auth = firebase.auth();
@@ -61,17 +62,17 @@ const SignUp = props => {
 	return (
 		<Container>
 			<Row className="centerLogin">
-				<Col xl={12} lg={6} className="mx-auto my-auto text-center">
+				<Col xs={12} className="mx-auto my-auto text-center">
 					<h3 className="mt-4">Sign Up</h3>
 				</Col>
 
-				<Col xl={12} lg={6} className="d-flex justify-content-center">
-					<GoogleButton type="light" onClick={loginWithGoogle} />
+				<Col xs={12} className="d-flex justify-content-center">
+					<GoogleButton type="light" onClick={SignUpWithGoogle} />
 				</Col>
-				<Col xl={12} lg={6} className="mx-auto my-auto text-center">
+				<Col xs={12} lg={6} className="mx-auto my-auto text-center">
 					<h4 className="mt-4">or</h4>
 				</Col>
-				<Col xl={12} lg={6} className="mx-auto my-auto">
+				<Col xs={12} lg={8} xl={6} className="mx-auto my-auto">
 					<Formik
 						initialValues={{ email: '', password: '' }}
 						validate={hasValid}
@@ -111,7 +112,9 @@ const SignUp = props => {
 										onBlur={handleBlur}
 									/>
 									{touched.email && errors.email ? (
-										<div className="error-message">{errors.email}</div>
+										<div className="error-message text-danger">
+											{errors.email}
+										</div>
 									) : null}
 								</Form.Group>
 								<Form.Group>
@@ -128,7 +131,9 @@ const SignUp = props => {
 										required
 									/>
 									{touched.password && errors.password ? (
-										<div className="error-message">{errors.password}</div>
+										<div className="error-message text-danger">
+											{errors.password}
+										</div>
 									) : null}
 								</Form.Group>
 

@@ -1,0 +1,25 @@
+@startuml
+
+actor User
+boundary UI
+control App
+control SignUp
+control SignUpWithGoogle
+
+control signUpAction
+database store
+database Firebase
+
+User -> UI : opens page
+UI -> App: request SignUp UI
+App -> SignUp: request SignUp component
+SignUp-> signUpAction: dispatch Firebase request 
+signUpAction -> Firebase: HTTP GET request
+Firebase -> signUpAction : HTTP response signUpAction -> store: updates store
+store -> SignUp : allow access to information
+SignUp -> ShowPlayer : send data of 1 SignUp and request component
+ShowPlayer -> SignUp: response ShowPlayer component
+SignUp -> App: response SignUp component
+
+App -> UI: response HTML, CSS and JS
+@enduml

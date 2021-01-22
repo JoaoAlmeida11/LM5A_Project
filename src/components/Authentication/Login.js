@@ -67,17 +67,17 @@ const Login = props => {
 	return (
 		<Container>
 			<Row className="centerLogin">
-				<Col xl={12} lg={6} className="mx-auto my-auto text-center">
+				<Col xs={12} className="mx-auto my-auto text-center">
 					<h3 className="mt-4">Login</h3>
 				</Col>
 
-				<Col xl={12} lg={6} className="d-flex justify-content-center">
+				<Col xs={12} className="d-flex justify-content-center">
 					<GoogleButton type="light" onClick={loginWithGoogle} />
 				</Col>
-				<Col xl={12} lg={6} className="mx-auto my-auto text-center">
+				<Col xs={12} lg={6} className="mx-auto my-auto text-center">
 					<h4 className="mt-4">or</h4>
 				</Col>
-				<Col xl={12} lg={6} className="mx-auto my-auto">
+				<Col xs={12} lg={8} xl={6} className="mx-auto my-auto">
 					<Formik
 						initialValues={{ email: '', password: '' }}
 						validate={hasValid}
@@ -116,7 +116,9 @@ const Login = props => {
 										onBlur={handleBlur}
 									/>
 									{touched.email && errors.email ? (
-										<div className="error-message">{errors.email}</div>
+										<div className="error-message text-danger">
+											{errors.email}
+										</div>
 									) : null}
 								</Form.Group>
 								<Form.Group>
@@ -133,7 +135,9 @@ const Login = props => {
 										required
 									/>
 									{touched.password && errors.password ? (
-										<div className="error-message">{errors.password}</div>
+										<div className="error-message text-danger">
+											{errors.password}
+										</div>
 									) : null}
 								</Form.Group>
 
